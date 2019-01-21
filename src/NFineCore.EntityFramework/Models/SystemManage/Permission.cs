@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_Permission")]
+    [Table("sys_permission")]
     public class Permission
     {
         [Key]

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_Dict")]
+    [Table("sys_dict")]
     public class Dict
     {
         [Key]

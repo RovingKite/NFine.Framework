@@ -40,8 +40,10 @@ namespace NFineCore.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddStaticHttpContextAccessor();
-            
-            services.AddDistributedRedisCache(options => { options.Configuration = "localhost"; options.InstanceName = "NFineCore"; });
+            services.AddDistributedRedisCache(options => {
+                options.Configuration = Configuration.GetConnectionString("RedisConnection");
+                options.InstanceName = "NFineCore";
+            });
             //services.AddDistributedMemoryCache();//启用session之前必须先添加内存
             services.AddSession(options =>
             {
@@ -67,7 +69,7 @@ namespace NFineCore.Web
             });
             services.AddHangfire(x => x.UseStorage(
                 new MySqlStorage(
-                    "Server=localhost;Database=nfinecorebase;User Id=root;Password=123456;Allow User Variables=True;",
+                    "Server=192.168.1.21;Database=nfinecorebase;User Id=root;Password=123456;Allow User Variables=True;",
                     new MySqlStorageOptions
                     {
                         TransactionIsolationLevel = IsolationLevel.ReadCommitted,
@@ -122,13 +124,13 @@ namespace NFineCore.Web
             });
 
             #region Hangfire 定时任务 
-            app.UseHangfireServer();
+            app.UseHangfireServer(new BackgroundJobServerOptions{ WorkerCount = 1});
             app.UseHangfireDashboard();
-            RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync1(), "*/1 * * * *");  //间隔1分钟执行
-            RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync2(), "*/2 * * * *");  //间隔2分钟执行
-            RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync3(), "*/3 * * * *");  //间隔3分钟执行
-            RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync4(), "*/4 * * * *");  //间隔4分钟执行
-            RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync5(), "*/5 * * * *");  //间隔5分钟执行
+            //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync1(), "*/1 * * * *");  //间隔1分钟执行
+            //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync2(), "*/2 * * * *");  //间隔2分钟执行
+            //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync3(), "*/3 * * * *");  //间隔3分钟执行
+            //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync4(), "*/4 * * * *");  //间隔4分钟执行
+            //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync5(), "*/5 * * * *");  //间隔5分钟执行
             #endregion
 
             app.UseStaticHttpContext();

@@ -49,7 +49,7 @@ namespace NFineCore.EntityFramework
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("Server=localhost;Database=nfinecorebase;User Id=root;Password=123456;");
+                optionsBuilder.UseMySql("Server=192.168.1.21;Database=nfinecorebase;User Id=root;Password=123456;");
             }
         }
     }

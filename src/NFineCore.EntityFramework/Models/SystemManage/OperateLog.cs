@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_OperateLog")]
+    [Table("sys_operatelog")]
     public class OperateLog
     {
         [Key]

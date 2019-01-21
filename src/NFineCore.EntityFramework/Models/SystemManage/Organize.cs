@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_Organize")]
+    [Table("sys_organize")]
     public class Organize
     {
         [Key]

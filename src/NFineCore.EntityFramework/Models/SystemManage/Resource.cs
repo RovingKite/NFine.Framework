@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_Resource")]
+    [Table("sys_resource")]
     public class Resource
     {
         [Key]

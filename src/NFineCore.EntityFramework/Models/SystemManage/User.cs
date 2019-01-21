@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_User")]
+    [Table("sys_user")]
     public class User
     {
         [Key]

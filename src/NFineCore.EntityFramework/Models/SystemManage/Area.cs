@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_Area")]
+    [Table("sys_area")]
     public class Area
     {
         [Key]

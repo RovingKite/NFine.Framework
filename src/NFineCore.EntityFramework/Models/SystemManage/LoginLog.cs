@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_LoginLog")]
+    [Table("sys_loginlog")]
     public class LoginLog
     {
         [Key]

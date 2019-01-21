@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_Attach")]
+    [Table("sys_attach")]
     public class Attach
     {
         [Key]

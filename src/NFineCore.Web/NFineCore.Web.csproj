@@ -27,11 +27,10 @@
   <ItemGroup>
     <Folder Include="Areas\SystemManage\Data\" />
     <Folder Include="Areas\SystemManage\Models\" />
-    <Folder Include="wwwroot\attach\201811\" />
+    <Folder Include="wwwroot\attach\" />
     <Folder Include="wwwroot\lib\bootstrap\3.3.4\css\" />
     <Folder Include="wwwroot\lib\bootstrap\3.3.7\" />
     <Folder Include="wwwroot\lib\loadmask\" />
-    <Folder Include="wwwroot\upload\" />
   </ItemGroup>
 
   <ItemGroup>

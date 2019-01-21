@@ -22,7 +22,7 @@ namespace NFineCore.Web
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel()
-                .UseUrls("http://localhost:80001/");
+                .UseUrls("http://localhost:8098/");
 
         //public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
         //        WebHost.CreateDefaultBuilder(args)

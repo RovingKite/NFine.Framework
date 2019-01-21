@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("Sys_UserRole")]
+    [Table("sys_userrole")]
     public class UserRole
     {
         public long UserId { get; set; }
