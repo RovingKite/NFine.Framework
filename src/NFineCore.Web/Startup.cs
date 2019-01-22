@@ -20,7 +20,6 @@ using NFineCore.Service.SystemManage;
 using SharpRepository.Ioc.Microsoft.DependencyInjection;
 using NFineCore.Web.Filters;
 using Hangfire;
-using Hangfire.MySql;
 using System.Transactions;
 
 namespace NFineCore.Web
@@ -40,6 +39,7 @@ namespace NFineCore.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddStaticHttpContextAccessor();
+            //services.AddDistributedRedisCache(options => { options.Configuration = "localhost"; options.InstanceName = "NFineCore"; });
             services.AddDistributedRedisCache(options => {
                 options.Configuration = Configuration.GetConnectionString("RedisConnection");
                 options.InstanceName = "NFineCore";
@@ -67,20 +67,11 @@ namespace NFineCore.Web
                 option.Filters.Add(new LoginAuthFilter());
                 //option.Filters.Add(new OperateLogFilter());
             });
-            services.AddHangfire(x => x.UseStorage(
-                new MySqlStorage(
-                    "Server=192.168.1.21;Database=nfinecorebase;User Id=root;Password=123456;Allow User Variables=True;",
-                    new MySqlStorageOptions
-                    {
-                        TransactionIsolationLevel = IsolationLevel.ReadCommitted,
-                        QueuePollInterval = TimeSpan.FromSeconds(15),
-                        JobExpirationCheckInterval = TimeSpan.FromHours(1),
-                        CountersAggregateInterval = TimeSpan.FromMinutes(5),
-                        PrepareSchemaIfNecessary = true,
-                        DashboardJobListLimit = 50000,
-                        TransactionTimeout = TimeSpan.FromMinutes(1),
-                        TablesPrefix = "hangfire_"
-                    })));
+            //注入Hangfire服务
+            services.AddHangfire(configuration => {
+                configuration.UseRedisStorage(Configuration.GetConnectionString("RedisConnection"));
+            });
+
             services.AddTransient(typeof(LoginLogService));
             services.AddTransient(typeof(OperateLogService));
 
@@ -124,7 +115,7 @@ namespace NFineCore.Web
             });
 
             #region Hangfire 定时任务 
-            app.UseHangfireServer(new BackgroundJobServerOptions{ WorkerCount = 1});
+            app.UseHangfireServer();
             app.UseHangfireDashboard();
             //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync1(), "*/1 * * * *");  //间隔1分钟执行
             //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync2(), "*/2 * * * *");  //间隔2分钟执行

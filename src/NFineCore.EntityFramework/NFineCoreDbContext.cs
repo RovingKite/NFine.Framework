@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NFineCore.EntityFramework.Models.SystemManage;
 using System;
 using System.Linq;
@@ -8,9 +9,10 @@ namespace NFineCore.EntityFramework
 {
     public class NFineCoreDbContext : DbContext
     {
-        public NFineCoreDbContext() : base()
+        private readonly string _connectionString;
+        public NFineCoreDbContext(IConfiguration configuration) : base()
         {
-
+            _connectionString = configuration.GetConnectionString("MySQLConnection");
         }
 
         public NFineCoreDbContext(DbContextOptions<NFineCoreDbContext> options) : base(options)
@@ -49,7 +51,7 @@ namespace NFineCore.EntityFramework
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("Server=192.168.1.21;Database=nfinecorebase;User Id=root;Password=123456;");
+                optionsBuilder.UseMySql(_connectionString);
             }
         }
     }
