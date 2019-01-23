@@ -14,9 +14,13 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class PermissionController : BaseController
     {
-        ResourceService resourceService = new ResourceService();
-        PermissionService permissionService = new PermissionService();
-
+        private readonly ResourceService _resourceService;
+        private readonly PermissionService _permissionService;
+        public PermissionController(ResourceService resourceService, PermissionService permissionService)
+        {
+            _resourceService = resourceService;
+            _permissionService = permissionService;
+        }
         [PermissionCheck]
         public override IActionResult Index()
         {
@@ -35,8 +39,8 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetRolePermissionTree(string roleId)
         {            
-            var resourceData = resourceService.GetList();
-            var permissionData = permissionService.GetRolePermissionList(Convert.ToInt64(roleId));
+            var resourceData = _resourceService.GetList();
+            var permissionData = _permissionService.GetRolePermissionList(Convert.ToInt64(roleId));
             var treeList = new List<TreeViewModel>();
             foreach (ResourceGridDto item in resourceData)
             {
@@ -60,8 +64,8 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetUserPermissionTree(string userId)
         {
-            var resourceData = resourceService.GetList();
-            var permissionData = permissionService.GetUserPermissionList(Convert.ToInt64(userId));
+            var resourceData = _resourceService.GetList();
+            var permissionData = _permissionService.GetUserPermissionList(Convert.ToInt64(userId));
             var treeList = new List<TreeViewModel>();
             foreach (ResourceGridDto item in resourceData)
             {

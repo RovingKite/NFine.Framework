@@ -281,6 +281,9 @@
     <Content Update="Areas\SystemManage\Views\Area\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Areas\SystemManage\Views\Attach\Upload.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\SystemManage\Views\DictItem\Details.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

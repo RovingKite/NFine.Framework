@@ -42,7 +42,10 @@ namespace NFineCore.Web.Controllers
         {
             return View();
         }
-
+        public virtual IActionResult Upload()
+        {
+            return View();
+        }
         protected virtual ActionResult Success(string message)
         {
             return Content(new AjaxResult { state = ResultType.success.ToString(), message = message }.ToJson());

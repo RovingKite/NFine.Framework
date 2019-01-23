@@ -17,8 +17,11 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class RoleController : BaseController
     {
-        RoleService roleService = new RoleService();
-
+        private readonly RoleService _roleService;
+        public RoleController(RoleService roleService)
+        {
+            _roleService = roleService;
+        }
         [PermissionCheck]
         public override IActionResult Index()
         {
@@ -38,7 +41,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Role_Index")]
         public ActionResult GetSelectJson(string keyword)
         {
-            var data = roleService.GetList(keyword);
+            var data = _roleService.GetList(keyword);
             return Content(data.ToJson());
         }
 
@@ -48,7 +51,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         {
             var data = new
             {
-                rows = roleService.GetList(pagination, keyword),
+                rows = _roleService.GetList(pagination, keyword),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -60,7 +63,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Role_Form")]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = roleService.GetForm(keyValue);
+            var data = _roleService.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
@@ -72,8 +75,8 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
             if (!string.IsNullOrEmpty(resourceIds))
             {
                 resourceIdsArray = resourceIds.Split(',');
-            }            
-            roleService.SubmitForm(roleInputDto, resourceIdsArray, keyValue);
+            }
+            _roleService.SubmitForm(roleInputDto, resourceIdsArray, keyValue);
             return Success("操作成功。");
         }
 
@@ -81,7 +84,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Role_Delete")]
         public ActionResult DeleteForm(string keyValue)
         {
-            roleService.DeleteForm(keyValue);
+            _roleService.DeleteForm(keyValue);
             return Success("操作成功。");
         }
     }

@@ -20,8 +20,13 @@ namespace NFineCore.Web.Controllers
 {
     public class AccountController : Controller
     {
-        UserService userService = new UserService();
-        LoginLogService loginLogService = new LoginLogService();
+        private readonly UserService _userService;
+        private readonly LoginLogService _loginLogService;
+        public AccountController(UserService userService, LoginLogService loginLogService)
+        {
+            _userService = userService;
+            _loginLogService = loginLogService;
+        }
 
         [AllowAnonymous]
         public IActionResult Login()
@@ -41,7 +46,7 @@ namespace NFineCore.Web.Controllers
             loginLogInputDto.IpAddress = HttpContext.Connection.RemoteIpAddress.ToString();
             loginLogInputDto.IpAddressLocation = NetHelper.GetLocation(loginLogInputDto.IpAddress);
             loginLogInputDto.Description = "安全退出。";
-            loginLogService.SubmitForm(loginLogInputDto, null);
+            _loginLogService.SubmitForm(loginLogInputDto, null);
 
             OperatorProvider.Provider.RemoveCurrent();
             return RedirectToAction("Login", "Account");
@@ -72,13 +77,13 @@ namespace NFineCore.Web.Controllers
                 {
                     throw new Exception("验证码错误，请重新输入。");
                 }
-                UserOutputDto userOutputDto = userService.CheckLogin(username, password);
+                UserOutputDto userOutputDto = _userService.CheckLogin(username, password);
                 if (userOutputDto != null)
                 {
                     loginLogInputDto.UserId = userOutputDto.Id;
                     loginLogInputDto.OperateResult = true;
                     loginLogInputDto.Description = "系统登录，登录成功。";
-                    loginLogService.SubmitForm(loginLogInputDto, null);
+                    _loginLogService.SubmitForm(loginLogInputDto, null);
 
                     OperatorModel operatorModel = new OperatorModel();
                     operatorModel.Id = userOutputDto.Id;
@@ -93,7 +98,7 @@ namespace NFineCore.Web.Controllers
             {
                 loginLogInputDto.OperateResult = false;
                 loginLogInputDto.Description = "系统登录，" + ex.Message;
-                loginLogService.SubmitForm(loginLogInputDto, null);
+                _loginLogService.SubmitForm(loginLogInputDto, null);
                 return Content(new AjaxResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
             }
         }

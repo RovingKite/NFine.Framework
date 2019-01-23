@@ -15,9 +15,13 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class DictItemController : BaseController
     {
-        DictService dictService = new DictService();
-        DictItemService dictItemService = new DictItemService();
-
+        private readonly DictService _dictService;
+        private readonly DictItemService _dictItemService;
+        public DictItemController(DictService dictService, DictItemService dictItemService)
+        {
+            _dictService = dictService;
+            _dictItemService = dictItemService;
+        }
         [PermissionCheck]
         public override IActionResult Index()
         {
@@ -36,32 +40,32 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetGridJson(long dictId, string keyword)
         {
-            var data = dictItemService.GetList(dictId, keyword);
+            var data = _dictItemService.GetList(dictId, keyword);
             return Content(data.ToJson());
         }
         [HttpGet]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = dictItemService.GetForm(keyValue);
+            var data = _dictItemService.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
         [HttpPost]
         public ActionResult SubmitForm(DictItemInputDto dictItemInputDto, string keyValue)
         {
-            dictItemService.SubmitForm(dictItemInputDto, keyValue);
+            _dictItemService.SubmitForm(dictItemInputDto, keyValue);
             return Success("操作成功。");
         }
         [HttpPost]
         public ActionResult DeleteForm(string keyValue)
         {
-            dictItemService.DeleteForm(keyValue);
+            _dictItemService.DeleteForm(keyValue);
             return Success("操作成功。");
         }
         [HttpGet]
         public ActionResult GetSelectJson(string enCode)
         {
-            var data = dictService.GetDictItemList(enCode);
+            var data = _dictService.GetDictItemList(enCode);
             List<object> list = new List<object>();
             foreach (DictItemGridDto item in data)
             {

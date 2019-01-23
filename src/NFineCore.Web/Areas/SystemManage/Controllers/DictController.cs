@@ -15,6 +15,11 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class DictController : BaseController
     {
+        private readonly DictService _dictService;
+        public DictController(DictService dictService)
+        {
+            _dictService = dictService;
+        }
         [PermissionCheck]
         public override IActionResult Index()
         {
@@ -30,11 +35,11 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         {
             return View();
         }
-        DictService dictService = new DictService();
+        
         [HttpGet]
         public ActionResult GetTreeJson()
         {
-            var data = dictService.GetList();
+            var data = _dictService.GetList();
             var treeList = new List<TreeViewModel>();
             foreach (DictGridDto dict in data)
             {
@@ -55,7 +60,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetTreeGridJson()
         {
-            var data = dictService.GetList();
+            var data = _dictService.GetList();
             var treeList = new List<TreeGridModel>();
             foreach (DictGridDto dict in data)
             {
@@ -75,7 +80,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetTreeSelectJson()
         {
-            var data = dictService.GetList();
+            var data = _dictService.GetList();
             var treeList = new List<TreeSelectModel>();
             foreach (DictGridDto dict in data)
             {
@@ -91,14 +96,14 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = dictService.GetForm(keyValue);
+            var data = _dictService.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
         [HttpPost]
         public ActionResult SubmitForm(DictInputDto dictInputDto, string keyValue)
         {
-            dictService.SubmitForm(dictInputDto, keyValue);
+            _dictService.SubmitForm(dictInputDto, keyValue);
             return Success("操作成功。");
         }
     }

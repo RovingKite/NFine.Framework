@@ -17,7 +17,11 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class UserController : BaseController
     {
-        UserService userService = new UserService();
+        private readonly UserService _userService;
+        public UserController(UserService userService)
+        {
+            _userService = userService;
+        }
 
         [PermissionCheck]
         public override IActionResult Index()
@@ -40,7 +44,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         {
             var data = new
             {
-                rows = userService.GetList(pagination, keyword),
+                rows = _userService.GetList(pagination, keyword),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -52,7 +56,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_User_Form")]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = userService.GetForm(keyValue);
+            var data = _userService.GetForm(keyValue);
             if (data.UserRoles.Count > 0)
             {
                 foreach (UserRole ur in data.UserRoles)
@@ -70,7 +74,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_User_Form")]
         public ActionResult SubmitForm(UserInputDto userInputDto,string[] roleIds, string keyValue)
         {
-            userService.SubmitForm(userInputDto, roleIds, keyValue);
+            _userService.SubmitForm(userInputDto, roleIds, keyValue);
             return Success("操作成功。");
         }
 
@@ -78,21 +82,21 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_User_Delete")]
         public ActionResult DeleteForm(string keyValue)
         {
-            userService.DeleteForm(keyValue);
+            _userService.DeleteForm(keyValue);
             return Success("操作成功。");
         }
 
         [HttpPost]
         public ActionResult DisabledForm(string keyValue)
         {
-            userService.DisabledForm(keyValue);
+            _userService.DisabledForm(keyValue);
             return Success("账户禁用成功。");
         }
 
         [HttpPost]
         public ActionResult EnabledForm(string keyValue)
         {
-            userService.EnabledForm(keyValue);
+            _userService.EnabledForm(keyValue);
             return Success("账户启用成功。");
         }
 
@@ -105,14 +109,14 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpPost]
         public ActionResult SubmitResetPassword(string password, string keyValue)
         {
-            userService.SubmitResetPassword(password, keyValue);
+            _userService.SubmitResetPassword(password, keyValue);
             return Success("重置密码成功。");
         }
 
         [HttpGet]
         public ActionResult VaildUserNameExists(string username)
         {
-            User user = userService.VaildUserNameExists(username);
+            User user = _userService.VaildUserNameExists(username);
             if(user != null)
                 return Error("用户名“" + username + "”已存在，请重新输入用户名。");
             else

@@ -14,8 +14,11 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class MenuButtonController : BaseController
     {
-        ResourceService resourceService = new ResourceService();
-
+        private readonly ResourceService _resourceService;
+        public MenuButtonController(ResourceService resourceService)
+        {
+            _resourceService = resourceService;
+        }
         [HttpGet]
         public IActionResult CloneButton()
         {
@@ -24,7 +27,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetTreeGridJson(string menuId)
         {
-            var data = resourceService.GetButtonList(menuId);
+            var data = _resourceService.GetButtonList(menuId);
             var treeList = new List<TreeGridModel>();
             foreach (ResourceGridDto item in data)
             {
@@ -43,7 +46,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetTreeSelectJson()
         {
-            var data = resourceService.GetList();
+            var data = _resourceService.GetList();
             var treeList = new List<TreeSelectModel>();
             foreach (ResourceGridDto item in data)
             {
@@ -59,7 +62,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetCloneButtonTreeJson()
         {
-            var resourceData = resourceService.GetList();
+            var resourceData = _resourceService.GetList();
             var treeList = new List<TreeViewModel>();
             foreach (ResourceGridDto item in resourceData)
             {
@@ -82,28 +85,28 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = resourceService.GetForm(keyValue);
+            var data = _resourceService.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
         [HttpPost]
         public ActionResult SubmitForm(ResourceInputDto resourceInputDto, string keyValue)
         {
-            resourceService.SubmitForm(resourceInputDto, keyValue);
+            _resourceService.SubmitForm(resourceInputDto, keyValue);
             return Success("操作成功。");
         }
 
         [HttpPost]
         public ActionResult DeleteForm(string keyValue)
         {
-            resourceService.DeleteForm(keyValue);
+            _resourceService.DeleteForm(keyValue);
             return Success("操作成功。");
         }
 
         [HttpPost]
         public ActionResult SubmitCloneButton(string menuId, string ids)
         {
-            resourceService.SubmitCloneButton(menuId, ids);
+            _resourceService.SubmitCloneButton(menuId, ids);
             return Success("克隆成功。");
         }
     }

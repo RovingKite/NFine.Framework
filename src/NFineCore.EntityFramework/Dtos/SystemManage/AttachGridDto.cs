@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace NFineCore.EntityFramework.Models.SystemManage
+namespace NFineCore.EntityFramework.Dtos.SystemManage
 {
-    [Table("sys_attach")]
-    public class Attach
+    public class AttachGridDto
     {
-        [Key]
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string FileName { get; set; }
         public string FilePath { get; set; }
         public long FileSize { get; set; }
@@ -24,7 +22,6 @@ namespace NFineCore.EntityFramework.Models.SystemManage
         public long? LastModifierUserId { get; set; }
         public DateTime? DeletionTime { get; set; }
         public long? DeleterUserId { get; set; }
-        [ForeignKey("CreatorUserId")]
-        public User CreatorUser { get; set; }
+        public string UserName { get; set; }
     }
 }

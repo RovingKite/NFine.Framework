@@ -73,10 +73,13 @@ namespace NFineCore.EntityFramework
                 cfg.CreateMap<Resource, ResourceOutputDto>();
 
                 cfg.CreateMap<AttachInputDto, Attach>();
+                cfg.CreateMap<Attach, AttachGridDto>()
+                .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.CreatorUser.UserName));
+                //cfg.CreateMap<AttachInputDto, Attach>();
 
                 #endregion
 
-                
+
             });
         }
     }

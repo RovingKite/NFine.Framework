@@ -15,8 +15,11 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class OrganizeController : BaseController
     {
-        OrganizeService organizeService = new OrganizeService();
-
+        private readonly OrganizeService _organizeService;
+        public OrganizeController(OrganizeService organizeService)
+        {
+            _organizeService = organizeService;
+        }
         [PermissionCheck]
         public override IActionResult Index()
         {
@@ -36,7 +39,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Organize_Index")]
         public ActionResult GetTreeSelectJson()
         {
-            var data = organizeService.GetList();
+            var data = _organizeService.GetList();
             var treeList = new List<TreeSelectModel>();
             foreach (OrganizeGridDto item in data)
             {
@@ -55,7 +58,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Organize_Index")]
         public ActionResult GetTreeGridJson(string keyword)
         {
-            var data = organizeService.GetList();
+            var data = _organizeService.GetList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.FullName.Contains(keyword));
@@ -79,7 +82,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Organize_Form")]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = organizeService.GetForm(keyValue);
+            var data = _organizeService.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
@@ -87,7 +90,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Organize_Form")]
         public ActionResult SubmitForm(OrganizeInputDto organizeInputDto, string keyValue)
         {
-            organizeService.SubmitForm(organizeInputDto, keyValue);
+            _organizeService.SubmitForm(organizeInputDto, keyValue);
             return Success("操作成功。");
         }
 
@@ -95,7 +98,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Organize_Delete")]
         public ActionResult DeleteForm(string keyValue)
         {
-            organizeService.DeleteForm(keyValue);
+            _organizeService.DeleteForm(keyValue);
             return Success("操作成功。");
         }
     }

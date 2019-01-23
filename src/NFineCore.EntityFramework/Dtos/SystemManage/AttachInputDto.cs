@@ -14,6 +14,7 @@ namespace NFineCore.EntityFramework.Dtos.SystemManage
         public long FileSize { get; set; }
         public string FileExt { get; set; }
         public string ThumbPath { get; set; }
+        public string FileType { get; set; }
         public bool? DeletedMark { get; set; }
         public DateTime? CreationTime { get; set; }
         public long? CreatorUserId { get; set; }

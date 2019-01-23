@@ -15,8 +15,11 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class AreaController : BaseController
     {
-        AreaService areaService = new AreaService();
-
+        private readonly AreaService _areaService;
+        public AreaController(AreaService areaService)
+        {
+            _areaService = areaService;
+        }
         [PermissionCheck]
         public override IActionResult Index()
         {
@@ -36,7 +39,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Area_Index")]
         public ActionResult GetTreeSelectJson()
         {
-            var data = areaService.GetList();
+            var data = _areaService.GetList();
             var treeList = new List<TreeSelectModel>();
             foreach (AreaGridDto item in data)
             {
@@ -55,7 +58,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Area_Index")]
         public ActionResult GetTreeGridJson(string keyword)
         {
-            var data = areaService.GetList();
+            var data = _areaService.GetList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.FullName.Contains(keyword));
@@ -79,7 +82,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Area_Form")]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = areaService.GetForm(keyValue);
+            var data = _areaService.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
@@ -87,7 +90,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Area_Form")]
         public ActionResult SubmitForm(AreaInputDto areaInputDto, string keyValue)
         {
-            areaService.SubmitForm(areaInputDto, keyValue);
+            _areaService.SubmitForm(areaInputDto, keyValue);
             return Success("操作成功。");
         }
 
@@ -95,7 +98,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [PermissionCheck("SystemManage_Area_Delete")]
         public ActionResult DeleteForm(string keyValue)
         {
-            areaService.DeleteForm(keyValue);
+            _areaService.DeleteForm(keyValue);
             return Success("操作成功。");
         }
     }

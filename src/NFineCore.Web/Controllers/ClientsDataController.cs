@@ -17,13 +17,38 @@ namespace NFineCore.Web.Controllers
 {
     public class ClientsDataController : Controller
     {
+        private readonly PermissionService _permissionService;
+        private readonly DictItemService _dictItemService;
+        private readonly DictService _dictService;
+        private readonly OrganizeService _organizeService;
+        private readonly RoleService _roleService;
+        private readonly UserService _userService;
+        private readonly ResourceService _resourceService;
+        private readonly DutyService _dutyService;
+        public ClientsDataController(
+            PermissionService permissionService, 
+            DictItemService dictItemService, 
+            DictService dictService, 
+            OrganizeService organizeService,
+            RoleService roleService,
+            UserService userService,
+            ResourceService resourceService,
+            DutyService dutyService)
+        {
+            _permissionService = permissionService;
+            _dictItemService = dictItemService;
+            _dictService = dictService;
+            _organizeService = organizeService;
+            _roleService = roleService;
+            _userService = userService;
+            _resourceService = resourceService;
+            _dutyService = dutyService;
+        }
         [HttpGet]
         public IActionResult GetClientsDataJson()
         {
             OperatorModel operatorModel = OperatorProvider.Provider.GetCurrent();
-            PermissionService permissionService = new PermissionService();
-            var permissions = permissionService.GetPermsResList(Convert.ToInt64(operatorModel.Id));
-
+            var permissions = _permissionService.GetPermsResList(Convert.ToInt64(operatorModel.Id));
             var data = new
             {
                 dataItems = this.GetDictItemList(),
@@ -40,7 +65,7 @@ namespace NFineCore.Web.Controllers
 
         private object GetDictItemList()
         {
-            var itemdata = new DictItemService().GetList();
+            var itemdata = _dictItemService.GetList();
             Dictionary<string, object> dictionaryItem = new Dictionary<string, object>();
             foreach (var item in new DictService().GetList())
             {
@@ -57,8 +82,7 @@ namespace NFineCore.Web.Controllers
 
         private object GetOrganizeList()
         {
-            OrganizeService organizeService = new OrganizeService();
-            var data = organizeService.GetList();
+            var data = _organizeService.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (OrganizeGridDto item in data)
             {
@@ -74,8 +98,7 @@ namespace NFineCore.Web.Controllers
 
         private object GetRoleList()
         {
-            RoleService roleService = new RoleService();
-            var data = roleService.GetList();
+            var data = _roleService.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (RoleGridDto item in data)
             {
@@ -91,8 +114,7 @@ namespace NFineCore.Web.Controllers
 
         private object GetDutyList()
         {
-            DutyService dutyService = new DutyService();
-            var data = dutyService.GetList();
+            var data = _dutyService.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (DutyGridDto item in data)
             {
@@ -114,8 +136,7 @@ namespace NFineCore.Web.Controllers
 
         private object GetWxMenuList()
         {
-            ResourceService resourceService = new ResourceService();
-            var wxMenus = resourceService.GetWxMenuList();
+            var wxMenus = _resourceService.GetWxMenuList();
             return ToMenuJson(wxMenus, "0");
         }
 
@@ -153,8 +174,7 @@ namespace NFineCore.Web.Controllers
 
         private object GetUserForm(string keyValue)
         {
-            UserService userService = new UserService();
-            var data = userService.GetForm(keyValue);
+            var data = _userService.GetForm(keyValue);
             return data;
         }
     }

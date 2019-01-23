@@ -11,20 +11,21 @@ using NFineCore.Service.SystemManage;
 using NFineCore.Web.Controllers;
 using SharpRepository.Repository;
 using NFineCore.Web.Attributes;
+using Newtonsoft.Json;
 
 namespace NFineCore.Web.Areas.SystemManage.Controllers
 {
     [Area("SystemManage")]
-    public class LoginLogController : BaseController
+    public class AttachController : BaseController
     {
-        private readonly LoginLogService _loginLogService;
-        public LoginLogController(LoginLogService loginLogService)
+        private readonly AttachService _attachService;
+        public AttachController(AttachService attachService)
         {
-            _loginLogService = loginLogService;
+            _attachService = attachService;
         }
 
         [HttpGet]
-        [PermissionCheck("SystemManage_LoginLog_Index")]
+        [PermissionCheck("SystemManage_Attach_Index")]
         public override IActionResult Index()
         {
             return View();
@@ -34,17 +35,23 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         {
             return View();
         }
+        [PermissionCheck]
+        public override IActionResult Upload()
+        {
+            return View();
+        }
         [HttpGet]
-        [PermissionCheck("SystemManage_LoginLog_Index")]
+        [PermissionCheck("SystemManage_Attach_Index")]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
         {
             var data = new
             {
-                rows = _loginLogService.GetList(pagination, keyword),
+                rows = _attachService.GetList(pagination, keyword),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
             };
+            Logger.Info(JsonConvert.SerializeObject(data));//此处调用日志记录函数记录日志
             return Content(data.ToJson());
         }
     }

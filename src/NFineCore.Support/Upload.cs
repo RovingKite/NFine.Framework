@@ -224,7 +224,7 @@ namespace NFineCore.Support
                     return false;
                 }
             }
-            string fileExtension = "gif,jpg,jpeg,png,bmp,rar,zip,doc,xls,txt,mpp";
+            string fileExtension = "gif,jpg,jpeg,png,bmp,webp,rar,zip,doc,docx,xls,xlsx,ppt,pptx,txt,mpp";
             string videoExtension = "flv,mp3,mp4,avi";
             //检查合法文件
             string[] allowExt = (fileExtension + "," + videoExtension).Split(',');

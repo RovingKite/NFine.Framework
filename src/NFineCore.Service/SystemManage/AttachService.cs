@@ -17,22 +17,19 @@ namespace NFineCore.Service.SystemManage
     public class AttachService
     {
         AttachRepository attachRepository = new AttachRepository(SharpRepoConfig.sharpRepoConfig, "efCore");
-        //public List<AreaGridDto> GetList()
-        //{
-        //    var specification = new Specification<Area>(u => u.DeletedMark == false);
-        //    var sortingOtopns = new SortingOptions<Area, int?>(x => x.SortCode, isDescending: false);
-        //    var list = areaRepository.FindAll(specification, sortingOtopns).ToList();
-        //    return Mapper.Map<List<AreaGridDto>>(list);
-        //}
-
-        //public AreaOutputDto GetForm(string keyValue)
-        //{
-        //    var id = Convert.ToInt64(keyValue);
-        //    AreaOutputDto areaOutputDto = new AreaOutputDto();
-        //    Area area = areaRepository.Get(id);
-        //    AutoMapper.Mapper.Map<Area, AreaOutputDto>(area, areaOutputDto);
-        //    return areaOutputDto;
-        //}
+        public List<AttachGridDto> GetList(Pagination pagination, string keyword)
+        {
+            var specification = new Specification<Attach>(u => u.DeletedMark == false);
+            var pagingOptions = new PagingOptions<Attach, DateTime?>(pagination.page, pagination.rows, x => x.CreationTime, isDescending: true);
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                specification = new Specification<Attach>(u => u.DeletedMark == false && (u.FileName.Contains(keyword)));
+            }
+            specification.FetchStrategy.Include(p => p.CreatorUser);
+            var list = attachRepository.FindAll(specification, pagingOptions).ToList();
+            pagination.records = pagingOptions.TotalItems;
+            return Mapper.Map<List<AttachGridDto>>(list);
+        }
 
         public void SubmitForm(AttachInputDto attachInputDto, string keyValue)
         {
@@ -47,22 +44,13 @@ namespace NFineCore.Service.SystemManage
             }
             else
             {
-                try
-                {
-                    AutoMapper.Mapper.Map<AttachInputDto, Attach>(attachInputDto, attach);
-                    attach.Id = IdWorkerHelper.GenId64();
-                    attach.CreationTime = DateTime.Now;
-                    attach.CreatorUserId = 1;
-                    attachRepository.Add(attach);
-                }
-                catch
-                {
-                    AutoMapper.Mapper.Map<AttachInputDto, Attach>(attachInputDto, attach);
-                    attach.Id = IdWorkerHelper.GenId64();
-                    attach.CreationTime = DateTime.Now;
-                    attach.CreatorUserId = 1;
-                    attachRepository.Add(attach);
-                }
+                AutoMapper.Mapper.Map<AttachInputDto, Attach>(attachInputDto, attach);
+                long UserId = Convert.ToInt64(OperatorProvider.Provider.GetCurrent().Id);
+                attach.Id = IdWorkerHelper.GenId64();
+                attach.DeletedMark = false;
+                attach.CreationTime = DateTime.Now;
+                attach.CreatorUserId = UserId;
+                attachRepository.Add(attach);
             }
         }
 

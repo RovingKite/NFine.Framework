@@ -12,7 +12,12 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class ResourceController : BaseController
     {
-        ResourceService resourceService = new ResourceService();
+        private readonly ResourceService _resourceService;
+
+        public ResourceController(ResourceService resourceService)
+        {
+            _resourceService = resourceService;
+        }
 
         [PermissionCheck]
         public override IActionResult Index()
@@ -32,7 +37,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetTreeSelectJson()
         {
-            var data = resourceService.GetMenuList();
+            var data = _resourceService.GetMenuList();
             var treeList = new List<TreeSelectModel>();
             foreach (ResourceGridDto item in data)
             {
@@ -48,7 +53,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetTreeGridJson(string keyword)
         {
-            var data = resourceService.GetMenuList();
+            var data = _resourceService.GetMenuList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.FullName.Contains(keyword));
@@ -71,14 +76,14 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         [HttpGet]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = resourceService.GetForm(keyValue);
+            var data = _resourceService.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
         [HttpPost]
         public ActionResult SubmitForm(ResourceInputDto resourceInputDto, string keyValue)
         {
-            resourceService.SubmitForm(resourceInputDto, keyValue);
+            _resourceService.SubmitForm(resourceInputDto, keyValue);
             return Success("操作成功。");
         }
     }
