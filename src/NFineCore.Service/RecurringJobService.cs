@@ -11,7 +11,7 @@ namespace NFineCore.Service
 {
     public class RecurringJobService
     {
-        [RecurringJob("*/1 * * * *")]
+        [RecurringJob("*/1 * * * *")]//1分钟执行一次
         [Queue("jobs")]
         public void TestJob1(PerformContext context)
         {
