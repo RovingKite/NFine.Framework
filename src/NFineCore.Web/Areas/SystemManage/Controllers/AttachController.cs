@@ -18,8 +18,8 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class AttachController : BaseController
     {
-        private readonly AttachService _attachService;
-        public AttachController(AttachService attachService)
+        private readonly IAttachService _attachService;
+        public AttachController(IAttachService attachService)
         {
             _attachService = attachService;
         }
@@ -53,6 +53,13 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
             };
             Logger.Info(JsonConvert.SerializeObject(data));//此处调用日志记录函数记录日志
             return Content(data.ToJson());
+        }
+
+        [HttpPost]
+        public ActionResult DeleteForm(string keyValue)
+        {
+            _attachService.DeleteForm(keyValue);
+            return Success("操作成功。");
         }
     }
 }

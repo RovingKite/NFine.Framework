@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,13 +8,13 @@ using System.Text;
 
 namespace NFineCore.Support
 {
-    public class UpLoad
+    public class Upload
     {
-        public UpLoad()
+        private readonly SystemOptions _systemOptions;
+        public Upload()
         {
-
+            _systemOptions = JsonConfigHelper.GetAppSettings<SystemOptions>("SystemSettings");
         }
-
         /// <summary>
         /// 通过文件流上传文件方法
         /// </summary>
@@ -22,7 +23,7 @@ namespace NFineCore.Support
         /// <param name="isThumbnail">是否生成缩略图</param>
         /// <param name="isWater">是否打水印</param>
         /// <returns>上传成功返回JSON字符串</returns>
-        public string FileSaveAs(string webRootPath, byte[] byteData, string fileName, bool isThumbnail, bool isWater)
+        public string FileSaveAs(string webRootPath, byte[] byteData, string fileName, bool isThumb, bool isWater)
         {
             try
             {
@@ -52,35 +53,34 @@ namespace NFineCore.Support
                 {
                     return "{\"status\": 0, \"msg\": \"文件超过限制的大小！\"}";
                 }
-
-                int imgMaxHeight = 1080;
-                int imgMaxWidth = 1920;
-                int thumbnailHeight = 200;
-                int thumbnailWidth = 300;
-                string thumbnailMode = "Cut";
+                int imgMaxHeight = _systemOptions.ImgMaxHeight;
+                int imgMaxWidth = _systemOptions.ImgMaxWidth;
+                int thumbHeight = _systemOptions.ThumbHeight;
+                int thumbWidth = _systemOptions.ThumbWidth;
+                string thumbMode = _systemOptions.ThumbMode;
                 ////如果是图片，检查图片是否超出最大尺寸，是则裁剪
                 if (IsImage(fileExt) && (imgMaxHeight > 0 || imgMaxWidth > 0))
                 {
                     byteData = Thumbnail.MakeThumbnailImage(byteData, fileExt, imgMaxWidth, imgMaxHeight);
                 }
                 ////如果是图片，检查是否需要生成缩略图，是则生成
-                if (IsImage(fileExt) && isThumbnail && thumbnailWidth > 0 && thumbnailHeight > 0)
+                if (IsImage(fileExt) && isThumb && thumbWidth > 0 && thumbHeight > 0)
                 {
-                    thumbData = Thumbnail.MakeThumbnailImage(byteData, fileExt, thumbnailWidth, thumbnailHeight, thumbnailMode);
+                    thumbData = Thumbnail.MakeThumbnailImage(byteData, fileExt, thumbWidth, thumbHeight, thumbMode);
                 }
                 else
                 {
                     newThumbnailPath = newFilePath; //不生成缩略图则返回原图
                 }
 
-                int waterMarkPosition = 9;
-                int waterMarkImgQuality = 80;
-                int waterMarkFontSize = 12;
-                int waterMarkTransparency = 5;
-                int waterMarkType = 2;
-                string waterMarkText = "NFine";
-                string waterMarkFont = "12";
-                string waterMarkPic = "watermark.png";
+                int waterMarkPosition = _systemOptions.WaterMarkPosition;
+                int waterMarkImgQuality = _systemOptions.WaterMarkImgQuality;
+                int waterMarkFontSize = _systemOptions.WaterMarkFontSize;
+                int waterMarkTransparency = _systemOptions.WaterMarkTransparency;
+                int waterMarkType = _systemOptions.WaterMarkType;
+                string waterMarkText = _systemOptions.WaterMarkText;
+                string waterMarkFont = _systemOptions.WaterMarkFont;
+                string waterMarkPic = _systemOptions.WaterMarkPic;
                 //如果是图片，检查是否需要打水印
                 if (IsWaterMark(fileExt) && isWater)
                 {
@@ -94,7 +94,7 @@ namespace NFineCore.Support
                             break;
                     }
                 }
-                string fileServer = "localhost";
+                string fileServer = _systemOptions.FileServer;
                 //string ossSecretId = _attachOptions.OssSecretId; 
                 //string ossSecretKey = _attachOptions.OssSecretKey;
                 //string ossEndPoint = _attachOptions.OssEndPoint;

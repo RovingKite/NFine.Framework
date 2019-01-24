@@ -14,7 +14,7 @@ using System.Threading;
 
 namespace NFineCore.Service.SystemManage
 {
-    public class AttachService
+    public class AttachService:IAttachService
     {
         AttachRepository attachRepository = new AttachRepository(SharpRepoConfig.sharpRepoConfig, "efCore");
         public List<AttachGridDto> GetList(Pagination pagination, string keyword)
@@ -54,13 +54,13 @@ namespace NFineCore.Service.SystemManage
             }
         }
 
-        //public void DeleteForm(string keyValue)
-        //{
-        //    var id = Convert.ToInt64(keyValue);
-        //    Area area = areaRepository.Get(id);
-        //    area.DeletedMark = true;
-        //    area.DeletionTime = DateTime.Now;
-        //    areaRepository.Update(area);
-        //}
+        public void DeleteForm(string keyValue)
+        {
+            var id = Convert.ToInt64(keyValue);
+            Attach attach = attachRepository.Get(id);
+            attach.DeletedMark = true;
+            attach.DeletionTime = DateTime.Now;
+            attachRepository.Update(attach);
+        }
     }
 }

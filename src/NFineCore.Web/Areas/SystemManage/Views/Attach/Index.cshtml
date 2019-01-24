@@ -77,24 +77,44 @@
                 colModel: [
                     { label: '主键', name: 'Id', hidden: true },
                     {
-                        label: '文件名称', name: 'FileName', width: 100, align: 'left', formatter: function (cellvalue, options, rowObject) {
-                            return '<a href="http://' + window.location.host + rowObject.FilePath + '" target = _blank>' + cellvalue + '</a>';
+                        label: '文件名称', name: 'FileName', width: 150, align: 'left', formatter: function (cellvalue, options, rowObject) {
+                            return '<a href="http://' + window.location.host + rowObject.FilePath + '" class="text-primary" target = _blank>' + cellvalue + '</a>';
                         }
                     },
-                    { label: '文件路径', name: 'FilePath', width: 100, align: 'left' },
+                    { label: '文件路径', name: 'FilePath', width: 150, align: 'left' },
                     {
-                        label: '文件大小', name: 'FileSize', width: 100, align: 'center', formatter: function (cellvalue) {
+                        label: '文件大小', name: 'FileSize', width: 80, align: 'center', formatter: function (cellvalue) {
                             return (parseFloat(cellvalue) / 1024).toFixed(2) + '(KB)';
                         }
                     },
-                    { label: '文件类型', name: 'FileType', width: 100, align: 'center' },
-                    { label: '文件扩展名', name: 'FileExt', width: 100, align: 'center' },
-                    { label: '上传时间', name: 'CreationTime', width: 100, align: 'center' },
-                    { label: '用户', name: 'UserName', width: 100, align: 'center' },
+                    { label: '文件类型', name: 'FileType', width: 80, align: 'center' },
+                    { label: '文件扩展名', name: 'FileExt', width: 80, align: 'center' },
+                    { label: '上传时间', name: 'CreationTime', width: 80, align: 'center' },
+                    { label: '用户', name: 'UserName', width: 80, align: 'center' },
+                    {
+                        label: '操作', name: '', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) {
+                            var action = '';
+                            action += '<a href="javascript:void(0);" class="deleteAction text-primary" data-id="'+rowObject.Id+'">删除</a>';
+                            return action;
+                        }
+                    },
                 ],
                 pager: "#gridPager",
                 sortname: 'CreatorTime desc',
-                viewrecords: true
+                viewrecords: true,
+                gridComplete: function () {
+                    $('.deleteAction').on('click', function () {
+                        var keyValue = $(this).data('id');
+                        $.deleteForm({
+                            url: "/SystemManage/Attach/DeleteForm",
+                            param: { keyValue: keyValue },
+                            success: function () {
+                                $("#gridList").resetSelection();
+                                $("#gridList").trigger("reloadGrid");
+                            }
+                        })
+                    });
+                }
             });
             $("#btn_search").click(function () {
                 $gridList.jqGrid('setGridParam', {

@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Hangfire;
+using Hangfire.RecurringJobExtensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
-using NFineCore.Support;
 using NFineCore.EntityFramework;
-using NFineCore.EntityFramework.Models;
+using NFineCore.Service;
 using NFineCore.Service.SystemManage;
-using SharpRepository.Ioc.Microsoft.DependencyInjection;
+using NFineCore.Support;
 using NFineCore.Web.Filters;
-using Hangfire;
-using System.Transactions;
+using SharpRepository.Ioc.Microsoft.DependencyInjection;
+using System;
 
 namespace NFineCore.Web
 {
@@ -67,15 +60,18 @@ namespace NFineCore.Web
                 option.Filters.Add(new LoginAuthFilter());
                 //option.Filters.Add(new OperateLogFilter());
             });
+
             //注入Hangfire服务
             services.AddHangfire(configuration => {
                 configuration.UseRedisStorage(Configuration.GetConnectionString("HangfireConnection"));
+                configuration.UseRecurringJob("recurringjob.json");
+                configuration.UseRecurringJob(typeof(RecurringJobService));
+                configuration.UseDefaultActivator();
             });
 
             #region 注入业务服务类
-            //这里可以通过反射的方式批量注入，为什么还留在这里，因为某些大爷一通乱写，Service写得到处都是，这里让他自己配去，不搞了。
-            services.AddTransient(typeof(AreaService));
-            services.AddTransient(typeof(AttachService));
+            //这里可以通过反射的方式批量注入，待优化。
+            services.AddTransient(typeof(AreaService));            
             services.AddTransient(typeof(DictItemService));
             services.AddTransient(typeof(DictService));
             services.AddTransient(typeof(DutyService));
@@ -86,10 +82,10 @@ namespace NFineCore.Web
             services.AddTransient(typeof(ResourceService));
             services.AddTransient(typeof(RoleService));
             services.AddTransient(typeof(UserService));
+            services.AddScoped<IAttachService, AttachService>();
             #endregion
 
-            services.AddDbContext<NFineCoreDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
-            //services.AddDbContext<NFineDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+            services.AddDbContext<NFineCoreDbContext>(options => options.UseMySql(Configuration.GetConnectionString("MySQLConnection")), ServiceLifetime.Transient);
             return services.UseSharpRepository(Configuration.GetSection("sharpRepository"), "efCore");
         }
 
@@ -128,15 +124,14 @@ namespace NFineCore.Web
             });
 
             #region Hangfire 定时任务 
-            app.UseHangfireServer();
+            var jobOptions = new BackgroundJobServerOptions
+            {
+                Queues = new[] { "test", "default", "jobs" },//队列名称，只能为小写
+                WorkerCount = Environment.ProcessorCount * 5, //并发任务数
+                ServerName = "hangfire1",//服务器名称
+            };
+            app.UseHangfireServer(jobOptions);
             app.UseHangfireDashboard();
-            //定时任务示例,这只是一个示例，无意义，仅供参考。
-            //定时任务我主要是用来定期生成报表。
-            RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync1(), "*/1 * * * *");    //定时任务示例，间隔1分钟执行
-            //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync2(), "*/2 * * * *");  //定时任务示例，间隔1分钟执行
-            //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync3(), "*/3 * * * *");  //定时任务示例，间隔1分钟执行
-            //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync4(), "*/4 * * * *");  //定时任务示例，间隔1分钟执行
-            //RecurringJob.AddOrUpdate<OperateLogService>(a => a.TestAsync5(), "*/5 * * * *");  //定时任务示例，间隔1分钟执行
             #endregion
 
             app.UseStaticHttpContext();
