@@ -19,7 +19,7 @@ namespace NFineCore.EntityFramework.Dtos.SystemManage
         public string CompanyId { get; set; }
         public string DepartmentId { get; set; }
         public string RoleId { get; set; }
-        public string DutyId { get; set; }
+        public string PositionId { get; set; }
         public byte? Type { get; set; }
         public bool? EnabledMark { get; set; }
         public string Description { get; set; }

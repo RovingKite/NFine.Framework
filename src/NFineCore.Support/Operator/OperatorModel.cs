@@ -20,8 +20,8 @@ namespace NFineCore.Support
         public string DepartmentName { get; set; }
         public string RoleIds { get; set; }
         public string RoleNames { get; set; }
-        public string DutyId { get; set; }
-        public string DutyName { get; set; }
+        public string PositionId { get; set; }
+        public string PositionName { get; set; }
         public byte? Type { get; set; }
         public bool? EnabledMark { get; set; }
         public string Description { get; set; }

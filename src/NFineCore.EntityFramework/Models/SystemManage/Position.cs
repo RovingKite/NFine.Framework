@@ -6,8 +6,8 @@ using System.Text;
 
 namespace NFineCore.EntityFramework.Models.SystemManage
 {
-    [Table("sys_duty")]
-    public class Duty
+    [Table("sys_position")]
+    public class Position
     {
         [Key]
         public long Id { get; set; }

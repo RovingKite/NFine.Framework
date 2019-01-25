@@ -26,7 +26,7 @@ namespace NFineCore.EntityFramework.Dtos.SystemManage
         public string CompanyId { get; set; }
         public string DepartmentId { get; set; }
         public string RoleId { get; set; }
-        public string DutyId { get; set; }
+        public string PositionId { get; set; }
         //public virtual IEnumerable<UserRole> UserRoles { get; set; }
     }
 }

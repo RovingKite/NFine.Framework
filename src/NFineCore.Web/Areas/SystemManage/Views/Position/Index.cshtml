@@ -66,7 +66,7 @@
         function gridList() {
             var $gridList = $("#gridList");
             $gridList.dataGrid({
-                url: "/SystemManage/Duty/GetGridJson",
+                url: "/SystemManage/Position/GetGridJson",
                 height: $(window).height() - 77,
                 colModel: [
                     { label: "主键", name: "Id", hidden: true, key: true },
@@ -102,7 +102,7 @@
             $.modalOpen({
                 id: "Form",
                 title: "新增岗位",
-                url: "/SystemManage/Duty/Form",
+                url: "/SystemManage/Position/Form",
                 width: "450px",
                 height: "380px",
                 callBack: function (iframeId) {
@@ -115,7 +115,7 @@
             $.modalOpen({
                 id: "Form",
                 title: "修改岗位",
-                url: "/SystemManage/Duty/Form?keyValue=" + keyValue,
+                url: "/SystemManage/Position/Form?keyValue=" + keyValue,
                 width: "450px",
                 height: "380px",
                 callBack: function (iframeId) {
@@ -125,7 +125,7 @@
         }
         function btn_delete() {
             $.deleteForm({
-                url: "/SystemManage/Duty/DeleteForm",
+                url: "/SystemManage/Position/DeleteForm",
                 param: { keyValue: $("#gridList").jqGridRowValue().Id },
                 success: function () {
                     $.currentWindow().$("#gridList").trigger("reloadGrid");
@@ -137,7 +137,7 @@
             $.modalOpen({
                 id: "Details",
                 title: "查看岗位",
-                url: "/SystemManage/Duty/Details?keyValue=" + keyValue,
+                url: "/SystemManage/Position/Details?keyValue=" + keyValue,
                 width: "450px",
                 height: "500px",
                 btn: null,

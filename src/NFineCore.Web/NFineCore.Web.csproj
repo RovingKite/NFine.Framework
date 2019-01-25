@@ -308,7 +308,7 @@
     <Content Update="Areas\SystemManage\Views\DictItem\Details.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\SystemManage\Views\Duty\Details.cshtml">
+    <Content Update="Areas\SystemManage\Views\Position\Details.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\SystemManage\Views\MenuButton\Form.cshtml">
@@ -329,10 +329,10 @@
     <Content Update="Areas\SystemManage\Views\Dict\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\SystemManage\Views\Duty\Form.cshtml">
+    <Content Update="Areas\SystemManage\Views\Position\Form.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\SystemManage\Views\Duty\Index.cshtml">
+    <Content Update="Areas\SystemManage\Views\Position\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\SystemManage\Views\Menu\Details.cshtml">

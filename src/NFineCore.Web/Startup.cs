@@ -74,7 +74,7 @@ namespace NFineCore.Web
             services.AddTransient(typeof(AreaService));            
             services.AddTransient(typeof(DictItemService));
             services.AddTransient(typeof(DictService));
-            services.AddTransient(typeof(DutyService));
+            services.AddTransient(typeof(PositionService));
             services.AddTransient(typeof(LoginLogService));
             services.AddTransient(typeof(OperateLogService));
             services.AddTransient(typeof(OrganizeService));

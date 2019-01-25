@@ -63,33 +63,6 @@ namespace NFineCore.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "sys_duty",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    OrganizeId = table.Column<long>(nullable: false),
-                    EnCode = table.Column<string>(nullable: true),
-                    FullName = table.Column<string>(nullable: true),
-                    AllowEdit = table.Column<bool>(nullable: true),
-                    AllowDelete = table.Column<bool>(nullable: true),
-                    SortCode = table.Column<int>(nullable: true),
-                    EnabledMark = table.Column<bool>(nullable: true),
-                    DeletedMark = table.Column<bool>(nullable: true),
-                    CreationTime = table.Column<DateTime>(nullable: true),
-                    CreatorUserId = table.Column<long>(nullable: true),
-                    LastModificationTime = table.Column<DateTime>(nullable: true),
-                    LastModifierUserId = table.Column<long>(nullable: true),
-                    DeletionTime = table.Column<DateTime>(nullable: true),
-                    DeleterUserId = table.Column<long>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_sys_duty", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "sys_loginlog",
                 columns: table => new
                 {
@@ -180,6 +153,33 @@ namespace NFineCore.EntityFramework.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_sys_organize", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "sys_position",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    OrganizeId = table.Column<long>(nullable: false),
+                    EnCode = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
+                    AllowEdit = table.Column<bool>(nullable: true),
+                    AllowDelete = table.Column<bool>(nullable: true),
+                    SortCode = table.Column<int>(nullable: true),
+                    EnabledMark = table.Column<bool>(nullable: true),
+                    DeletedMark = table.Column<bool>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: true),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_sys_position", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -322,7 +322,7 @@ namespace NFineCore.EntityFramework.Migrations
                     DeleterUserId = table.Column<long>(nullable: true),
                     CompanyId = table.Column<long>(nullable: false),
                     DepartmentId = table.Column<long>(nullable: false),
-                    DutyId = table.Column<long>(nullable: false),
+                    PositionId = table.Column<long>(nullable: false),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -341,9 +341,9 @@ namespace NFineCore.EntityFramework.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_sys_user_sys_duty_DutyId",
-                        column: x => x.DutyId,
-                        principalTable: "sys_duty",
+                        name: "FK_sys_user_sys_position_PositionId",
+                        column: x => x.PositionId,
+                        principalTable: "sys_position",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -464,9 +464,9 @@ namespace NFineCore.EntityFramework.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_sys_user_DutyId",
+                name: "IX_sys_user_PositionId",
                 table: "sys_user",
-                column: "DutyId");
+                column: "PositionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sys_userrole_RoleId",
@@ -513,7 +513,7 @@ namespace NFineCore.EntityFramework.Migrations
                 name: "sys_organize");
 
             migrationBuilder.DropTable(
-                name: "sys_duty");
+                name: "sys_position");
         }
     }
 }

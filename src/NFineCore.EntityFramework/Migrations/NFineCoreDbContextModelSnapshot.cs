@@ -181,46 +181,6 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_dictitem");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Duty", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool?>("AllowDelete");
-
-                    b.Property<bool?>("AllowEdit");
-
-                    b.Property<DateTime?>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<bool?>("DeletedMark");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("EnCode");
-
-                    b.Property<bool?>("EnabledMark");
-
-                    b.Property<string>("FullName");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<long>("OrganizeId");
-
-                    b.Property<int?>("SortCode");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("sys_duty");
-                });
-
             modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.LoginLog", b =>
                 {
                     b.Property<long>("Id")
@@ -399,6 +359,46 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_permission");
                 });
 
+            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Position", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool?>("AllowDelete");
+
+                    b.Property<bool?>("AllowEdit");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("EnCode");
+
+                    b.Property<bool?>("EnabledMark");
+
+                    b.Property<string>("FullName");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<long>("OrganizeId");
+
+                    b.Property<int?>("SortCode");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("sys_position");
+                });
+
             modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Resource", b =>
                 {
                     b.Property<long>("Id")
@@ -534,8 +534,6 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<long>("DutyId");
-
                     b.Property<string>("Email");
 
                     b.Property<bool?>("EnabledMark");
@@ -556,6 +554,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<string>("Password");
 
+                    b.Property<long>("PositionId");
+
                     b.Property<string>("RealName");
 
                     b.Property<string>("SecretKey");
@@ -574,7 +574,7 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("DutyId");
+                    b.HasIndex("PositionId");
 
                     b.ToTable("sys_user");
                 });
@@ -636,9 +636,9 @@ namespace NFineCore.EntityFramework.Migrations
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.Duty", "Duty")
+                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.Position", "Position")
                         .WithMany()
-                        .HasForeignKey("DutyId")
+                        .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -52,7 +52,7 @@ namespace NFineCore.Service.SystemManage
         public UserOutputDto GetForm(string keyValue) {
             var id = Convert.ToInt64(keyValue);
             UserOutputDto userOutputDto = new UserOutputDto();
-            string[] includePath = { "Company", "Department", "Duty", "UserRoles.Role", "UserRoles.User" };
+            string[] includePath = { "Company", "Department", "Position", "UserRoles.Role", "UserRoles.User" };
             User user = userRepository.Get(id, includePath);
             AutoMapper.Mapper.Map<User, UserOutputDto>(user, userOutputDto);
             return userOutputDto;
@@ -63,7 +63,7 @@ namespace NFineCore.Service.SystemManage
             if (!string.IsNullOrEmpty(keyValue))
             {
                 var id = Convert.ToInt64(keyValue);
-                string[] includePath = { "Company", "Department", "Duty", "UserRoles", "UserRoles.Role", "UserRoles.User" };
+                string[] includePath = { "Company", "Department", "Position", "UserRoles", "UserRoles.Role", "UserRoles.User" };
                 user = userRepository.Get(id, includePath);
                 AutoMapper.Mapper.Map<UserInputDto, User>(userInputDto, user);
                 user.LastModificationTime = DateTime.Now;

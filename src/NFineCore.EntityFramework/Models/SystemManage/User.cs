@@ -40,9 +40,9 @@ namespace NFineCore.EntityFramework.Models.SystemManage
         public long DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public Organize Department { get; set; }
-        public long DutyId { get; set; }
-        [ForeignKey("DutyId")]
-        public Duty Duty { get; set; }
+        public long PositionId { get; set; }
+        [ForeignKey("PositionId")]
+        public Position Position { get; set; }
         public string Description { get; set; }
     }
 }

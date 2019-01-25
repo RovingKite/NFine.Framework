@@ -24,7 +24,7 @@ namespace NFineCore.Web.Controllers
         private readonly RoleService _roleService;
         private readonly UserService _userService;
         private readonly ResourceService _resourceService;
-        private readonly DutyService _dutyService;
+        private readonly PositionService _positionService;
         public ClientsDataController(
             PermissionService permissionService, 
             DictItemService dictItemService, 
@@ -33,7 +33,7 @@ namespace NFineCore.Web.Controllers
             RoleService roleService,
             UserService userService,
             ResourceService resourceService,
-            DutyService dutyService)
+            PositionService positionService)
         {
             _permissionService = permissionService;
             _dictItemService = dictItemService;
@@ -42,7 +42,7 @@ namespace NFineCore.Web.Controllers
             _roleService = roleService;
             _userService = userService;
             _resourceService = resourceService;
-            _dutyService = dutyService;
+            _positionService = positionService;
         }
         [HttpGet]
         public IActionResult GetClientsDataJson()
@@ -54,7 +54,7 @@ namespace NFineCore.Web.Controllers
                 dataItems = this.GetDictItemList(),
                 organize = this.GetOrganizeList(),
                 role = this.GetRoleList(),
-                duty = this.GetDutyList(),
+                position = this.GetPositionList(),
                 currentUser = this.GetUserForm(operatorModel.Id),
                 authorizeMenu = this.GetMenuList(permissions),
                 authorizeButton = this.GetMenuButtonList(permissions),
@@ -112,11 +112,11 @@ namespace NFineCore.Web.Controllers
             return dictionary;
         }
 
-        private object GetDutyList()
+        private object GetPositionList()
         {
-            var data = _dutyService.GetList();
+            var data = _positionService.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            foreach (DutyGridDto item in data)
+            foreach (PositionGridDto item in data)
             {
                 var fieldItem = new
                 {

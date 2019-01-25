@@ -46,11 +46,11 @@ namespace NFineCore.EntityFramework
                 cfg.CreateMap<UserInputDto, User>()
                 .ForMember(d => d.CompanyId, opt => opt.MapFrom(s => s.CompanyId))
                 .ForMember(d => d.DepartmentId, opt => opt.MapFrom(s => s.DepartmentId))
-                .ForMember(d => d.DutyId, opt => opt.MapFrom(s => s.DutyId))
+                .ForMember(d => d.PositionId, opt => opt.MapFrom(s => s.PositionId))
                 .ForMember(d => d.Password, opt => opt.Ignore())
                 //.ForPath(s => s.Company.Id, opt => opt.MapFrom(src => src.CompanyId))
                 //.ForPath(s => s.Department.Id, opt => opt.MapFrom(src => src.DepartmentId))
-                //.ForPath(s => s.Duty.Id, opt => opt.MapFrom(src => src.DutyId))
+                //.ForPath(s => s.Position.Id, opt => opt.MapFrom(src => src.PositionId))
                 ;
 
                 cfg.CreateMap<User, UserOutputDto>()
@@ -58,15 +58,15 @@ namespace NFineCore.EntityFramework
                 .ForMember(d => d.CompanyId, opt => opt.MapFrom(s => s.Company.Id))
                 .ForMember(d => d.DepartmentName, opt => opt.MapFrom(s => s.Department.FullName))
                 .ForMember(d => d.DepartmentId, opt => opt.MapFrom(s => s.Department.Id))
-                .ForMember(d => d.DutyName, opt => opt.MapFrom(s => s.Duty.FullName))
-                .ForMember(d => d.DutyId, opt => opt.MapFrom(s => s.Duty.Id))
+                .ForMember(d => d.PositionName, opt => opt.MapFrom(s => s.Position.FullName))
+                .ForMember(d => d.PositionId, opt => opt.MapFrom(s => s.Position.Id))
                 .ForMember(d => d.UserRoles, opt => opt.MapFrom(s => s.UserRoles))
                 ;
                 cfg.CreateMap<User, UserGridDto>();
                 
-                cfg.CreateMap<DutyInputDto, Duty>();
-                cfg.CreateMap<Duty, DutyOutputDto>();
-                cfg.CreateMap<Duty, DutyGridDto>();
+                cfg.CreateMap<PositionInputDto, Position>();
+                cfg.CreateMap<Position, PositionOutputDto>();
+                cfg.CreateMap<Position, PositionGridDto>();
 
                 cfg.CreateMap<ResourceInputDto, Resource>();
                 cfg.CreateMap<Resource, ResourceGridDto>();

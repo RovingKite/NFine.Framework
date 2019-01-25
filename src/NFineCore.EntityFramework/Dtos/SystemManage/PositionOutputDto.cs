@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NFineCore.EntityFramework.Dtos.SystemManage
 {
-    public class DutyOutputDto
+    public class PositionOutputDto
     {
         public string OrganizeId { get; set; }
         public string EnCode { get; set; }

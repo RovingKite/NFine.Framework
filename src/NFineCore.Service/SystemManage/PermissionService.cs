@@ -20,7 +20,7 @@ namespace NFineCore.Service.SystemManage
         public List<ResourceGridDto> GetPermsResList(long userId)
         {
             var resourceList = new List<Resource>();
-            string[] includePath = { "Company", "Department", "Duty", "UserRoles", "UserRoles.Role", "UserRoles.User" };
+            string[] includePath = { "Company", "Department", "Position", "UserRoles", "UserRoles.Role", "UserRoles.User" };
             User user = userRepository.Get(userId, includePath);
 
             //添加角色权限资源

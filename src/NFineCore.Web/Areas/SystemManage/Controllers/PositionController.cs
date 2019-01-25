@@ -12,12 +12,12 @@ using NFineCore.Web.Attributes;
 namespace NFineCore.Web.Areas.SystemManage.Controllers
 {
     [Area("SystemManage")]
-    public class DutyController : BaseController
+    public class PositionController : BaseController
     {
-        private readonly DutyService _dutyService;
-        public DutyController(DutyService dutyService)
+        private readonly PositionService _positionService;
+        public PositionController(PositionService positionService)
         {
-            _dutyService = dutyService;
+            _positionService = positionService;
         }
         [PermissionCheck]
         public override IActionResult Index()
@@ -35,34 +35,34 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
             return View();
         }
         [HttpGet]
-        [PermissionCheck("SystemManage_Duty_Index")]
+        [PermissionCheck("SystemManage_Position_Index")]
         public ActionResult GetGridJson(string keyword)
         {
-            var data = _dutyService.GetList(keyword);
+            var data = _positionService.GetList(keyword);
             return Content(data.ToJson());
         }
 
         [HttpGet]
-        [PermissionCheck("SystemManage_Duty_Form")]
+        [PermissionCheck("SystemManage_Position_Form")]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = _dutyService.GetForm(keyValue);
+            var data = _positionService.GetForm(keyValue);
             return Content(data.ToJson());
         }
 
         [HttpPost]
-        [PermissionCheck("SystemManage_Duty_Form")]
-        public ActionResult SubmitForm(DutyInputDto dutyInputDto, string keyValue)
+        [PermissionCheck("SystemManage_Position_Form")]
+        public ActionResult SubmitForm(PositionInputDto positionInputDto, string keyValue)
         {
-            _dutyService.SubmitForm(dutyInputDto, keyValue);
+            _positionService.SubmitForm(positionInputDto, keyValue);
             return Success("操作成功。");
         }
 
         [HttpPost]
-        [PermissionCheck("SystemManage_Duty_Delete")]
+        [PermissionCheck("SystemManage_Position_Delete")]
         public ActionResult DeleteForm(string keyValue)
         {
-            _dutyService.DeleteForm(keyValue);
+            _positionService.DeleteForm(keyValue);
             return Success("操作成功。");
         }
     }

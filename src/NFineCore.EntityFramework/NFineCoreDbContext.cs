@@ -24,7 +24,7 @@ namespace NFineCore.EntityFramework
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<LoginLog> LoginLogs { get; set; }
         public DbSet<OperateLog> OperateLogs { get; set; }
-        public DbSet<Duty> Duties { get; set; }
+        public DbSet<Position> Positions { get; set; }
         public DbSet<Organize> Organizes { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<Dict> Dicts { get; set; }
