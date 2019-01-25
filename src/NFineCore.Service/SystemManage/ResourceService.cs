@@ -20,7 +20,8 @@ namespace NFineCore.Service.SystemManage
         public List<ResourceGridDto> GetList()
         {
             var specification = new Specification<Resource>(u => u.DeletedMark == false);
-            var list = resourceRepository.FindAll(specification).ToList();
+            var sortingOtopns = new SortingOptions<Resource, int?>(x => x.SortCode, isDescending: false);
+            var list = resourceRepository.FindAll(specification, sortingOtopns).ToList();
             return Mapper.Map<List<ResourceGridDto>>(list);
         }
 

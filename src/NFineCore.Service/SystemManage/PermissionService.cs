@@ -61,14 +61,16 @@ namespace NFineCore.Service.SystemManage
         public List<PermissionGridDto> GetRolePermissionList(long roleId)
         {
             var specification = new Specification<Permission>(p => p.ObjectId.Equals(roleId) && p.ObjectType.Equals("RolePermission"));
-            var list = permissionRepository.FindAll(specification).ToList();
+            var sortingOtopns = new SortingOptions<Permission, int?>(x => x.Resource.SortCode, isDescending: false);
+            var list = permissionRepository.FindAll(specification, sortingOtopns).ToList();
             return Mapper.Map<List<PermissionGridDto>>(list);
         }
 
         public List<PermissionGridDto> GetUserPermissionList(long userId)
         {
             var specification = new Specification<Permission>(p => p.ObjectId.Equals(userId) && p.ObjectType.Equals("UserPermission"));
-            var list = permissionRepository.FindAll(specification).ToList();
+            var sortingOtopns = new SortingOptions<Permission, int?>(x => x.Resource.SortCode, isDescending: false);
+            var list = permissionRepository.FindAll(specification, sortingOtopns).ToList();
             return Mapper.Map<List<PermissionGridDto>>(list);
         }
     }
