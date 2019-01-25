@@ -49,7 +49,8 @@ namespace NFineCore.Service.SystemManage
             long[] objectIds = Array.ConvertAll<string, long>(roleIds.Split(','), delegate (string s) { return long.Parse(s); });
             var roleSpecification = new Specification<Permission>(p => objectIds.Contains(p.ObjectId));
             roleSpecification.FetchStrategy.Include(obj => obj.Resource);
-            var rolePermissions = permissionRepository.FindAll(roleSpecification);
+            var sortingOtopns = new SortingOptions<Permission, int?>(x => x.Resource.SortCode, isDescending: false);
+            var rolePermissions = permissionRepository.FindAll(roleSpecification, sortingOtopns);
             foreach (Permission p in rolePermissions)
             {
                 rolePermsResList.Add(p.Resource);

@@ -120,6 +120,10 @@
     <None Include="wwwroot\lib\art-template\test\res\nested-block\index.art" />
     <None Include="wwwroot\lib\art-template\test\res\nested-block\layout.art" />
     <None Include="wwwroot\lib\art-template\webpack.config.js" />
+    <None Include="wwwroot\lib\echarts\echarts-all.js" />
+    <None Include="wwwroot\lib\echarts\echarts.js" />
+    <None Include="wwwroot\lib\echarts\echarts.min.js" />
+    <None Include="wwwroot\lib\echarts\infographic.js" />
     <None Include="wwwroot\lib\fancybox\.gitignore" />
     <None Include="wwwroot\lib\fancybox\dist\jquery.fancybox.js" />
     <None Include="wwwroot\lib\fancybox\dist\jquery.fancybox.min.js" />
@@ -145,7 +149,19 @@
     <None Include="wwwroot\lib\jqPaginator\README.md" />
     <None Include="wwwroot\lib\jqPaginator\src\js\jqPaginator.js" />
     <None Include="wwwroot\lib\jqPaginator\test\specs\jqPaginatorSpec.js" />
+    <None Include="wwwroot\lib\jqprint\jquery.jqprint-0.3.js" />
     <None Include="wwwroot\lib\nestable\jquery.nestable.js" />
+    <None Include="wwwroot\lib\simditor\css\editor.scss" />
+    <None Include="wwwroot\lib\simditor\css\fonticon.scss" />
+    <None Include="wwwroot\lib\simditor\css\simditor.scss" />
+    <None Include="wwwroot\lib\simditor\js\hotkeys.js" />
+    <None Include="wwwroot\lib\simditor\js\hotkeys.min.js" />
+    <None Include="wwwroot\lib\simditor\js\module.js" />
+    <None Include="wwwroot\lib\simditor\js\module.min.js" />
+    <None Include="wwwroot\lib\simditor\js\simditor.js" />
+    <None Include="wwwroot\lib\simditor\js\simditor.min.js" />
+    <None Include="wwwroot\lib\simditor\js\uploader.js" />
+    <None Include="wwwroot\lib\simditor\js\uploader.min.js" />
     <None Include="wwwroot\lib\ueditor\dialogs\attachment\attachment.js" />
     <None Include="wwwroot\lib\ueditor\dialogs\background\background.js" />
     <None Include="wwwroot\lib\ueditor\dialogs\charts\chart.config.js" />
@@ -231,6 +247,7 @@
     <None Include="wwwroot\lib\ueditor\ueditor.config.js" />
     <None Include="wwwroot\lib\ueditor\ueditor.parse.js" />
     <None Include="wwwroot\lib\ueditor\ueditor.parse.min.js" />
+    <None Include="wwwroot\lib\zsign\jquery.zsign.js" />
   </ItemGroup>
 
   <ItemGroup>

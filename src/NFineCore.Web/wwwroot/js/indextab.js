@@ -1,23 +1,39 @@
 (function ($) {
     $.nfinecoretab = {
         requestFullScreen: function () {
-            var de = document.documentElement;
-            if (de.requestFullscreen) {
-                de.requestFullscreen();
-            } else if (de.mozRequestFullScreen) {
-                de.mozRequestFullScreen();
-            } else if (de.webkitRequestFullScreen) {
-                de.webkitRequestFullScreen();
+            var docElm = document.documentElement;            
+            if (docElm.requestFullscreen) {//W3C
+                docElm.requestFullscreen();
+            }            
+            else if (docElm.mozRequestFullScreen) {//FireFox 
+                docElm.mozRequestFullScreen();
+            }            
+            else if (docElm.webkitRequestFullScreen) {//Chrome 
+                docElm.webkitRequestFullScreen();
+            }            
+            else if (docElm.msRequestFullscreen) {//IE11   
+                docElm.msRequestFullscreen();
+                ////注：ie调用ActiveX控件，需要在ie浏览器安全设置里面把 ‘未标记为可安全执行脚本的ActiveX控件初始化并执行脚本’ 设置为启用
+                //if (typeof (window.ActiveXObject != 'undefined')) {
+                //    var wscript = ActiveXObject('WScript.Shell');
+                //    if (wscript != null) {
+                //        wscript.SendKeys('{F11}');
+                //    }
+                //}              
             }
         },
         exitFullscreen: function () {
-            var de = document;
-            if (de.exitFullscreen) {
-                de.exitFullscreen();
-            } else if (de.mozCancelFullScreen) {
-                de.mozCancelFullScreen();
-            } else if (de.webkitCancelFullScreen) {
-                de.webkitCancelFullScreen();
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+            else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            }
+            else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+            else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
             }
         },
         refreshTab: function () {
@@ -266,10 +282,10 @@
             $('.fullscreen').on('click', function () {
                 if (!$(this).attr('fullscreen')) {
                     $(this).attr('fullscreen', 'true');
-                    requestFullScreen();
+                    $.nfinecoretab.requestFullScreen();
                 } else {
                     $(this).removeAttr('fullscreen')
-                    exitFullscreen();
+                    $.nfinecoretab.exitFullscreen();
                 }
             });
         }

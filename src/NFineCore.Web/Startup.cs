@@ -113,7 +113,9 @@ namespace NFineCore.Web
                 routes.MapRoute(
                     name: "SystemManage",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+                routes.MapRoute(
+                    name: "SystemSecurity",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "WeixinManage",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
