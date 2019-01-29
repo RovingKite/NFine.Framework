@@ -188,7 +188,7 @@ function GetLoadNav() {
                             if (subchildNodes.length > 0) {
                                 _html += '<a data-id="' + subrow.Id + '" href="#" class="dropdown-toggle"><i class="' + subrow.Icon + '"></i><span>' + subrow.FullName + '</span><i class="fa fa-angle-right drop-icon"></i></a>';
                                 _html += '<ul class="submenu">';
-                                $.each(subchildNodes, function (i) {                                    
+                                $.each(subchildNodes, function (i) {
                                     var subrowsj = subchildNodes[i];
                                     //Èý¼¶²Ëµ¥
                                     if (subrowsj.ParentId == subrow.Id && subrowsj.IsDisplay == false) {
@@ -207,7 +207,7 @@ function GetLoadNav() {
                     });
                     $("#navzx_menu").prepend(_html);
                 }
-                $.getScript("/js/wx/indextab.js");
+                $.getScript("/js/weixin/indextab.js");
             //}
         }
     });
@@ -219,7 +219,7 @@ function navbar_click(a) {
     var s = a.firstChild.innerHTML;
     var b = "" + s.match(/d="\S*(\S*)"/);
     var id = b.substr(3, b.length - 5);
-    var data = top.clients.wxMenu;
+    var data = top.clients.authorizeMenu;
     $.each(data, function (i) {
         var row = data[i];
         if (row.ParentId == "0") {
@@ -259,5 +259,5 @@ function navbar_click(a) {
             }
         }
     });
-    $.getScript("/js/indextab.js");
+    $.getScript("/js/weixin/indextab.js");
 }

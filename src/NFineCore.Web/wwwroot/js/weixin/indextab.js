@@ -1,5 +1,5 @@
 (function ($) {
-    $.nfinecoretab = {
+    $.nfinetab = {
         requestFullScreen: function () {
             var de = document.documentElement;
             if (de.requestFullscreen) {
@@ -40,7 +40,7 @@
                     }
                 });
                 $(this).addClass('active').siblings('.menuTab').removeClass('active');
-                $.nfinecoretab.scrollToTab(this);
+                $.nfinetab.scrollToTab(this);
             }
         },
         closeOtherTabs: function () {
@@ -103,7 +103,7 @@
                         return false;
                     }
                 });
-                $.nfinecoretab.scrollToTab($('.menuTab.active'));
+                $.nfinetab.scrollToTab($('.menuTab.active'));
             }
             return false;
         },
@@ -130,7 +130,7 @@
                 if ($(this).data('id') == dataUrl) {
                     if (!$(this).hasClass('active')) {
                         $(this).addClass('active').siblings('.menuTab').removeClass('active');
-                        $.nfinecoretab.scrollToTab(this);
+                        $.nfinetab.scrollToTab(this);
                         $('.mainContent .NFineCore_iframe').each(function () {
                             if ($(this).data('id') == dataUrl) {
                                 $(this).show().siblings('.NFineCore_iframe').hide();
@@ -153,13 +153,13 @@
                     $.loading(false);
                 });
                 $('.menuTabs .page-tabs-content').append(str);
-                $.nfinecoretab.scrollToTab($('.menuTab.active'));
+                $.nfinetab.scrollToTab($('.menuTab.active'));
             }
             return false;
         },
         scrollTabRight: function () {
             var marginLeftVal = Math.abs(parseInt($('.page-tabs-content').css('margin-left')));
-            var tabOuterWidth = $.nfinecoretab.calSumWidth($(".content-tabs").children().not(".menuTabs"));
+            var tabOuterWidth = $.nfinetab.calSumWidth($(".content-tabs").children().not(".menuTabs"));
             var visibleWidth = $(".content-tabs").outerWidth(true) - tabOuterWidth;
             var scrollVal = 0;
             if ($(".page-tabs-content").width() < visibleWidth) {
@@ -176,7 +176,7 @@
                     offsetVal += $(tabElement).outerWidth(true);
                     tabElement = $(tabElement).next();
                 }
-                scrollVal = $.nfinecoretab.calSumWidth($(tabElement).prevAll());
+                scrollVal = $.nfinetab.calSumWidth($(tabElement).prevAll());
                 if (scrollVal > 0) {
                     $('.page-tabs-content').animate({
                         marginLeft: 0 - scrollVal + 'px'
@@ -186,7 +186,7 @@
         },
         scrollTabLeft: function () {
             var marginLeftVal = Math.abs(parseInt($('.page-tabs-content').css('margin-left')));
-            var tabOuterWidth = $.nfinecoretab.calSumWidth($(".content-tabs").children().not(".menuTabs"));
+            var tabOuterWidth = $.nfinetab.calSumWidth($(".content-tabs").children().not(".menuTabs"));
             var visibleWidth = $(".content-tabs").outerWidth(true) - tabOuterWidth;
             var scrollVal = 0;
             if ($(".page-tabs-content").width() < visibleWidth) {
@@ -199,12 +199,12 @@
                     tabElement = $(tabElement).next();
                 }
                 offsetVal = 0;
-                if ($.nfinecoretab.calSumWidth($(tabElement).prevAll()) > visibleWidth) {
+                if ($.nfinetab.calSumWidth($(tabElement).prevAll()) > visibleWidth) {
                     while ((offsetVal + $(tabElement).outerWidth(true)) < (visibleWidth) && tabElement.length > 0) {
                         offsetVal += $(tabElement).outerWidth(true);
                         tabElement = $(tabElement).prev();
                     }
-                    scrollVal = $.nfinecoretab.calSumWidth($(tabElement).prevAll());
+                    scrollVal = $.nfinetab.calSumWidth($(tabElement).prevAll());
                 }
             }
             $('.page-tabs-content').animate({
@@ -212,8 +212,8 @@
             }, "fast");
         },
         scrollToTab: function (element) {
-            var marginLeftVal = $.nfinecoretab.calSumWidth($(element).prevAll()), marginRightVal = $.nfinecoretab.calSumWidth($(element).nextAll());
-            var tabOuterWidth = $.nfinecoretab.calSumWidth($(".content-tabs").children().not(".menuTabs"));
+            var marginLeftVal = $.nfinetab.calSumWidth($(element).prevAll()), marginRightVal = $.nfinetab.calSumWidth($(element).nextAll());
+            var tabOuterWidth = $.nfinetab.calSumWidth($(".content-tabs").children().not(".menuTabs"));
             var visibleWidth = $(".content-tabs").outerWidth(true) - tabOuterWidth;
             var scrollVal = 0;
             if ($(".page-tabs-content").outerWidth() < visibleWidth) {
@@ -242,12 +242,12 @@
             return width;
         },
         init: function () {
-            $('.menuItem').on('click', $.nfinecoretab.addTab);
-            $('.menuTabs').on('click', '.menuTab i', $.nfinecoretab.closeTab);
-            $('.menuTabs').on('click', '.menuTab', $.nfinecoretab.activeTab);
-            $('.tabLeft').on('click', $.nfinecoretab.scrollTabLeft);
-            $('.tabRight').on('click', $.nfinecoretab.scrollTabRight);
-            $('.tabReload').on('click', $.nfinecoretab.refreshTab);
+            $('.menuItem').on('click', $.nfinetab.addTab);
+            $('.menuTabs').on('click', '.menuTab i', $.nfinetab.closeTab);
+            $('.menuTabs').on('click', '.menuTab', $.nfinetab.activeTab);
+            $('.tabLeft').on('click', $.nfinetab.scrollTabLeft);
+            $('.tabRight').on('click', $.nfinetab.scrollTabRight);
+            $('.tabReload').on('click', $.nfinetab.refreshTab);
             $('.tabCloseCurrent').on('click', function () {
                 $('.page-tabs-content').find('.active i').trigger("click");
             });
@@ -262,7 +262,7 @@
                 });
                 $('.page-tabs-content').css("margin-left", "0");
             });
-            $('.tabCloseOther').on('click', $.nfinecoretab.closeOtherTabs);
+            $('.tabCloseOther').on('click', $.nfinetab.closeOtherTabs);
             $('.fullscreen').on('click', function () {
                 if (!$(this).attr('fullscreen')) {
                     $(this).attr('fullscreen', 'true');
@@ -275,6 +275,6 @@
         }
     };
     $(function () {
-        $.nfinecoretab.init();
+        $.nfinetab.init();
     });
 })(jQuery);

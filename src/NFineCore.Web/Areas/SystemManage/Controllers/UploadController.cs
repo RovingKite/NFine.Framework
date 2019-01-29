@@ -12,7 +12,7 @@ using NFineCore.Support;
 using NFineCore.EntityFramework.Dtos.SystemManage;
 using NFineCore.Service.SystemManage;
 
-namespace NFineCore.Web.Areas.WeixinManage.Controllers
+namespace NFineCore.Web.Areas.SystemManage.Controllers
 {
     [Area("SystemManage")]
     public class UploadController : Controller

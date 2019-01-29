@@ -18,14 +18,14 @@ namespace NFineCore.Web
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        //public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-        //    WebHost.CreateDefaultBuilder(args)
-        //        .UseStartup<Startup>()
-        //        .UseKestrel()
-        //        .UseUrls("http://localhost:8098/");
-
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-                WebHost.CreateDefaultBuilder(args)
-                    .UseStartup<Startup>();
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .UseKestrel()
+                .UseUrls("http://localhost:8098/");
+
+        //public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        //        WebHost.CreateDefaultBuilder(args)
+        //            .UseStartup<Startup>();
     }
 }

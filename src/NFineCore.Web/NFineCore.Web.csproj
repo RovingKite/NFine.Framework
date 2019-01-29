@@ -30,7 +30,7 @@
     <Folder Include="wwwroot\attach\" />
     <Folder Include="wwwroot\lib\bootstrap\3.3.4\css\" />
     <Folder Include="wwwroot\lib\bootstrap\3.3.7\" />
-    <Folder Include="wwwroot\lib\loadmask\" />
+    <Folder Include="wwwroot\upload\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -264,6 +264,9 @@
     <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" />
+    <PackageReference Include="Senparc.Weixin" Version="6.3.6-preview1" />
+    <PackageReference Include="Senparc.Weixin.MP" Version="16.6.10-preview1" />
+    <PackageReference Include="Senparc.Weixin.MP.MVC" Version="7.2.4" />
     <PackageReference Include="SharpRepository.Caching.Redis" Version="2.0.2.2" />
     <PackageReference Include="SharpRepository.InMemoryRepository" Version="2.0.3-prerelease" />
     <PackageReference Include="SharpRepository.Ioc.Microsoft.DependencyInjection" Version="2.0.2" />
@@ -274,6 +277,7 @@
     <ProjectReference Include="..\NFineCore.EntityFramework\NFineCore.EntityFramework.csproj" />
     <ProjectReference Include="..\NFineCore.Service\NFineCore.Service.csproj" />
     <ProjectReference Include="..\NFineCore.Support\NFineCore.Support.csproj" />
+    <ProjectReference Include="..\Senparc.Weixin.MP.Sample.CommonService\Senparc.Weixin.MP.CoreSample.CommonService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

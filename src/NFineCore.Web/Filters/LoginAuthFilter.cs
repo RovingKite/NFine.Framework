@@ -22,6 +22,7 @@ namespace NFineCore.Web.Filters
                 if (controllerName == "Account" && actionName == "Login") return;
                 if (controllerName == "Account" && actionName == "GetAuthCode") return;
                 if (controllerName == "Account" && actionName == "CheckLogin") return;
+                if (controllerName == "Weixin") return;
             }
 
             if (OperatorProvider.Provider.GetCurrent() == null)

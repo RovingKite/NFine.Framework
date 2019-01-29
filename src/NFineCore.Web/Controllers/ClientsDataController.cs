@@ -55,7 +55,7 @@ namespace NFineCore.Web.Controllers
                 organize = this.GetOrganizeList(),
                 role = this.GetRoleList(),
                 position = this.GetPositionList(),
-                currentUser = this.GetUserForm(operatorModel.Id),
+                currentUser = this.GetUserForm(operatorModel.Id.ToString()),
                 authorizeMenu = this.GetMenuList(permissions),
                 authorizeButton = this.GetMenuButtonList(permissions),
                 wxMenu = this.GetWxMenuList()

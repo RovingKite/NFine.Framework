@@ -594,6 +594,280 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_userrole");
                 });
 
+            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxImage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppId");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("FileExt");
+
+                    b.Property<string>("FileName");
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<long?>("FileSize");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("MediaId");
+
+                    b.Property<string>("MediaUrl");
+
+                    b.Property<string>("ThumbPath");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wx_image");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxMenu", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppId");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("MenuData");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wx_menu");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxNews", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppId");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("MediaId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wx_news");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxNewsItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author");
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("ContentSourceUrl");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Digest");
+
+                    b.Property<int>("Index");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<int>("NeedOpenComment");
+
+                    b.Property<long?>("NewsId");
+
+                    b.Property<int>("OnlyFansCanComment");
+
+                    b.Property<int>("ShowCoverPic");
+
+                    b.Property<long?>("ThumbId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsId");
+
+                    b.HasIndex("ThumbId");
+
+                    b.ToTable("wx_newsitem");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxOfficial", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Account");
+
+                    b.Property<string>("AppId");
+
+                    b.Property<string>("AppSecret");
+
+                    b.Property<string>("AppType");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool?>("EnabledMark");
+
+                    b.Property<string>("EncodingAESKey");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Token");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wx_official");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxText", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wx_text");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxUser", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppId");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Country");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<int?>("GroupId");
+
+                    b.Property<string>("HeadImgUrl");
+
+                    b.Property<string>("Language");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Nickname");
+
+                    b.Property<string>("OpenId");
+
+                    b.Property<string>("Province");
+
+                    b.Property<string>("Remark");
+
+                    b.Property<int?>("Sex");
+
+                    b.Property<int?>("SubscribeStatus");
+
+                    b.Property<DateTime?>("SubscribeTime");
+
+                    b.Property<DateTime?>("SynchronisedTime");
+
+                    b.Property<string>("TagId");
+
+                    b.Property<string>("UnionId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wx_user");
+                });
+
             modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Attach", b =>
                 {
                     b.HasOne("NFineCore.EntityFramework.Models.SystemManage.User", "CreatorUser")
@@ -653,6 +927,17 @@ namespace NFineCore.EntityFramework.Migrations
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxNewsItem", b =>
+                {
+                    b.HasOne("NFineCore.EntityFramework.Models.WeixinManage.WxNews", "WxNews")
+                        .WithMany("WxNewsItems")
+                        .HasForeignKey("NewsId");
+
+                    b.HasOne("NFineCore.EntityFramework.Models.WeixinManage.WxImage", "Thumb")
+                        .WithMany()
+                        .HasForeignKey("ThumbId");
                 });
 #pragma warning restore 612, 618
         }

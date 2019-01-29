@@ -38,7 +38,7 @@ namespace NFineCore.Web.Controllers
         {
             OperatorModel operatorModel = OperatorProvider.Provider.GetCurrent();
             LoginLogInputDto loginLogInputDto = new LoginLogInputDto();
-            loginLogInputDto.UserId = operatorModel.Id;
+            loginLogInputDto.UserId = operatorModel.Id.ToString();
             loginLogInputDto.UserName = operatorModel.UserName;
             loginLogInputDto.OperateType = "Logout";
             loginLogInputDto.OperateResult = true;
@@ -86,7 +86,7 @@ namespace NFineCore.Web.Controllers
                     _loginLogService.SubmitForm(loginLogInputDto, null);
 
                     OperatorModel operatorModel = new OperatorModel();
-                    operatorModel.Id = userOutputDto.Id;
+                    operatorModel.Id = Convert.ToInt64(userOutputDto.Id);
                     operatorModel.UserName = userOutputDto.UserName;
                     operatorModel.MobilePhone = userOutputDto.MobilePhone;
                     operatorModel.Email = userOutputDto.Email;

@@ -89,8 +89,7 @@ $.modalOpen = function (options) {
         btn: ['确认', '关闭'],
         closeBtn:1,
         btnclass: ['btn btn-primary', 'btn btn-danger'],
-        callBack: null,     
-        end:null
+        callBack: null
     };
     var options = $.extend(defaults, options);
     var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width : top.$(window).width() + 'px';
@@ -111,9 +110,6 @@ $.modalOpen = function (options) {
             options.callBack(options.id)
         }, cancel: function () {
             return true;
-        },
-        end: function () {
-            options.end();
         }
     });
 }
