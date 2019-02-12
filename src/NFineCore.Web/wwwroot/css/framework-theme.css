@@ -264,6 +264,17 @@ a:hover,a:focus{color:#475059;}
 .theme-blue-gradient #header-navbar .nav > li > a{color:#fff;}
 .theme-blue-gradient .btn-primary{background-color:#1ABC9C;border-color:#1ABC9C;}
 .theme-blue-gradient .btn-primary:hover,.theme-blue-gradient .btn-primary:focus,.theme-blue-gradient .btn-primary:active,.theme-blue-gradient .btn-primary.active,.theme-blue-gradient .open .dropdown-toggle.btn-primary{background-color:#14a689;border-color:#14a689;}
+/***** begin 2019-01-30 ´ó°×ÐÂÔö ******/
+.theme-blue-gradient .btn-white {
+    color: inherit;
+    background: #fff;
+    border: 1px solid #e7eaec;
+}
+.theme-blue-gradient .btn-primary:hover, .theme-blue-gradient .btn-primary:focus, .theme-blue-gradient .btn-primary:active, .theme-blue-gradient .btn-primary.active, .theme-blue-gradient .open .dropdown-toggle.btn-primary {
+    background-color: #14a689;
+    border-color: #14a689;
+}
+/**********/
 .theme-blue-gradient .btn-success{background-color:#1ABC9C;border-color:#1ABC9C;}
 .theme-blue-gradient .btn-success:hover,.theme-blue-gradient .btn-success:focus,.theme-blue-gradient .btn-success:active,.theme-blue-gradient .btn-success.active,.theme-blue-gradient .open .dropdown-toggle.btn-success{background-color:#14a689;border-color:#14a689;}
 .theme-blue-gradient #header-navbar .nav > li > a:hover,.theme-blue-gradient #header-navbar .nav > li > a:focus,.theme-blue-gradient #header-navbar .nav .open > a,.theme-blue-gradient #header-navbar .nav .open > a:hover,.theme-blue-gradient #header-navbar .nav .open > a:focus{background-color:#14a689;}

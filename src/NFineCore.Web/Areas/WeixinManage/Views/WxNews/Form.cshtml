@@ -1,0 +1,592 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/framework-font.css" rel="stylesheet" />
+    <link href="~/css/framework-theme.css" rel="stylesheet" />
+    <script src="~/lib/jquery/1.12.4/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="~/lib/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/art-template/lib/template-web.js"></script>
+    <script src="~/lib/validate/jquery.validate.min.js"></script>
+    @*<script src="~/lib/validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/validation/dist/localization/messages_zh.min.js"></script>*@
+    <link href="~/lib/icheck/custom.css" rel="stylesheet" />
+    <script src="~/lib/icheck/icheck.min.js"></script>
+    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" type="text/css" rel="stylesheet">
+    <script src="~/lib/ueditor/ueditor.config.js"></script>
+    <script src="~/lib/ueditor/ueditor.all.min.js"></script>
+    <script src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <link href="~/css/framework-ui.css" rel="stylesheet" />
+    <script src="~/js/framework-ui.js"></script>
+    <script id="newsitem-tr-empty-temp" type="text/html">
+        <tr class="newsitem-tr current" data-index="{{index}}">
+            <td class="client-avatar" style="width:40px;vertical-align: middle;text-align: center;">
+                <img alt="image" src="~/img/image_picture_48px.png" style="width:40px;height:40px;">
+            </td>
+            <td class="newsitem-tr-title" style="vertical-align: middle;">标题</td>
+            <td style="width:100px;vertical-align: middle;text-align: center;">
+                <a class="btn btn-xs btn-white newsitem-up" title="上移"><i class="fa fa-arrow-up"></i></a>
+                <a class="btn btn-xs btn-white newsitem-down" title="下移"><i class="fa fa-arrow-down"></i></a>
+                <a class="btn btn-xs btn-white newsitem-delete" title="删除"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    </script>
+    <script id="newsitem-tr-temp" type="text/html">
+        {{each WxNewsItems item index}}
+        <tr class="newsitem-tr {{index==0?'current':''}}" data-index="{{index}}">
+            <td class="client-avatar" style="width:40px;vertical-align: middle;text-align: center;">
+                <img alt="image" src="{{item.Thumb.FilePath}}" width="40px;" height="40px;">
+            </td>
+            <td class="newsitem-tr-title" style="vertical-align: middle;">{{item.Title}}</td>
+            <td style="width:100px;vertical-align: middle;text-align: center;">
+                <a class="btn btn-xs btn-white newsitem-up" title="上移"><i class="fa fa-arrow-up"></i></a>
+                <a class="btn btn-xs btn-white newsitem-down" title="下移"><i class="fa fa-arrow-down"></i></a>
+                <a class="btn btn-xs btn-white newsitem-delete" title="删除"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+    <style>
+        .newsitem-tr {
+            cursor: pointer;
+        }
+        .newsitem-tr.current {
+            /*border: 1px solid #1ab394;*/
+            background-color: #dff0d8 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-4">
+            <div style="padding-top: 24px; margin-left: 20px;">
+                <table class="table table-bordered table-hover newsTable" style="word-wrap:break-word; word-break:break-all;">
+                    <tbody>
+                        @*<tr class="newsitem-tr current" data-index="">
+                            <td class="client-avatar" style="width:40px"><img alt="image" src="~/img/image_picture_48px.png" height="40px;" width="40px;"> </td>
+                            <td class="newsitem-tr-title" style="vertical-align: middle;"></td>
+                            <td style="width:100px;vertical-align: middle;text-align: center;">
+                                <a class="btn btn-xs btn-white newsitem-up" title="上移"><i class="fa fa-arrow-up"></i></a>
+                                <a class="btn btn-xs btn-white newsitem-down" title="下移"><i class="fa fa-arrow-down"></i></a>
+                                <a class="btn btn-xs btn-white newsitem-delete" title="删除"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>*@
+                        <tr class="">
+                            <td colspan="3">
+                                <button id="newsitem-btn-add" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> 新增图文</button> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+            <div class="col-md-8">
+                <form id="form1">
+                    <div style="padding-top: 20px; margin-right: 20px;">
+                        <table class="form">
+                            <tr>
+                                <th class="formTitle">标题</th>
+                                <td class="formValue">
+                                    <input id="Title" name="Title" type="text" class="form-control" placeholder="请输入标题，最长为64个字符。" maxlength="64" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="formTitle">原文链接</th>
+                                <td class="formValue">
+                                    <input id="ContentSourceUrl" name="ContentSourceUrl" type="text" class="form-control" maxlength="255" placeholder="请输入图文消息的原文地址，即点击“阅读原文”后的URL地址。" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="formTitle">封面图片</th>
+                                <td class="formValue">
+                                    <div class="input-group">
+                                        <input id="ThumbFileName" name="ThumbFileName" type="text" class="form-control" placeholder="请从图片库中选择封面图片。" readonly>
+                                        <input id="ThumbId" type="hidden" class="form-control">
+                                        <input id="ThumbFilePath" type="hidden" class="form-control">
+                                        <input id="ThumbMediaId" type="hidden" class="form-control">
+                                        <input id="ThumbMediaUrl" type="hidden" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button id="choose-thumb" type="button" class="btn btn-white">
+                                                从图片库中选择
+                                            </button>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                    正文内容
+                                </th>
+                                <td class="formValue">
+                                    <textarea id="Content" name="Content" class="ueditor" style="width:100%;height:300px;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="formTitle" style="height: 35px;">作者</th>
+                                <td class="formValue">
+                                    <input id="Author" name="Author" type="text" class="form-control" maxlength="255" placeholder="请输入作者。"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="formTitle" style="height: 35px;">摘要</th>
+                                <td class="formValue">
+                                    <textarea id="Digest" class="form-control" type="text" maxlength="255" placeholder="图文消息的摘要，仅有单图文消息才有摘要，多图文此处为空。如果本字段为没有填写，则默认抓取正文前64个字。"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="formTitle" style="height: 35px;">留言</th>
+                                <td class="formValue">
+                                    <label class="checkbox-inline i-checks">
+                                        <input type="checkbox" id="NeedOpenComment"> 是否打开评论
+                                    </label>
+                                    <label class="radio-inline i-checks">
+                                        <input type="radio" value="0" name="OnlyFansCanComment"> 所有人可留言
+                                    </label>
+                                    <label class="radio-inline i-checks">
+                                        <input type="radio" value="1" name="OnlyFansCanComment"> 仅关注后可留言
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <script>
+            var keyValue = $.request("keyValue");
+            var newsObj = {};
+            $(function () {
+                
+                $(".i-checks").iCheck({
+                    checkboxClass: "icheckbox_square-green",
+                    radioClass: "iradio_square-green"
+                });
+                var ue = UE.getEditor('Content', {
+                    serverUrl: "http://localhost:5002/WeixinManage/Upload/OnPostUpload",
+                    autoHeightEnabled: true,
+                });
+
+                ue.ready(function () {//编辑器初始化完成再赋值
+                    bindNewsItemFromEvents();
+                    if (!!keyValue) {
+                        $.ajax({
+                            url: "/WeixinManage/WxNews/GetFormJson",
+                            data: { keyValue: keyValue },
+                            dataType: "json",
+                            async: false,
+                            success: function (data, textStatus, jqXHR) {
+                                newsObj = data;
+                                var html = template('newsitem-tr-temp', newsObj);
+                                $('.newsTable tbody').prepend(html);
+                                bindNewsItemTrEvents();
+
+                                $('#Title').val(newsObj.WxNewsItems[0].Title);
+                                $('#Author').val(newsObj.WxNewsItems[0].Author);
+                                UE.getEditor('Content').setContent(newsObj.WxNewsItems[0].Content);
+                                $('#Digest').val(newsObj.WxNewsItems[0].Digest);
+                                $('#ContentSourceUrl').val(newsObj.WxNewsItems[0].ContentSourceUrl);
+                                if (newsObj.WxNewsItems[0].NeedOpenComment == 1) {
+                                    $('#NeedOpenComment').iCheck('check');
+                                    $('input[name="OnlyFansCanComment"]').iCheck('enable');
+                                }
+                                else {
+                                    $('#NeedOpenComment').iCheck('uncheck');
+                                    $('input[name="OnlyFansCanComment"]').iCheck('disable');
+                                }
+                                if (newsObj.WxNewsItems[0].OnlyFansCanComment == 0) {
+                                    $('input[name="OnlyFansCanComment"]:eq(0)').iCheck('check');
+                                }
+                                if (newsObj.WxNewsItems[0].OnlyFansCanComment == 1) {
+                                    $('input[name="OnlyFansCanComment"]:eq(1)').iCheck('check');
+                                }
+                                if (typeof (newsObj.WxNewsItems[0].Thumb) != "undefined") {
+                                    $('#ThumbId').val(newsObj.WxNewsItems[0].Thumb.Id);
+                                    $('#ThumbFileName').val(newsObj.WxNewsItems[0].Thumb.FileName);
+                                    $('#ThumbFilePath').val(newsObj.WxNewsItems[0].Thumb.FilePath);
+                                    $('#ThumbMediaId').val(newsObj.WxNewsItems[0].Thumb.MediaId);
+                                    $('#ThumbMediaUrl').val(newsObj.WxNewsItems[0].Thumb.MediaUrl);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        var tempObj = { index: 0 };
+                        var html = template('newsitem-tr-empty-temp', tempObj);
+                        $('.newsTable tbody').prepend(html);
+                        newsObj.WxNewsItems = [];
+                        var newsitemObj = {
+                            Id: '',
+                            Title: '',
+                            Author: '',
+                            Thumb: { Id: '', FileName: '', FilePath: '', MediaId: '', MediaUrl: '' },
+                            Content: '',
+                            Digest: '',
+                            ContentSourceUrl: '',
+                            Index: '',
+                            NeedOpenComment: '',
+                            OnlyFansCanComment: ''
+                        };
+                        newsObj.WxNewsItems.push(newsitemObj);
+                        $('#Title').focus();
+                        bindNewsItemTrEvents();
+                        $('#NeedOpenComment').iCheck('uncheck');
+                        $('input[name="OnlyFansCanComment"]:eq(1)').iCheck('check');
+                        $('input[name="OnlyFansCanComment"]').each(function () {
+                            $(this).iCheck('disable');
+                        });
+                    }
+                });
+                $("#form1").validate({
+                    ignore: "",
+                    rules: {
+                        Title: "required",
+                        ContentSourceUrl: "required",
+                        ThumbFileName: "required"
+                    },
+                    errorPlacement: function (error, element) {
+                        element.parents('.formValue').addClass('has-error');
+                        element.parents('.has-error').find('i.error').remove();
+                        element.parents('.has-error').append('<i class="form-control-feedback fa fa-exclamation-circle error" data-placement="left" data-toggle="tooltip" title="' + error + '"></i>');
+                        $("[data-toggle='tooltip']").tooltip();
+                        if (element.parents('.input-group').hasClass('input-group')) {
+                            if (element[0].id == 'ThumbFileName') {
+                                element.parents('.has-error').find('i.error').css('right', '103px')
+                            }
+                        }
+                    },
+                    success: function (element) {
+                        element.parents('.has-error').find('i.error').remove();
+                        element.parent().removeClass('has-error');
+                    }
+                });
+
+                $('#newsitem-btn-add').bind('click', function () {
+                    var length = $('.newsitem-tr').length;
+                    if (length < 8) {
+                        $('.newsitem-tr').removeClass('current');
+                        var tempObj = { index: length }
+                        var trHtml = template('newsitem-tr-empty-temp', tempObj);
+                        $(this).parents('tr').prev().after(trHtml);
+                        var newsitemObj = {
+                            Id: '',
+                            Title: '',
+                            Author: '',
+                            Thumb: { Id: '', FileName: '', FilePath: '', MediaId: '', MediaUrl: '' },
+                            Content: '',
+                            Digest: '',
+                            ContentSourceUrl: '',
+                            Index: '',
+                            NeedOpenComment: '',
+                            OnlyFansCanComment: ''
+                        };
+                        newsObj.WxNewsItems.push(newsitemObj);
+                        clearNewsItemForm();
+                        $('#Title').focus();
+                        bindNewsItemTrEvents();
+                    }
+                    else {
+                        alert('最多只能添加8个图文消息')
+                    }
+                })
+            });
+            function bindNewsItemFromEvents() {
+                //标题
+                $('#Title').bind('input', function () {
+                    var tr = $('.newsitem-tr.current');
+                    var index = tr.attr('data-index');
+                    if (this.value.trim() != '') {
+                        tr.find('.newsitem-tr-title').html(this.value);
+                    }
+                    else {
+                        tr.find('.newsitem-tr-title').html('标题');
+                    }
+                    newsObj.WxNewsItems[index].Title = this.value;
+                    
+                });
+
+                //原文链接
+                $('#ContentSourceUrl').bind('change', function () {
+                    var tr = $('.newsitem-tr.current');
+                    var index = tr.attr('data-index');
+                    newsObj.WxNewsItems[index].ContentSourceUrl = $(this).val();
+                });
+
+                //作者
+                $('#Author').bind('change', function () {
+                    var tr = $('.newsitem-tr.current');
+                    var index = tr.attr('data-index');
+                    newsObj.WxNewsItems[index].Author = this.value;
+                });
+
+                //摘要
+                $('#Digest').bind('change', function () {
+                    var tr = $('.newsitem-tr.current');
+                    var index = tr.attr('data-index');
+                    newsObj.WxNewsItems[index].Digest = this.value;
+                });
+
+                //缩略图
+                $('#choose-thumb').bind('click', function () {
+                    var obj = this;
+                    $.modalOpen({
+                        id: "Choose",
+                        title: "选择图文封面",
+                        url: "/WeixinManage/WxImage/Choose",
+                        width: "80%",
+                        height: "80%",
+                        callBack: function (iframeId) {
+                            top.frames[iframeId].submitForm();
+                            if (top.tempData != '') {
+                                var jsonObj = JSON.parse(top.tempData);
+                                $('#ThumbId').val(jsonObj.Id);
+                                $('#ThumbFileName').val(jsonObj.FileName);
+                                $('#ThumbFilePath').val(jsonObj.FilePath);
+                                $('#ThumbMediaId').val(jsonObj.MediaId);
+                                $('#ThumbMediaUrl').val(jsonObj.MediaUrl);
+
+                                var tr = $('.newsitem-tr.current');
+                                var index = tr.attr('data-index');
+                                var img = tr.find('img')[0];
+                                $(img).attr('src', jsonObj.FilePath);
+
+                                if (typeof (newsObj.WxNewsItems[index].Thumb) == "undefined") {
+                                    newsObj.WxNewsItems[index].Thumb = {};
+                                }
+                                newsObj.WxNewsItems[index].Thumb.Id = jsonObj.Id;
+                                newsObj.WxNewsItems[index].Thumb.FileName = jsonObj.FileName;
+                                newsObj.WxNewsItems[index].Thumb.FilePath = jsonObj.FilePath;
+                                newsObj.WxNewsItems[index].Thumb.MediaId = jsonObj.MediaId;
+                                newsObj.WxNewsItems[index].Thumb.MediaUrl = jsonObj.MediaUrl;
+
+                                $('#form1').validate().element($("#ThumbFileName"));
+                                $(obj).parents('.has-error').find('i.error').remove();
+                                //$('#form1').find('#ThumbFileName').parent().find('.has-error').find('i.error').remove();
+                                //if ($('#ThumbMediaId').val().trim() != '') {
+                                //    $('#ThumbFileName').closest('.form-group').removeClass('has-error');
+                                //}
+                            }
+                        }
+                    });
+                });
+
+                //是否打开评论
+                $('#NeedOpenComment').on('ifChecked', function (event) {
+                    var tr = $('.newsitem-tr.current');
+                    var index = tr.attr('data-index');
+                    newsObj.WxNewsItems[index].NeedOpenComment = 1;
+                    $('input[name="OnlyFansCanComment"]').each(function () {
+                        $(this).iCheck('enable');
+                    });
+                });
+
+                //是否打开评论
+                $('#NeedOpenComment').on('ifUnchecked', function (event) {
+                    var tr = $('.newsitem-tr.current');
+                    var index = tr.attr('data-index');
+                    newsObj.WxNewsItems[index].NeedOpenComment = 0;
+                    $('input[name="OnlyFansCanComment"]').each(function () {
+                        $(this).iCheck('disable');
+                    });
+                });
+
+                //是否打开评论，仅关注后可留言
+                $('input[name="OnlyFansCanComment').on('ifChecked', function (event) {
+                    var tr = $('.newsitem-tr.current');
+                    var index = tr.attr('data-index');
+                    newsObj.WxNewsItems[index].OnlyFansCanComment = $(this).val();
+                });
+
+                //内容
+                var ue = UE.getEditor('Content');
+                ue.addListener("blur", function () {
+                    var tr = $('.newsitem-tr.current');
+                    var index = tr.attr('data-index');
+                    newsObj.WxNewsItems[index].Content = UE.getEditor('Content').getContent();
+                })
+            }
+
+            //清空表单
+            function clearNewsItemForm() {
+                $('#Title').val('');
+                $('#Author').val('');
+                UE.getEditor('Content').setContent('');
+                $('#Digest').val('');
+                $('#ContentSourceUrl').val('');
+                $('#ThumbId').val('');
+                $('#ThumbFileName').val('');
+                $('#ThumbFilePath').val('');
+                $('#ThumbMediaId').val('');
+                $('#ThumbMediaUrl').val('');
+            }
+
+            //清空表单验证
+            function clearFormValidStyle() {
+                $("#form1").validate().resetForm();
+                $("#form1").find('.has-error').find('i.error').remove();
+            }
+
+            //绑定图文按钮时间(选中,上移,下移,删除)
+            function bindNewsItemTrEvents() {
+                $('.newsitem-tr').unbind();
+                $('.newsitem-tr').bind('click', function () {
+                    clearFormValidStyle();
+                    var index = $(this).attr('data-index');
+                    $('.newsitem-tr').removeClass('current')
+                    if ($(this).has('current')) {
+                        $(this).addClass('current');
+                    }
+                    $('#Title').val(newsObj.WxNewsItems[index].Title);
+                    $('#Author').val(newsObj.WxNewsItems[index].Author);
+                    UE.getEditor('Content').setContent(newsObj.WxNewsItems[index].Content);
+                    $('#Digest').val(newsObj.WxNewsItems[index].Digest);
+                    $('#ContentSourceUrl').val(newsObj.WxNewsItems[index].ContentSourceUrl);
+                    $('#ThumbId').val(newsObj.WxNewsItems[index].Thumb.Id);
+                    $('#ThumbFileName').val(newsObj.WxNewsItems[index].Thumb.FileName);
+                    $('#ThumbFilePath').val(newsObj.WxNewsItems[index].Thumb.FilePath);
+                    $('#ThumbMediaId').val(newsObj.WxNewsItems[index].Thumb.MediaId);
+                    $('#ThumbMediaUrl').val(newsObj.WxNewsItems[index].Thumb.MediaUrl);
+
+                    if (newsObj.WxNewsItems[index].NeedOpenComment == 1) {
+                        $('#NeedOpenComment').iCheck('check');
+                        $('input[name="OnlyFansCanComment"]').iCheck('enable');
+                    }
+                    else {
+                        $('#NeedOpenComment').iCheck('uncheck');
+                        $('input[name="OnlyFansCanComment"]').iCheck('disable');
+                    }
+                    if (newsObj.WxNewsItems[index].OnlyFansCanComment == 0) {
+                        $('input[name="OnlyFansCanComment"]:eq(0)').iCheck('check');
+                    }
+                    if (newsObj.WxNewsItems[index].OnlyFansCanComment == 1) {
+                        $('input[name="OnlyFansCanComment"]:eq(1)').iCheck('check');
+                    }
+                })
+
+                $('.newsitem-up').unbind();
+                $('.newsitem-up').bind('click', function (event) {
+                    var tr = $(this).closest('.newsitem-tr'); //获取当前<tr>
+                    tr.click();
+                    var prev = tr.prev();  //获取当前<tr>前一个元素
+                    if (tr.index() > 0) {
+                        tr.insertBefore(prev); //插入到当前<tr>前一个元素前
+                        var index = tr.attr('data-index');
+                        moveArrayElement(newsObj.WxNewsItems, parseInt(index), parseInt(index) - 1)
+                        resetNewsItemTrIndex();
+                    }
+                    event.stopPropagation();
+                })
+
+                $('.newsitem-down').unbind();
+                $('.newsitem-down').bind('click', function (event) {
+                    var tr = $(this).closest('.newsitem-tr'); //获取当前<tr>
+                    tr.click();
+                    var next = tr.next(); //获取当前<tr>后面一个元素
+                    if (next) {
+                        tr.insertAfter(next);  //插入到当前<tr>后面一个元素后面
+                        var index = tr.attr('data-index');
+                        moveArrayElement(newsObj.WxNewsItems, parseInt(index), parseInt(index) + 1);
+                        resetNewsItemTrIndex();
+                    }
+                    event.stopPropagation();
+                })
+
+                $('.newsitem-delete').unbind();
+                $('.newsitem-delete').bind('click', function () {
+                    var tr = $(this).closest('tr');
+                    tr.click();
+                    var prevTr = tr.prev();
+                    var nextTr = tr.next();
+                    var index = tr.attr('data-index');
+                    $.modalConfirm("注：您确定要删除该项数据吗？", function (result) {
+                        if (result) {
+                            var trs = $('.newsitem-tr');
+                            if (trs.length > 1) {
+                                tr.remove();
+                                if (index == 0) nextTr.click();
+                                else prevTr.click();
+                                newsObj.WxNewsItems.splice(index, 1);
+                                resetNewsItemTrIndex();
+                                $.modalMsg('操作成功。', 'success');
+                            }
+                            else {
+                                $.modalMsg('最少需要1条图文。', 'error');
+                            }
+                        }
+                    });
+                })
+            }
+
+            //重置图文索引
+            function resetNewsItemTrIndex() {
+                $('.newsitem-tr').each(function (index) {
+                    $(this).attr('data-index', index);
+                });
+            }
+
+            function submitForm() {
+                if (!$("#form1").valid() || !UE.getEditor('Content').hasContents()) {
+                    if (!UE.getEditor('Content').hasContents()) {
+                        $.modalMsg('请输入一段正文内容。', 'error');
+                        UE.getEditor('Content').focus();
+                    }                    
+                    return false;
+                }
+                for (var i = 0; i < $('.newsitem-tr').length; i++) {
+                    $('.newsitem-tr').eq(i).click();
+                    if (!$("#form1").valid() || !UE.getEditor('Content').hasContents()) {
+                        if (!UE.getEditor('Content').hasContents()) {
+                            $.modalMsg('请输入一段正文内容。', 'error');
+                            UE.getEditor('Content').focus();
+                        }
+                        return false;
+                    }
+                }
+                for (var i = 0; i < newsObj.WxNewsItems.length; i++) {
+                    newsObj.WxNewsItems[i].Index = i;
+                }
+                var postData = newsObj;
+                postData.Id = keyValue;
+                $.submitForm({
+                    url: "/WeixinManage/WxNews/SubmitForm?keyValue=" + keyValue,
+                    param: postData,
+                    success: function () {
+                        $.currentWindow().initPaginator();
+                    }
+                });   
+            }
+
+            function uploadForm() {
+                //alert($("#form1").valid());
+                //for (var i = 0; i < $('.newsitem-tr').length; i++) {
+                //    $('.newsitem-tr').eq(i).click();
+                //    if (!$("#form1").valid()) {
+                //        return;
+                //    }
+                //}
+            }
+            
+            //currentIndex是当前元素下标，targetIndex是拖动到的位置下标。
+            function moveArrayElement(arrayList, currentIndex, targetIndex) {
+                //如果当前元素在拖动目标位置的下方，先将当前元素从数组拿出，数组长度-1，我们直接给数组拖动目标位置的地方新增一个和当前元素值一样的元素，
+                //我们再把数组之前的那个拖动的元素删除掉，所以要len+1
+                if (currentIndex > targetIndex) {
+                    arrayList.splice(targetIndex, 0, arrayList[currentIndex]);
+                    arrayList.splice(currentIndex + 1, 1)
+                }
+                else {
+                    //如果当前元素在拖动目标位置的上方，先将当前元素从数组拿出，数组长度-1，我们直接给数组拖动目标位置+1的地方新增一个和当前元素值一样的元素，
+                    //这时，数组len不变，我们再把数组之前的那个拖动的元素删除掉，下标还是index
+                    arrayList.splice(targetIndex + 1, 0, arrayList[currentIndex]);
+                    arrayList.splice(currentIndex, 1)
+                }
+            }
+        </script>
+</body>
+</html>

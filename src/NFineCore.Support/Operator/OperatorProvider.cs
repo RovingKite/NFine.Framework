@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.Http;
+
 namespace NFineCore.Support
 {
     public class OperatorProvider
@@ -26,7 +28,10 @@ namespace NFineCore.Support
         }
         public void AddCurrent(OperatorModel operatorModel)
         {
-            StaticHttpContext.Current.Response.Cookies.Append(LoginUserKey, DESEncrypt.Encrypt(operatorModel.ToJson()));
+            StaticHttpContext.Current.Response.Cookies.Append(LoginUserKey, DESEncrypt.Encrypt(operatorModel.ToJson()), new CookieOptions()
+            {
+                //Expires = System.DateTime.Now.AddMinutes(60)
+            });
         }
         public void RemoveCurrent()
         {

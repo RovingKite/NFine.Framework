@@ -1,0 +1,157 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Index</title>
+    <script src="~/lib/jquery/1.12.4/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="~/lib/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/framework-font.css" rel="stylesheet" />
+    <link href="~/css/framework-theme.css" rel="stylesheet" />
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" />
+    <script src="~/lib/select2/select2.min.js"></script>
+    <link href="~/lib/jqgrid/5.3.0/css/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jqgrid/5.3.0/js/jquery.jqGrid.js"></script>
+    <script src="~/lib/jqgrid/5.3.0/i18n/grid.locale-cn.js"></script>
+    <link href="~/css/framework-ui.css" rel="stylesheet" />
+    <script src="~/js/framework-ui.js"></script>
+</head>
+<body>
+    <div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-Add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>新增公众号</a>
+            </div>
+            <div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                    <li><a id="NF-Edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>编辑公众号</a></li>
+                    <li><a id="NF-Delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除公众号</a></li>
+                    <li><a id="NF-Details" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看公众号</a></li>
+                    <li class="split"></li>
+                    <li><a id="NF-Enter" authorize="yes" onclick="btn_enter()"><i class="fa fa-search-plus"></i>进入公众号</a></li>
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>
+            <script>$('.toolbar').authorizeButton()</script>
+        </div>
+        <div class="search">
+            <table>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <input id="txt_keyword" type="text" class="form-control" placeholder="微信账号/公众号名称" style="width: 200px;">
+                            <span class="input-group-btn">
+                                <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="gridPanel">
+        <table id="gridList"></table>
+        <div id="gridPager"></div>
+    </div>
+    <script>
+        $(function () {
+            gridList();
+        })
+        function gridList() {
+            var $gridList = $("#gridList");
+            $gridList.dataGrid({
+                url: "/WeixinManage/WxOfficial/GetGridJson",
+                height: $(window).height() - 77,
+                colModel: [
+                    { label: '主键', name: 'Id', hidden: true, key: true },
+                    { label: '微信号', name: 'Account', width: '10%', align: 'left', sortable: false },
+                    { label: '公众号名称', name: 'Name', width: '10%', align: 'left', sortable: false },
+                    { label: 'AppID(应用ID)', name: 'AppId', width: '15%', align: 'left', sortable: false },
+                    { label: 'AppSecret(应用密钥)', name: 'AppSecret', width: '30%', align: 'left', sortable: false },
+                    { label: 'Token(令牌)', name: 'Token', width: '15%', align: 'left', sortable: false },
+                    {
+                        label: '公众号类型', name: 'AppType', width: '10%', align: 'center', sortable: false,
+                        formatter: function (cellvalue, options, rowObject) {
+                            return top.clients.dataItems.WxAppType[cellvalue] == null ? "" : top.clients.dataItems.WxAppType[cellvalue];
+                        }
+                    }
+                ],
+                //pager: "#gridPager",
+                sortname: 'Id asc',
+                viewrecords: true
+            });
+            $("#btn_search").click(function () {
+                $gridList.jqGrid('setGridParam', {
+                    postData: { keyword: $("#txt_keyword").val() },
+                }).trigger('reloadGrid');
+            });
+        }
+        function btn_add() {
+            $.modalOpen({
+                id: "Form",
+                title: "新增公众号",
+                url: "/WeixinManage/WxOfficial/Form",
+                width: "550px",
+                height: "570px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_edit() {
+            var keyValue = $("#gridList").jqGridRowValue().Id;
+            $.modalOpen({
+                id: "Form",
+                title: "编辑公众号",
+                url: "/WeixinManage/WxOfficial/Form?keyValue=" + keyValue,
+                width: "550px",
+                height: "570px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_delete() {
+            $.deleteForm({
+                url: "/WeixinManage/WxOfficial/DeleteForm",
+                param: { keyValue: $("#gridList").jqGridRowValue().Id },
+                success: function () {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+        function btn_details() {
+            var keyValue = $("#gridList").jqGridRowValue().Id;
+            $.modalOpen({
+                id: "Details",
+                title: "查看公众号",
+                url: "/WeixinManage/WxOfficial/Details?keyValue=" + keyValue,
+                width: "550px",
+                height: "620px",
+                btn: null,
+            });
+        }
+
+        var objWin = top;
+        function btn_enter() { 
+            var keyValue = $("#gridList").jqGridRowValue().Id;
+            var target = "/WeixinManage/WxHome?keyValue=" + keyValue;
+            if (objWin == null || objWin.closed) {
+                objWin = window.open(target);
+            } else {
+                objWin.close();
+                objWin = window.open(target);
+                //objWin.location.replace(target);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Index</title>
+    <script src="~/lib/jquery/1.12.4/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="~/lib/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/framework-font.css" rel="stylesheet" />
+    <link href="~/css/framework-theme.css" rel="stylesheet" />
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" />
+    <script src="~/lib/select2/select2.min.js"></script>
+    <link href="~/lib/jqgrid/5.3.0/css/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jqgrid/5.3.0/js/jquery.jqGrid.js"></script>
+    <script src="~/lib/jqgrid/5.3.0/i18n/grid.locale-cn.js"></script>
+    <link href="~/css/framework-ui.css" rel="stylesheet" />
+    <script src="~/js/framework-ui.js"></script>
+    <style>
+        .table > tbody > tr > td {
+            vertical-align: middle;
+            padding: 2px 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-Upload" class="btn btn-primary dropdown-text" onclick="btn_upload()"><i class="fa fa-cloud-upload"></i> 上传图片素材</a>
+            </div>
+            <div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                    <li><a id="NF-Edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-trash-o"></i>编辑图片素材</a></li>
+                    <li class="split"></li>
+                    <li><a id="NF-Delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除图片素材</a></li>
+                    <li class="split"></li>
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>
+            <script>$('.toolbar').authorizeButton()</script>
+        </div>
+        <div class="search">
+            <table>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <input id="txt_keyword" type="text" class="form-control" placeholder="昵称/手机" style="width: 200px;">
+                            <span class="input-group-btn">
+                                <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="gridPanel">
+        <table id="gridList"></table>
+        <div id="gridPager"></div>
+    </div>
+    <script>
+        $(function () {
+            gridList();
+        })
+        function gridList() {
+            var $gridList = $("#gridList");
+            $gridList.dataGrid({
+                url: "/WeixinManage/WxImage/GetGridJson",
+                height: $(window).height() - 103,
+                colModel: [
+                    { label: 'Id', name: 'Id', hidden: true, key: true },
+                    { label: 'AppId', name: 'AppId', hidden: true },
+                    { label: 'OpenId', name: 'OpenId', hidden: true },
+                    {
+                        label: '文件图像', name: 'FilePath', width: 30, align: 'center', sortable: false,
+                        formatter: function (cellvalue, options, rowObject) {
+                            return '<img alt="image" height="28" width="28" src="' + cellvalue + '" onerror="this.src=\'/img/image_picture_48px.png\'">';
+                        },
+                        cellattr: function (rowId, val, rawObject, cm, rdata) {
+                            return 'style="cursor:pointer;"';
+                        }
+                    },
+                    { label: '文件名称', name: 'FileName', width: 100, align: 'left', sortable: false },
+                    {
+                        label: '文件大小', name: 'FileSize', width: 50, align: 'center', sortable: false, formatter: function (cellvalue) {
+                            if (cellvalue == null) return '';
+                            else return Math.round(cellvalue / 1024) + 'KB';
+                        }
+                    },
+                    { label: '文件路径', name: 'FilePath', width: 100, align: 'left', sortable: false },
+                    { label: 'MediaId', name: 'MediaId', width: 100, align: 'left', sortable: false },
+                    { label: '创建时间', name: 'CreationTime', width: 50, align: 'center', sortable: false },
+                ],
+                pager: "#gridPager",
+                sortname: 'Id asc',
+                viewrecords: true,
+            });
+            $("#btn_search").click(function () {
+                $gridList.jqGrid('setGridParam', {
+                    postData: { keyword: $("#txt_keyword").val() },
+                }).trigger('reloadGrid');
+            });
+        }
+        function btn_upload() {
+            $.modalOpen({
+                id: "Upload",
+                title: "上传图片素材",
+                url: "/WeixinManage/WxImage/Upload",
+                width: "900px",
+                height: "700px",
+                btn: null,
+                //callBack: function (iframeId) {
+                //    top.frames[iframeId].submitForm();
+                //}
+            });
+        }
+        function btn_edit() {
+            var keyValue = $("#gridList").jqGridRowValue().Id;
+            $.modalOpen({
+                id: "Form",
+                title: "编辑图片素材",
+                url: "/WeixinManage/WxImage/Form?keyValue=" + keyValue,
+                width: "550px",
+                height: "570px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_delete() {
+            $.deleteForm({
+                url: "/WeixinManage/WxImage/DeleteForm",
+                param: { keyValue: $("#gridList").jqGridRowValue().Id },
+                success: function () {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+    </script>
+</body>
+</html>

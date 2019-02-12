@@ -138,17 +138,6 @@
     <None Include="wwwroot\lib\fancybox\src\js\slideshow.js" />
     <None Include="wwwroot\lib\fancybox\src\js\thumbs.js" />
     <None Include="wwwroot\lib\fancybox\src\js\wheel.js" />
-    <None Include="wwwroot\lib\jqPaginator\.bowerrc" />
-    <None Include="wwwroot\lib\jqPaginator\.github\ISSUE_TEMPLATE.md" />
-    <None Include="wwwroot\lib\jqPaginator\.gitignore" />
-    <None Include="wwwroot\lib\jqPaginator\.jshintrc" />
-    <None Include="wwwroot\lib\jqPaginator\.travis.yml" />
-    <None Include="wwwroot\lib\jqPaginator\dist\jqpaginator.min.js" />
-    <None Include="wwwroot\lib\jqPaginator\Gruntfile.js" />
-    <None Include="wwwroot\lib\jqPaginator\LICENSE.md" />
-    <None Include="wwwroot\lib\jqPaginator\README.md" />
-    <None Include="wwwroot\lib\jqPaginator\src\js\jqPaginator.js" />
-    <None Include="wwwroot\lib\jqPaginator\test\specs\jqPaginatorSpec.js" />
     <None Include="wwwroot\lib\jqprint\jquery.jqprint-0.3.js" />
     <None Include="wwwroot\lib\nestable\jquery.nestable.js" />
     <None Include="wwwroot\lib\simditor\css\editor.scss" />

@@ -1,0 +1,324 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <script src="/lib/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/lib/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <link href="/lib/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
+    <link href="/lib/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <link href="/css/framework-style.css" rel="stylesheet" />
+    <script src="/lib/art-template/lib/template-web.js"></script>
+    <link href="~/lib/icheck/custom.css" rel="stylesheet" />
+    <script src="~/lib/icheck/icheck.min.js"></script>
+    <link href="~/lib/jqPaginator/dist/jqpaginator.min.css" rel="stylesheet" />
+    <script src="~/lib/jqPaginator/dist/jqpaginator.min.js"></script>
+    <script src="/js/framework-ui.js"></script>
+    <script type="text/html" id="image-template">
+        {{each rows as row index}}
+        <div class="thumbnail" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;cursor: pointer;">
+            <img src="{{row.FilePath}}" alt="{{row.FileName}}" onerror="javascript:this.src = '{{row.MediaUrl}}'">
+            <div class="m-t-xs">
+                <label class="radio-inline i-checks">
+                    <input type="radio" name="WxMaterial" value="{{row.Id}}" data-type="image" data-filename="{{row.FileName}}" data-filepath="{{row.FilePath}}" data-mediaid="{{row.MediaId}}" data-mediaurl="{{row.MediaUrl}}"> <i></i> {{row.FileName}}
+                </label>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    <script type="text/html" id="news-template">
+        {{each wxNews row index}}
+        <table class="table table-bordered table-hover">
+            <tbody>
+                <tr class="check-tr" data-index="0">
+                    <td class="client-avatar" style="width:48px;text-align:center;">
+                        <input type="radio" class="i-checks" name="WxMaterial" data-type="news" data-mediaid="{{row.MediaId}}">
+                    </td>
+                    <td class="article-tr-title">{{row.MediaId}}</td>
+                </tr>
+                {{each row.WxNewsItems item i}}
+                <tr class="article-tr" data-index="0">
+                    <td class="client-avatar" style="width:48px"><img alt="image" src="{{item.Thumb.ThumbPath}}"> </td>
+                    <td class="article-tr-title"> {{item.Title}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{/each}}
+    </script>
+    <style type="text/css">
+        .check-tr {
+            cursor: pointer
+        }
+    </style>
+</head>
+<body class="gray-bg">
+    <div class="">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel blank-panel">
+                    <div class="panel-heading">
+                        <div class="panel-options">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a data-toggle="tab" href="tabs_panels.html#tab-1" aria-expanded="true"><i class="fa fa-photo"></i> 图片</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="tabs_panels.html#tab-2" aria-expanded="false"><i class="fa fa-newspaper-o"></i> 图文</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="tabs_panels.html#tab-3" aria-expanded="false"><i class="fa fa fa-volume-up"></i> 语音</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="tabs_panels.html#tab-4" aria-expanded="false"><i class="fa fa-video-camera"></i> 视频</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <input id="txt_image_keyword" type="text" placeholder="请输入项目名称" class="input-sm form-control"> <span class="input-group-btn">
+                                                <button id="btn_image_search" type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索图片素材</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 text-center ">
+                                        <div class="customBootstrap no-margins">
+                                            <ul id="image-jqpagination" class="pagination no-margins"></ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="pull-right">
+                                            @*<button class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i> </button>
+                                            <button id="btnAdd" class="btn btn-sm btn-primary" onclick="btn_upload()"><i class="fa fa-cloud-upload"></i> 上传图文素材</button>*@
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div id="image-col1" class="col-sm-2"></div>
+                                    <div id="image-col2" class="col-sm-2"></div>
+                                    <div id="image-col3" class="col-sm-2"></div>
+                                    <div id="image-col4" class="col-sm-2"></div>
+                                    <div id="image-col5" class="col-sm-2"></div>
+                                    <div id="image-col6" class="col-sm-2"></div>
+                                </div>
+                            </div>
+
+                            <div id="tab-2" class="tab-pane">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <input id="txt_news_keyword" type="text" placeholder="请输入项目名称" class="input-sm form-control"> <span class="input-group-btn">
+                                                <button id="btn_news_search" type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索图文素材</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <div class="customBootstrap no-margins">
+                                            <ul id="news-jqpagination" class="pagination no-margins"></ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div id="news-col1" class="col-sm-4"></div>
+                                    <div id="news-col2" class="col-sm-4"></div>
+                                    <div id="news-col3" class="col-sm-4"></div>
+                                    @*<div id="news-col4" class="col-sm-3"></div>*@
+                                </div>
+                            </div>
+                            <div id="tab-3" class="tab-pane">
+                                <strong>布局容器</strong>
+
+                                <p>Bootstrap 需要为页面内容和栅格系统包裹一个 .container 容器。我们提供了两个作此用处的类。注意，由于 padding 等属性的原因，这两种 容器类不能互相嵌套。</p>
+                            </div>
+                            <div id="tab-4" class="tab-pane">
+                                <strong>栅格系统</strong>
+
+                                <p>Bootstrap 提供了一套响应式、移动设备优先的流式栅格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多12列。它包含了易于使用的预定义类，还有强大的mixin 用于生成更具语义的布局。</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var imagePage = 1,imageRows = 18;
+        var newsPage = 1, newsRows = 10;
+        $(function () {
+            $("#image-jqpagination").jqPaginator({
+                totalPages: 1,
+                visiblePages: 10,
+                currentPage: 1,
+                first: '<li class="first"><a href="javascript:void(0);">首页<\/a><\/li>',
+                prev: '<li class="prev"><a href="javascript:void(0);"><i class="arrow arrow2"><\/i>上一页<\/a><\/li>',
+                next: '<li class="next"><a href="javascript:void(0);">下一页<i class="arrow arrow3"><\/i><\/a><\/li>',
+                last: '<li class="last"><a href="javascript:void(0);">末页<\/a><\/li>',
+                page: '<li class="page"><a href="javascript:void(0);">{{page}}<\/a><\/li>',
+                onPageChange: function (page) {
+                    imagePage = imagePage;
+                    loadImagePaginationData(imagePage, imageRows);
+                }
+            });
+            $("#news-jqpagination").jqPaginator({
+                totalPages: 1,
+                visiblePages: 10,
+                currentPage: 1,
+                first: '<li class="first"><a href="javascript:void(0);">首页<\/a><\/li>',
+                prev: '<li class="prev"><a href="javascript:void(0);"><i class="arrow arrow2"><\/i>上一页<\/a><\/li>',
+                next: '<li class="next"><a href="javascript:void(0);">下一页<i class="arrow arrow3"><\/i><\/a><\/li>',
+                last: '<li class="last"><a href="javascript:void(0);">末页<\/a><\/li>',
+                page: '<li class="page"><a href="javascript:void(0);">{{page}}<\/a><\/li>',
+                onPageChange: function (page) {
+                    newsPage = page;
+                    loadNewsPaginationData(newsPage, newsRows);
+                }
+            });
+            $('#btn_image_search').bind('click', function () {
+                loadImagePaginationData(imagePage, imageRows, $("#txt_image_keyword").val());
+            })
+            $('#btn_news_search').bind('click', function () {
+                loadNewsPaginationData(imagePage, imageRows, $("#txt_news_keyword").val());
+            })
+        });
+        function loadImagePaginationData(page, rows, keyword) {
+            var url = "/WeixinManage/WxImage/GetGridJson?&rows=" + rows + "&page=" + page;
+            if (typeof (keyword) != "undefined") {
+                url += "&keyword=" + keyword;
+            }
+            $.ajax({
+                url: url,
+                data: {},
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var col1Data = {}; col1Data.rows = [];
+                    var col2Data = {}; col2Data.rows = [];
+                    var col3Data = {}; col3Data.rows = [];
+                    var col4Data = {}; col4Data.rows = [];
+                    var col5Data = {}; col5Data.rows = [];
+                    var col6Data = {}; col6Data.rows = [];
+
+                    for (var i = 0; i < result.rows.length; i++) {
+                        var colNum = (i + 1) % 6;
+                        if (colNum === 1) col1Data.rows.push(result.rows[i]);
+                        else if (colNum === 2) col2Data.rows.push(result.rows[i]);
+                        else if (colNum === 3) col3Data.rows.push(result.rows[i]);
+                        else if (colNum === 4) col4Data.rows.push(result.rows[i]);
+                        else if (colNum === 5) col5Data.rows.push(result.rows[i]);
+                        else if (colNum === 0) col6Data.rows.push(result.rows[i]);
+                        else;
+                    }
+
+                    var col1Html = template('image-template', col1Data);
+                    var col2Html = template('image-template', col2Data);
+                    var col3Html = template('image-template', col3Data);
+                    var col4Html = template('image-template', col4Data);
+                    var col5Html = template('image-template', col5Data);
+                    var col6Html = template('image-template', col6Data);
+
+                    document.getElementById('image-col1').innerHTML = col1Html;
+                    document.getElementById('image-col2').innerHTML = col2Html;
+                    document.getElementById('image-col3').innerHTML = col3Html;
+                    document.getElementById('image-col4').innerHTML = col4Html;
+                    document.getElementById('image-col5').innerHTML = col5Html;
+                    document.getElementById('image-col6').innerHTML = col6Html;
+
+                    $('#image-jqpagination').jqPaginator('option', { totalPages: result.total == 0 ? result.total + 1 : result.total });
+                    $(".i-checks").iCheck({
+                        checkboxClass: "icheckbox_square-green",
+                        radioClass: "iradio_square-green"
+                    });
+                    $("input[name='WxMaterial']").unbind();
+                    $("input[name='WxMaterial']").on('ifChecked', function (event) {
+                        $('.thumbnail').css('border-color', '#ddd');
+                        var thumbDiv = $(this).parents('.thumbnail');
+                        thumbDiv.css('border-color', '#1ab394');
+                    });
+                    $('.thumbnail').unbind();
+                    $('.thumbnail').bind('click', function () {
+                        $(this).find('input[name="WxMaterial"]:eq(0)').iCheck('check');
+                        $('.thumbnail').css('border-color', '#ddd');
+                        $(this).css('border-color', '#1ab394');
+                    })
+                }
+            });
+        }
+        function loadNewsPaginationData(page, rows, keyword) {
+            var url = "/WeixinManage/WxNews/GetGridJson?&rows=" + newsRows + "&page=" + newsPage;
+            if (typeof (keyword) != "undefined") {
+                url += "&keyword=" + keyword;
+            }
+            $.ajax({
+                url: url,
+                data: {},
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var col1Data = {}; col1Data.wxNews = [];
+                    var col2Data = {}; col2Data.wxNews = [];
+                    var col3Data = {}; col3Data.wxNews = [];
+                    var col4Data = {}; col4Data.wxNews = [];
+
+                    for (var i = 0; i < result.rows.length; i++) {
+                        var colNum = (i + 1) % 3;
+                        if (colNum === 1) col1Data.wxNews.push(result.rows[i]);
+                        else if (colNum === 2) col2Data.wxNews.push(result.rows[i]);
+                        else if (colNum === 0) col3Data.wxNews.push(result.rows[i]);
+                        //else if (colNum === 0) col4Data.wxNews.push(result.rows[i]);
+                        else;
+                    }
+
+                    var col1Html = template('news-template', col1Data);
+                    var col2Html = template('news-template', col2Data);
+                    var col3Html = template('news-template', col3Data);
+                    //var col4Html = template('news-template', col4Data);
+
+                    document.getElementById('news-col1').innerHTML = col1Html;
+                    document.getElementById('news-col2').innerHTML = col2Html;
+                    document.getElementById('news-col3').innerHTML = col3Html;
+                    //document.getElementById('news-col4').innerHTML = col4Html;
+
+                    $('#news-jqpagination').jqPaginator('option', { totalPages: result.total == 0 ? result.total + 1 : result.total });
+                    $(".i-checks").iCheck({
+                        checkboxClass: "icheckbox_square-green",
+                        radioClass: "iradio_square-green"
+                    });
+                    $('.check-tr').unbind();
+                    $('.check-tr').bind('click', function () {
+                        $(this).find('input[name="WxMaterial"]:eq(0)').iCheck('check');
+                    })
+                }
+            });
+        }
+        function submitForm() {
+            top.tempData = '';
+            var radios = $('input[name="WxMaterial"]:checked');
+            console.log(radios);
+            if (radios.length > 0) {
+                var radio = radios[0];
+                var obj = {
+                    Id: radio.value,
+                    MediaId: radio.attributes['data-mediaid'].value,
+                };
+                if (radio.attributes['data-type'] == 'image') {
+                    obj.FileName = radio.attributes['data-filename'].value;
+                    obj.FilePath = radio.attributes['data-filename'].value;
+                    obj.MediaUrl = radio.attributes['data-filename'].value;
+                }
+                top.tempData = JSON.stringify(obj);
+            }
+            $.modalClose();
+        }
+    </script>
+</body>
+</html>

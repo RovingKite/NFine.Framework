@@ -1,0 +1,327 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Index</title>
+    <script src="~/lib/jquery/1.12.4/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="~/lib/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/framework-font.css" rel="stylesheet" />
+    <link href="~/css/framework-theme.css" rel="stylesheet" />
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" />
+    <script src="~/lib/select2/select2.min.js"></script>
+    <link href="~/lib/jqgrid/5.3.0/css/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jqgrid/5.3.0/js/jquery.jqGrid.js"></script>
+    <script src="~/lib/jqgrid/5.3.0/i18n/grid.locale-cn.js"></script>
+    <script src="/lib/art-template/lib/template-web.js"></script>
+    <link href="~/lib/bootstrap-paginator/bootstrap-paginator.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap-paginator/bootstrap-paginator.min.js"></script>
+    <link href="~/lib/loadmask/jquery.loadmask.css" rel="stylesheet" />
+    <script src="~/lib/loadmask/jquery.loadmask.js"></script>
+    <link href="~/css/framework-ui.css" rel="stylesheet" />
+    <script src="~/js/framework-ui.js"></script>
+    <script id="news-template" type="text/html">
+        {{each wxNews row index}}
+        <div class="news">
+            @*<div class="pull-right news-action dropdown">
+                <button data-toggle="dropdown" class="dropdown-toggle btn-white">
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu m-t-xs">
+                    <li><a href="javascript:void(0);">上传</a></li>
+                    <li><a href="javascript:void(0);">编辑</a></li>
+                    <li><a href="javascript:void(0);">删除</a></li>
+                </ul>
+            </div>*@
+            <div class="btn-group">
+                <button type="button" class="btn btn-xs btn-primary news-upload" data-id="{{row.Id}}"><i class="fa fa-cloud-upload"></i> 上传</button>
+                <button type="button" class="btn btn-xs btn-info news-edit" data-id="{{row.Id}}"><i class="fa fa-pencil"></i> 编辑</button>
+                <button type="button" class="btn btn-xs btn-danger news-delete" data-id="{{row.Id}}"><i class="fa fa-trash"></i> 删除</button>
+            </div>
+            {{each row.WxNewsItems newsItem i}}
+            <div class="newsitem">
+                <img src="{{newsItem.Thumb.ThumbPath}}">
+                <span>{{newsItem.Title}}</span>
+            </div>
+            {{/each}}
+        </div>
+        {{/each}}
+    </script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-Add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>新增图文素材</a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-Choose" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_choose()"><i class="fa fa-plus"></i>选择图文素材</a>
+            </div>
+            @*<div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                    <li><a id="NF-Edit" authorize="no" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>编辑文本素材</a></li>
+                    <li><a id="NF-Details" authorize="no" onclick="btn_details()"><i class="fa fa-pencil-square-o"></i>查看文本素材</a></li>
+                    <li><a id="NF-Delete" authorize="no" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除文本素材</a></li>
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>*@
+            <script>$('.toolbar').authorizeButton()</script>
+        </div>
+        <div class="search">
+            <table>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <input id="txt_keyword" type="text" class="form-control" placeholder="请输入标题/内容" style="width: 200px;">
+                            <span class="input-group-btn">
+                                <button id="btn_search" onclick="initPaginator()" type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="newsPanel">
+        <div class="row">
+            <div class="col-md-12" id="news" style="overflow-y: auto;">
+                <div class="col-sm-4 col-md-4 col-lg-3" id="news-col-1">
+
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-3" id="news-col-2">
+
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-3" id="news-col-3">
+
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-3" id="news-col-4">
+
+                </div>
+            </div>
+        </div>
+        <div class="row newsPager">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
+                <ul class="pagination" style="margin:0;padding:7px 0 0 0;"></ul>
+            </div>
+            <div class="col-md-3" style="text-align: right;">
+                <p id="paginationInfo" style="margin: 0;padding:12px 4px;">无数据显示</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('#news').height($(document).height() - 88);
+            initPaginator();
+        })
+
+        function btn_add() {
+            top.layer.open({
+                id: 'Form',
+                type: 2,
+                shade: 0.3,
+                title: "新增图文素材",
+                fix: false,
+                area: ['85%', '85%'],
+                content: "/WeixinManage/WxNews/Form",
+                zIndex: 1000,
+                btn: ['保存', '上传', '关闭'],
+                btnclass: ['btn btn-info', 'btn btn-primary', 'btn btn-danger'],
+                yes: function () {
+                    top.frames['Form'].submitForm();
+                },
+                btn2: function () {
+                    top.frames['Form'].uploadForm();
+                    return false
+                },
+                cancel: function () {
+                    return true
+                }
+            });
+            //$.modalOpen({
+            //    id: "Form",
+            //    title: "新增图文素材",
+            //    url: "/WeixinManage/WxNews/Form",
+            //    width: "85%",
+            //    height: "85%",
+            //    btn: ['保存', '保存并提交', '关闭'],
+            //    btnclass: ['btn btn-primary', 'btn btn-primary', 'btn btn-danger'],
+            //    callBack: function (iframeId) {
+            //        top.frames[iframeId].submitForm();
+            //    }
+            //});
+        }
+
+        function btn_choose() {
+            $.modalOpen({
+                id: "Choose",
+                title: "选择图片素材",
+                url: "/WeixinManage/WxNews/Choose",
+                width: "85%",
+                height: "85%",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+
+        function loadNews(data) {
+            var col1Data = {}; col1Data.wxNews = [];
+            var col2Data = {}; col2Data.wxNews = [];
+            var col3Data = {}; col3Data.wxNews = [];
+            var col4Data = {}; col4Data.wxNews = [];
+
+            for (var i = 0; i < data.rows.length; i++) {
+                var colNum = (i + 1) % 4;
+                if (colNum === 1) col1Data.wxNews.push(data.rows[i]);
+                else if (colNum === 2) col2Data.wxNews.push(data.rows[i]);
+                else if (colNum === 3) col3Data.wxNews.push(data.rows[i]);
+                else if (colNum === 0) col4Data.wxNews.push(data.rows[i]);
+                else;
+            }
+
+            var col1Html = template('news-template', col1Data);
+            var col2Html = template('news-template', col2Data);
+            var col3Html = template('news-template', col3Data);
+            var col4Html = template('news-template', col4Data);
+
+            document.getElementById('news-col-1').innerHTML = col1Html;
+            document.getElementById('news-col-2').innerHTML = col2Html;
+            document.getElementById('news-col-3').innerHTML = col3Html;
+            document.getElementById('news-col-4').innerHTML = col4Html;
+            bindNewsEvents();
+        }
+        function initPaginator() {
+            $("body").mask("数据加载中，请稍后......");
+            window.setTimeout(function () {
+                $.ajax({
+                    type: 'get',
+                    url: '/WeixinManage/WxNews/GetGridJson?page=1&rows=10' + '&keyword=' + $('#txt_keyword').val(),
+                    dataType: 'json',
+                    async: false,
+                    success: function (result) {
+                        loadNews(result);
+                        var currentPage = result.page || 1;
+                        var totalPages = result.total || 1;
+                        var options = {
+                            currentPage: currentPage, //当前页
+                            totalPages: totalPages, //总页数
+                            numberOfPages: 10, //设置控件显示的页码数
+                            bootstrapMajorVersion: 3,//如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                            useBootstrapTooltip: false,//是否显示tip提示框
+                            itemTexts: function (type, page, current) {//文字翻译
+                                switch (type) {
+                                    case "first": return "首页";
+                                    case "prev": return "上一页";
+                                    case "next": return "下一页";
+                                    case "last": return "尾页";
+                                    case "page": return page;
+                                }
+                            },
+                            onPageClicked: onPageClicked
+                        }
+                        if (result.records == 0) {
+                            $('#paginationInfo').text('无数据显示');
+                        }
+                        else {
+                            $('#paginationInfo').text('显示第 ' + result.start + ' - ' + result.end + ' 条记录　检索到 ' + result.records + ' 条记录');
+                        }
+                        $('.pagination').bootstrapPaginator(options);
+                        $("body").unmask();
+                    }
+                })
+            }, 500);
+        }
+        function onPageClicked(event, originalEvent, type, page) {
+            $("body").mask("数据加载中，请稍后......");
+            window.setTimeout(function () {
+                $.ajax({
+                    type: 'get',
+                    url: '/WeixinManage/WxNews/GetGridJson?page=' + page + '&rows=10&keyword=' + $('#txt_keyword').val(),
+                    dataType: 'json',
+                    success: function (result) {
+                        loadNews(result);
+                        var currentPage = result.page || 1;
+                        var totalPages = result.total || 1;
+                        var options = {
+                            currentPage: currentPage, //当前页
+                            totalPages: totalPages, //总页数
+                        }
+                        if (result.records == 0) {
+                            $('#paginationInfo').text('无数据显示');
+                        }
+                        else {
+                            $('#paginationInfo').text('显示第 ' + result.start + ' - ' + result.end + ' 条记录　检索到 ' + result.records + ' 条记录');
+                        }
+                        $('.pagination').bootstrapPaginator(options);
+                        $("body").unmask();
+                    }
+                })
+            }, 500);
+        }
+        function bindNewsEvents() {
+            $('.news-edit').unbind();
+            $('.news-edit').bind('click', function () {
+                var keyValue = $(this).data('id');
+                //$.modalOpen({
+                //    id: "Form",
+                //    title: "编辑图片素材",
+                //    url: "/WeixinManage/WxNews/Form?keyValue=" + keyValue,
+                //    width: "90%",
+                //    height: "90%",
+                //    callBack: function (iframeId) {
+                //        top.frames[iframeId].submitForm();
+                //    }
+                //});
+                top.layer.open({
+                    id: 'Form',
+                    type: 2,
+                    shade: 0.3,
+                    title: "新增图文素材",
+                    fix: false,
+                    area: ['85%', '85%'],
+                    content: "/WeiXinManage/WxNews/Form?keyValue=" + keyValue,
+                    zIndex: 1000,
+                    btn: ['保存', '上传', '关闭'],
+                    btnclass: ['btn btn-info', 'btn btn-primary', 'btn btn-danger'],
+                    yes: function () {
+                        top.frames['Form'].submitForm();
+                    },
+                    btn2: function () {
+                        top.frames['Form'].uploadForm();
+                        return false
+                    },
+                    cancel: function () {
+                        return true
+                    }
+                });
+            });
+
+            $('.news-delete').unbind();
+            $('.news-delete').bind('click', function () {
+                var keyValue = $(this).data('id');
+                $.deleteForm({
+                    url: "/WeixinManage/WxNews/DeleteForm",
+                    param: { keyValue: keyValue },
+                    success: function () {
+                        initPaginator();
+                    }
+                })
+            });
+        }
+    </script>
+</body>
+</html>

@@ -238,6 +238,7 @@ $.submitForm = function (options) {
             dataType: "json",
             success: function (data) {
                 if (data.state == "success") {
+                    $.loading(false);
                     options.success(data);
                     $.modalMsg(data.message, data.state);
                     if (options.close == true) {

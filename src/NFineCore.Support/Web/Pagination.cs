@@ -45,20 +45,20 @@ namespace NFineCore.Support
             }
         }
 
-        //public int start
-        //{
-        //    get
-        //    {
-        //        return ((page - 1) * this.rows) + 1;
-        //    }
-        //}
+        public int start
+        {
+            get
+            {
+                return ((page - 1) * this.rows) + 1;
+            }
+        }
 
-        //public int end
-        //{
-        //    get
-        //    {
-        //        return (page * this.rows);
-        //    }
-        //}
+        public int end
+        {
+            get
+            {
+                return (page * this.rows) < this.records ? (page * this.rows) : this.records;
+            }
+        }
     }
 }

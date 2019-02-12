@@ -1,5 +1,7 @@
 ﻿using NFineCore.EntityFramework.Dtos.SystemManage;
+using NFineCore.EntityFramework.Dtos.WeixinManage;
 using NFineCore.EntityFramework.Models.SystemManage;
+using NFineCore.EntityFramework.Models.WeixinManage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,7 +81,35 @@ namespace NFineCore.EntityFramework
 
                 #endregion
 
+                #region WeixinManage Map
 
+                cfg.CreateMap<WxOfficialInputDto, WxOfficial>();
+                cfg.CreateMap<WxOfficial, WxOfficialOutputDto>();
+                cfg.CreateMap<WxOfficial, WxOfficialGridDto>();
+
+                cfg.CreateMap<WxUser, WxUserGridDto>();
+
+                cfg.CreateMap<WxTextInputDto, WxText>();
+                cfg.CreateMap<WxText, WxTextOutputDto>();
+                cfg.CreateMap<WxText, WxTextGridDto>();
+
+                cfg.CreateMap<WxImageInputDto, WxImage>();
+                cfg.CreateMap<WxImage, WxImageInputDto>();
+                cfg.CreateMap<WxImage, WxImageGridDto>();
+
+                cfg.CreateMap<WxImageInputDto, WxImage>();
+                cfg.CreateMap<WxImage, WxImageOutputDto>();
+                cfg.CreateMap<WxImage, WxImageGridDto>();
+
+                cfg.CreateMap<WxNewsInputDto, WxNews>();
+                cfg.CreateMap<WxNews, WxNewsInputDto>();
+                cfg.CreateMap<WxNews, WxNewsGridDto>();
+
+                //cfg.CreateMap<WxNewsInpDto, WxNewsItem>();
+                cfg.CreateMap<WxNewsItem, WxNewsItemOutputDto>();
+                //cfg.CreateMap<WxNews, WxNewsGridDto>();
+
+                #endregion
             });
         }
     }
