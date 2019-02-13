@@ -26,33 +26,35 @@
     <script src="~/js/framework-ui.js"></script>
     <script id="news-template" type="text/html">
         {{each wxNews row index}}
-        <div class="news">
-            @*<div class="pull-right news-action dropdown">
-                <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                    <i class="fa fa-angle-down"></i>
-                </button>
-                <ul class="dropdown-menu m-t-xs">
-                    <li><a href="javascript:void(0);">上传</a></li>
-                    <li><a href="javascript:void(0);">编辑</a></li>
-                    <li><a href="javascript:void(0);">删除</a></li>
-                </ul>
-            </div>*@
-            <div class="btn-group">
-                <button type="button" class="btn btn-xs btn-primary news-upload" data-id="{{row.Id}}"><i class="fa fa-cloud-upload"></i> 上传</button>
-                <button type="button" class="btn btn-xs btn-info news-edit" data-id="{{row.Id}}"><i class="fa fa-pencil"></i> 编辑</button>
-                <button type="button" class="btn btn-xs btn-danger news-delete" data-id="{{row.Id}}"><i class="fa fa-trash"></i> 删除</button>
-            </div>
-            {{each row.WxNewsItems newsItem i}}
-            <div class="newsitem">
-                <img src="{{newsItem.Thumb.ThumbPath}}">
-                <span>{{newsItem.Title}}</span>
-            </div>
-            {{/each}}
-        </div>
+        <table class="table table-bordered table-hover newsTable" style="word-wrap:break-word; word-break:break-all;">
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <div class="btn-group">
+                            {{if row.MediaId == null}}
+                            <button type="button" class="btn btn-xs btn-primary news-upload" data-id="{{row.Id}}" data-mediaid="{{row.MediaId}}"><i class="fa fa-cloud-upload"></i> 上传</button>
+                            {{/if}}
+                            <button type="button" class="btn btn-xs btn-info news-edit" data-id="{{row.Id}}" data-mediaid="{{row.MediaId}}"><i class="fa fa-pencil"></i> 编辑</button>
+                            <button type="button" class="btn btn-xs btn-danger news-delete" data-id="{{row.Id}}" data-mediaid="{{row.MediaId}}"><i class="fa fa-trash"></i> 删除</button>
+                        </div>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-xs btn-white"><strong>更新时间：2019-01-27 21:43:37</strong></button>
+                        </div>
+                    </td>
+                </tr>
+                {{each row.WxNewsItems newsItem i}}
+                <tr class="newsitem-tr current" data-index="0">
+                    <td class="client-avatar" style="width:40px;vertical-align: middle;text-align: center;">
+                        <img alt="image" src="{{newsItem.Thumb.ThumbPath}}" style="width:40px;height:40px;">
+                    </td>
+                    <td class="newsitem-tr-title" style="vertical-align: middle;">{{newsItem.Title}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
         {{/each}}
     </script>
-    <style>
-
+    <style type="text/css">
     </style>
 </head>
 <body>
@@ -151,18 +153,6 @@
                     return true
                 }
             });
-            //$.modalOpen({
-            //    id: "Form",
-            //    title: "新增图文素材",
-            //    url: "/WeixinManage/WxNews/Form",
-            //    width: "85%",
-            //    height: "85%",
-            //    btn: ['保存', '保存并提交', '关闭'],
-            //    btnclass: ['btn btn-primary', 'btn btn-primary', 'btn btn-danger'],
-            //    callBack: function (iframeId) {
-            //        top.frames[iframeId].submitForm();
-            //    }
-            //});
         }
 
         function btn_choose() {
@@ -273,19 +263,37 @@
             }, 500);
         }
         function bindNewsEvents() {
+            $('.news-upload').unbind();
+            $('.news-upload').bind('click', function () {
+                var id = $(this).data('id');
+                var mediaId = $(this).data('mediaid');
+                alert(mediaId);
+                $.modalConfirm('注：您确定要上传该图文消息吗？', function (result) {
+                    if (result) {
+                        $.loading(true, '正在上传该图文消息，请耐心等待......');
+                        window.setTimeout(function () {
+                            $.ajax({
+                                url: '/WeixinManage/WxNews/UploadForm',
+                                data: { keyValue: keyValue },
+                                type: "post",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.state == "success") {
+                                        options.success(data);
+                                        $.modalMsg(data.message, data.state);
+                                    } else {
+                                        $.modalAlert(data.message, data.state);
+                                    }
+                                }
+                            });
+                        }, 500);
+                    }
+                })
+            });
+
             $('.news-edit').unbind();
             $('.news-edit').bind('click', function () {
                 var keyValue = $(this).data('id');
-                //$.modalOpen({
-                //    id: "Form",
-                //    title: "编辑图片素材",
-                //    url: "/WeixinManage/WxNews/Form?keyValue=" + keyValue,
-                //    width: "90%",
-                //    height: "90%",
-                //    callBack: function (iframeId) {
-                //        top.frames[iframeId].submitForm();
-                //    }
-                //});
                 top.layer.open({
                     id: 'Form',
                     type: 2,

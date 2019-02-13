@@ -54,9 +54,9 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadForm(WxNewsInputDto wxNewsInputDto, string keyValue)
+        public ActionResult UploadForm(string keyValue)
         {
-            wxNewsService.UploadForm(wxNewsInputDto, keyValue);
+            wxNewsService.UploadForm(keyValue);
             return Success("操作成功。");
         }
 

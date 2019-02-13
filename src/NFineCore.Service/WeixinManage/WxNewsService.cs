@@ -180,9 +180,11 @@ namespace NFineCore.Service.WeixinManage
             }
         }
 
-        public void UploadForm(WxNewsInputDto wxNewsInputDto, string keyValue)
+        public void UploadForm(string keyValue)
         {
-
+            var id = Convert.ToInt64(keyValue);
+            WxNews wxNews = wxNewsRepository.Get(id);
+            UploadForeverNews(wxNews);
         }
 
         public void DeleteForm(string keyValue)
@@ -191,30 +193,26 @@ namespace NFineCore.Service.WeixinManage
             var id = Convert.ToInt64(keyValue);
             var genericFetchStrategy = new GenericFetchStrategy<WxNews>().Include(p => p.WxNewsItems);
             WxNews wxNews = wxNewsRepository.Get(id, genericFetchStrategy);
-            wxNews.DeletedMark = true;
-            wxNews.DeletionTime = DateTime.Now;
-            foreach (WxNewsItem item in wxNews.WxNewsItems)
+            AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
+            var wxJsonResult = MediaApi.DeleteForeverMedia(accessTokenResult.access_token, wxNews.MediaId, 10000);
+            if (wxJsonResult.ErrorCodeValue == 0)
             {
-                item.DeletedMark = true;
-                item.DeletionTime = DateTime.Now;
+                wxNews.MediaId = null;
+                wxNews.DeletedMark = true;
+                wxNews.DeletionTime = DateTime.Now;
+                foreach (WxNewsItem item in wxNews.WxNewsItems)
+                {
+                    item.DeletedMark = true;
+                    item.DeletionTime = DateTime.Now;
+                }
+                wxNewsRepository.Update(wxNews);
             }
-            wxNewsRepository.Update(wxNews);
-
-            //AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
-            //var wxJsonResult = MediaApi.DeleteForeverMedia(accessTokenResult.access_token, wxNews.MediaId, 10000);
-            //if (wxJsonResult.ErrorCodeValue == 0)
-            //{
-            //    wxNews.DeletedMark = true;
-            //    wxNews.DeletionTime = DateTime.Now;
-            //    foreach (WxNewsItem item in wxNews.WxNewsItems)
-            //    {
-            //        item.DeletedMark = true;
-            //        item.DeletionTime = DateTime.Now;
-            //    }
-            //    wxNewsRepository.Update(wxNews);
-            //}
+            else {
+                //throw new Exception(wxJsonResult.errmsg);
+            }
         }
 
+        //新增永久图文素材
         public void UploadForeverNews(WxNews wxNews)
         {
             var specification = new Specification<WxNews>().FetchStrategy.Include(p => p.WxNewsItems.Select(e => e.Thumb));
@@ -254,6 +252,12 @@ namespace NFineCore.Service.WeixinManage
                     wxNewsRepository.Update(wxNews);
                 }
             }
+        }
+
+        //更新永久图文素材
+        public void UpdateForeverNews(WxNews wxNews)
+        {
+
         }
     }
 }
