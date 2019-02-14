@@ -87,13 +87,29 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
             return Success("操作成功。");
         }
 
+        //[HttpPost]
+        //public ActionResult UploadForm(string keyValue)
+        //{
+        //    var webRootPath = _hostingEnvironment.WebRootPath;
+        //    wxImageService.UploadForm(keyValue, webRootPath);
+        //    return Success("操作成功。");
+        //}
+
         [HttpPost]
-        public ActionResult UploadForm(string keyValue)
+        public ActionResult UploadForeverImage(string keyValue)
         {
-            var webRootPath = _hostingEnvironment.WebRootPath;
-            wxImageService.UploadForm(keyValue, webRootPath);
-            return Success("操作成功。");
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var uploadForeverMediaResult = wxImageService.UploadForeverImage(keyValue, webRootPath);
+            if (uploadForeverMediaResult.errcode == 0)
+            {
+                return Success("操作成功。");
+            }
+            else
+            {
+                return Error(uploadForeverMediaResult.errmsg);
+            }
         }
+
         [HttpPost]
         public ActionResult DownloadForm(string keyValue)
         {

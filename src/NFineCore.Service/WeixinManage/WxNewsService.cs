@@ -18,6 +18,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using NFineCore.EntityFramework;
+using Senparc.Weixin.MP.AdvancedAPIs.Media;
+using Senparc.Weixin.Entities;
 
 namespace NFineCore.Service.WeixinManage
 {
@@ -180,11 +182,10 @@ namespace NFineCore.Service.WeixinManage
             }
         }
 
-        public void UploadForm(string keyValue)
+        public void UploadForm(WxNewsInputDto wxNewsInputDto, string keyValue)
         {
-            var id = Convert.ToInt64(keyValue);
-            WxNews wxNews = wxNewsRepository.Get(id);
-            UploadForeverNews(wxNews);
+            SubmitForm(wxNewsInputDto, keyValue);
+            UpdateForeverNews(keyValue);
         }
 
         public void DeleteForm(string keyValue)
@@ -212,12 +213,50 @@ namespace NFineCore.Service.WeixinManage
             }
         }
 
-        //新增永久图文素材
-        public void UploadForeverNews(WxNews wxNews)
-        {
-            var specification = new Specification<WxNews>().FetchStrategy.Include(p => p.WxNewsItems.Select(e => e.Thumb));
-            wxNews = wxNewsRepository.Get(wxNews.Id, specification);
+        /// <summary>
+        /// 新增永久图文素材
+        /// </summary>
+        /// <param name="keyValue">NewsId</param>
+        public UploadForeverMediaResult UploadForeverNews(string keyValue) {
+            long id = Convert.ToInt64(keyValue);
             string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            var specification = new Specification<WxNews>().FetchStrategy.Include(p => p.WxNewsItems.Select(e => e.Thumb));
+            WxNews wxNews = wxNewsRepository.Get(id, specification);
+            NewsModel[] newsModel = new NewsModel[wxNews.WxNewsItems.Count()];
+            foreach (WxNewsItem wxNewsItem in wxNews.WxNewsItems)
+            {
+                int index = wxNews.WxNewsItems.IndexOf(wxNewsItem);
+                newsModel[index] = new NewsModel();
+                newsModel[index].title = wxNewsItem.Title;
+                newsModel[index].author = wxNewsItem.Author;
+                newsModel[index].content = wxNewsItem.Content;
+                newsModel[index].content_source_url = wxNewsItem.ContentSourceUrl;
+                newsModel[index].digest = wxNewsItem.Digest;
+                newsModel[index].need_open_comment = wxNewsItem.NeedOpenComment;
+                newsModel[index].only_fans_can_comment = wxNewsItem.OnlyFansCanComment;
+                newsModel[index].show_cover_pic = wxNewsItem.ShowCoverPic.ToString();
+                newsModel[index].thumb_media_id = wxNewsItem.Thumb.MediaId;
+                newsModel[index].thumb_url = wxNewsItem.Thumb.MediaUrl;
+            }
+            var uploadForeverMediaResult = MediaApi.UploadNews(appId, 10000, newsModel);
+            if (uploadForeverMediaResult.ErrorCodeValue == 0)
+            {
+                wxNews.MediaId = uploadForeverMediaResult.media_id;
+                wxNewsRepository.Update(wxNews);
+            }
+            return uploadForeverMediaResult;
+        }
+
+        /// <summary>
+        /// 更新永久图文素材
+        /// </summary>
+        /// <param name="keyValue"></param>
+        public void UpdateForeverNews(string keyValue)
+        {
+            long id = Convert.ToInt64(keyValue);
+            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            var specification = new Specification<WxNews>().FetchStrategy.Include(p => p.WxNewsItems.Select(e => e.Thumb));
+            WxNews wxNews = wxNewsRepository.Get(id, specification);
 
             NewsModel[] newsModel = new NewsModel[wxNews.WxNewsItems.Count()];
             var index = 0;
@@ -236,28 +275,13 @@ namespace NFineCore.Service.WeixinManage
                 newsModel[index].thumb_url = wxNewsItem.Thumb.MediaUrl;
                 index++;
             }
-
             if (!string.IsNullOrEmpty(wxNews.MediaId))
             {
                 for (var i = 0; i < newsModel.Length; i++)
                 {
-                    var wxJsonResult =MediaApi.UpdateForeverNews(appId, wxNews.MediaId, i, newsModel[i], 10000);
+                    var wxJsonResult = MediaApi.UpdateForeverNews(appId, wxNews.MediaId, i, newsModel[i], 10000);
                 }
             }
-            else
-            {
-                var uploadForeverMediaResult = MediaApi.UploadNews(appId, 10000, newsModel);
-                if (uploadForeverMediaResult.ErrorCodeValue == 0) {
-                    wxNews.MediaId = uploadForeverMediaResult.media_id;
-                    wxNewsRepository.Update(wxNews);
-                }
-            }
-        }
-
-        //更新永久图文素材
-        public void UpdateForeverNews(WxNews wxNews)
-        {
-
         }
     }
 }

@@ -17,11 +17,11 @@ using NFineCore.EntityFramework.Dtos.WeixinManage;
 namespace NFineCore.Web.Areas.WeixinManage.Controllers
 {
     [Area("WeixinManage")]
-    public class UploadController : Controller
+    public class WxUploadController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public UploadController(IHostingEnvironment hostingEnvironment)
+        public WxUploadController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }
@@ -102,7 +102,7 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
                 string thumbPath = dic["thumb"].ToString();
                 string fileSize = dic["size"].ToString();
                 string fileExt = dic["ext"].ToString();
-                SaveWxImage(fileName, filePath, thumbPath, fileSize, fileExt, "0", "0");
+                SaveWxImage(fileName, filePath, thumbPath, fileSize, fileExt, null, null);
                 showSuccess(fileName, filePath, thumbPath, fileSize, fileExt);
             }
             else

@@ -163,34 +163,29 @@ namespace NFineCore.Support
         /// </summary>
         /// <param name="sourceUri">URI地址</param>
         /// <returns>上传后的路径</returns>
-        public string RemoteSaveAs(string sourceUri)
+        public string RemoteSaveAs(string webRootPath, string sourceUri)
         {
-            //if (!IsExternalIPAddress(sourceUri))
-            //{
-            //    return "{\"status\": 0, \"msg\": \"INVALID_URL\"}";
-            //}
-            //var request = HttpWebRequest.Create(sourceUri) as HttpWebRequest;
-            //using (var response = request.GetResponse() as HttpWebResponse)
-            //{
-            //    if (response.StatusCode != HttpStatusCode.OK)
-            //    {
-            //        return "{\"status\": 0, \"msg\": \"Url returns " + response.StatusCode + ", " + response.StatusDescription + "\"}";
-            //    }
-            //    if (response.ContentType.IndexOf("image") == -1)
-            //    {
-            //        return "{\"status\": 0, \"msg\": \"Url is not an image\"}";
-            //    }
-            //    try
-            //    {
-            //        //byte[] byteData = FileHelper.ConvertStreamToByteBuffer(response.GetResponseStream());
-            //        //return FileSaveAs(byteData, sourceUri, false, false);
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        return "{\"status\": 0, \"msg\": \"抓取错误：" + e.Message + "\"}";
-            //    }
-            //}
-            return "";
+            var request = HttpWebRequest.Create(sourceUri) as HttpWebRequest;
+            using (var response = request.GetResponse() as HttpWebResponse)
+            {
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return "{\"status\": 0, \"msg\": \"Url returns " + response.StatusCode + ", " + response.StatusDescription + "\"}";
+                }
+                if (response.ContentType.IndexOf("image") == -1)
+                {
+                    return "{\"status\": 0, \"msg\": \"Url is not an image\"}";
+                }
+                try
+                {
+                    byte[] byteData = FileHelper.ConvertStreamToByteBuffer(response.GetResponseStream());
+                    return FileSaveAs(webRootPath, byteData, sourceUri, false, false);
+                }
+                catch (Exception e)
+                {
+                    return "{\"status\": 0, \"msg\": \"抓取错误：" + e.Message + "\"}";
+                }
+            }
         }
 
         private string GetUploadPath()
@@ -210,6 +205,7 @@ namespace NFineCore.Support
             }
             return path + "/";
         }
+
         /// <summary>
         /// 检查是否为合法的上传文件
         /// </summary>
@@ -237,6 +233,7 @@ namespace NFineCore.Support
             }
             return false;
         }
+
         /// <summary>
         /// 检查文件大小是否合法
         /// </summary>
@@ -274,6 +271,7 @@ namespace NFineCore.Support
             }
             return true;
         }
+
         /// <summary>
         /// 是否为图片文件
         /// </summary>

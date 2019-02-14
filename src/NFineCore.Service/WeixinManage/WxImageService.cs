@@ -110,22 +110,20 @@ namespace NFineCore.Service.WeixinManage
             //}
         }
 
-        public void UploadForm(string keyValue,string webRootPath)
+        public UploadForeverMediaResult UploadForeverImage(string keyValue,string webRootPath)
         {
             var id = Convert.ToInt64(keyValue);
+            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
             WxImage wxImage = wxImageRepository.Get(id);
-            if (string.IsNullOrEmpty(wxImage.MediaId))
-            {                
-                string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
-                AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
-                string fullFilePaht = webRootPath + wxImage.FilePath;
-                var uploadForeverMediaResult = MediaApi.UploadForeverMedia(accessTokenResult.access_token, fullFilePaht, 10000);
-                if (uploadForeverMediaResult.ErrorCodeValue == 0) {
-                    wxImage.MediaId = uploadForeverMediaResult.media_id;
-                    wxImage.MediaUrl = uploadForeverMediaResult.url;
-                    wxImageRepository.Update(wxImage);
-                }
+            AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
+            string fullFilePaht = webRootPath + wxImage.FilePath;
+            var uploadForeverMediaResult = MediaApi.UploadForeverMedia(accessTokenResult.access_token, fullFilePaht, 10000);
+            if (uploadForeverMediaResult.ErrorCodeValue == 0) {
+                wxImage.MediaId = uploadForeverMediaResult.media_id;
+                wxImage.MediaUrl = uploadForeverMediaResult.url;
+                wxImageRepository.Update(wxImage);
             }
+            return uploadForeverMediaResult;
         }
     }
 }

@@ -1,0 +1,164 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Index</title>
+    <script src="~/lib/jquery/1.12.4/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="~/lib/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/framework-font.css" rel="stylesheet" />
+    <link href="~/css/framework-theme.css" rel="stylesheet" />
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" />
+    <script src="~/lib/select2/select2.min.js"></script>
+    <link href="~/lib/jqgrid/5.3.0/css/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jqgrid/5.3.0/js/jquery.jqGrid.js"></script>
+    <script src="~/lib/jqgrid/5.3.0/i18n/grid.locale-cn.js"></script>
+    <link href="~/css/framework-ui.css" rel="stylesheet" />
+    <script src="~/js/framework-ui.js"></script>
+    <style type="text/css">
+        /* 自动换行
+        .ui-jqgrid tr.jqgrow td {
+            white-space: normal !important;
+            height: auto;
+        }
+        */
+    </style>
+</head>
+<body>
+    <div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-Upload" authorize="yes" class="btn btn-primary" onclick="btn_upload()"><i class="fa fa-cloud-upload"></i>附件上传</a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-MultiUpload" authorize="yes" class="btn btn-primary" onclick="btn_multiupload()"><i class="fa fa-cloud-upload"></i>多附件上传</a>
+            </div>
+            <div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>
+            <script>$('.toolbar').authorizeButton()</script>
+        </div>
+        <div class="search">
+            <table>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <input id="txt_keyword" type="text" class="form-control" placeholder="文件名称" style="width: 200px;">
+                            <span class="input-group-btn">
+                                <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="gridPanel">
+        <table id="gridList"></table>
+        <div id="gridPager"></div>
+    </div>
+    <script>
+        $(function () {
+            gridList();
+        })
+        function gridList() {
+            var $gridList = $("#gridList");
+            $gridList.dataGrid({
+                url: "/SystemManage/Attach/GetGridJson",
+                height: $(window).height() - 108,
+                //rowNum: 20,	
+                colModel: [
+                    { label: '主键', name: 'Id', hidden: true },
+                    {
+                        label: '文件名称', name: 'FileName', width: 150, align: 'left', formatter: function (cellvalue, options, rowObject) {
+                            return '<a href="http://' + window.location.host + rowObject.FilePath + '" class="text-primary" target = _blank>' + cellvalue + '</a>';
+                        }
+                    },
+                    { label: '文件路径', name: 'FilePath', width: 150, align: 'left' },
+                    {
+                        label: '文件大小', name: 'FileSize', width: 80, align: 'center', formatter: function (cellvalue) {
+                            return (parseFloat(cellvalue) / 1024).toFixed(2) + '(KB)';
+                        }
+                    },
+                    { label: '文件类型', name: 'FileType', width: 80, align: 'center' },
+                    { label: '文件扩展名', name: 'FileExt', width: 80, align: 'center' },
+                    { label: '上传时间', name: 'CreationTime', width: 80, align: 'center' },
+                    { label: '用户', name: 'UserName', width: 80, align: 'center' },
+                    {
+                        label: '操作', name: '', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) {
+                            var action = '';
+                            action += '<a href="javascript:void(0);" class="deleteAction text-primary" data-id="'+rowObject.Id+'">删除</a>';
+                            return action;
+                        }
+                    },
+                ],
+                pager: "#gridPager",
+                sortname: 'CreatorTime desc',
+                viewrecords: true,
+                gridComplete: function () {
+                    $('.deleteAction').on('click', function () {
+                        var keyValue = $(this).data('id');
+                        $.deleteForm({
+                            url: "/SystemManage/Attach/DeleteForm",
+                            param: { keyValue: keyValue },
+                            success: function () {
+                                $("#gridList").resetSelection();
+                                $("#gridList").trigger("reloadGrid");
+                            }
+                        })
+                    });
+                }
+            });
+            $("#btn_search").click(function () {
+                $gridList.jqGrid('setGridParam', {
+                    postData: { keyword: $("#txt_keyword").val() },
+                }).trigger('reloadGrid');
+            });
+        }
+        function btn_upload() {
+            $.modalOpen({
+                id: "Upload",
+                title: "上传附件",
+                url: "/SystemManage/Attach/Upload",
+                width: "700px",
+                height: "430px",
+                btn: null,
+                callBack: function (iframeId) {
+                    //top.frames[iframeId].submitForm();
+                    alert(123456);
+                },
+                end: function () {
+                    //ajaxPaginator(1);
+                }
+            });
+        }
+        function btn_multiupload() {
+            $.modalOpen({
+                id: "Upload",
+                title: "上传附件",
+                url: "/SystemManage/Attach/MultiUpload",
+                width: "900px",
+                height: "430px",
+                btn: null,
+                callBack: function (iframeId) {
+                    //top.frames[iframeId].submitForm();
+                    alert(123456);
+                },
+                end: function () {
+                    //ajaxPaginator(1);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

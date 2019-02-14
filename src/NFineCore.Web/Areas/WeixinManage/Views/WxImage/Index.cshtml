@@ -215,6 +215,32 @@
             }, 500);
         }
         function bindThumbEvents() {
+            $('.thumb-upload').unbind();
+            $('.thumb-upload').bind('click', function () {
+                var id = $(this).data('id');
+                $.modalConfirm('注：您确定要上传该图片素材吗？', function (result) {
+                    if (result) {
+                        $.loading(true, '正在上传该图片素材，请耐心等待......');
+                        window.setTimeout(function () {
+                            $.ajax({
+                                url: '/WeixinManage/WxImage/UploadForeverImage',
+                                data: { keyValue: id },
+                                type: "post",
+                                dataType: "json",
+                                success: function (data) {
+                                    $.loading(false);
+                                    if (data.state == "success") {
+                                        $.modalMsg(data.message, data.state);
+                                    } else {
+                                        $.modalAlert(data.message, data.state);
+                                    }
+                                }
+                            });
+                        }, 500);
+                    }
+                })
+            });
+
             $('.thumb-edit').unbind();
             $('.thumb-edit').bind('click', function () {
                 var keyValue = $(this).data('id');

@@ -267,19 +267,18 @@
             $('.news-upload').bind('click', function () {
                 var id = $(this).data('id');
                 var mediaId = $(this).data('mediaid');
-                alert(mediaId);
                 $.modalConfirm('注：您确定要上传该图文消息吗？', function (result) {
                     if (result) {
                         $.loading(true, '正在上传该图文消息，请耐心等待......');
                         window.setTimeout(function () {
                             $.ajax({
-                                url: '/WeixinManage/WxNews/UploadForm',
-                                data: { keyValue: keyValue },
+                                url: '/WeixinManage/WxNews/UploadForeverNews',
+                                data: { keyValue: id },
                                 type: "post",
                                 dataType: "json",
                                 success: function (data) {
+                                    $.loading(false);
                                     if (data.state == "success") {
-                                        options.success(data);
                                         $.modalMsg(data.message, data.state);
                                     } else {
                                         $.modalAlert(data.message, data.state);
@@ -308,7 +307,7 @@
                     yes: function () {
                         top.frames['Form'].submitForm();
                     },
-                    btn2: function () {
+                    upload: function () {
                         top.frames['Form'].uploadForm();
                         return false
                     },

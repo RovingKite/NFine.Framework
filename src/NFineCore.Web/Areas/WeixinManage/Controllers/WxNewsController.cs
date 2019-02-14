@@ -54,10 +54,38 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadForm(string keyValue)
+        public ActionResult UploadForm(WxNewsInputDto wxNewsInputDto, string keyValue)
         {
-            wxNewsService.UploadForm(keyValue);
+            wxNewsService.UploadForm(wxNewsInputDto, keyValue);
             return Success("操作成功。");
+        }
+
+        [HttpPost]
+        public ActionResult UploadForeverNews(string keyValue)
+        {
+            var uploadForeverMediaResult = wxNewsService.UploadForeverNews(keyValue);
+            if (uploadForeverMediaResult.errcode == 0)
+            {
+                return Success("操作成功。");
+            }
+            else
+            {
+                return Error(uploadForeverMediaResult.errmsg);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateForeverNews(WxNewsInputDto wxNewsInputDto,string keyValue)
+        {
+            var uploadForeverMediaResult = wxNewsService.UploadForeverNews(keyValue);
+            if (uploadForeverMediaResult.errcode == 0)
+            {
+                return Success("操作成功。");
+            }
+            else
+            {
+                return Error(uploadForeverMediaResult.errmsg);
+            }
         }
 
         [HttpPost]

@@ -40,6 +40,12 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         {
             return View();
         }
+
+        public IActionResult MultiUpload()
+        {
+            return View();
+        }
+
         [HttpGet]
         [PermissionCheck("SystemManage_Attach_Index")]
         public ActionResult GetGridJson(Pagination pagination, string keyword)

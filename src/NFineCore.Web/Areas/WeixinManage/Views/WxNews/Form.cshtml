@@ -181,8 +181,8 @@
                 radioClass: "iradio_square-green"
             });
             var ue = UE.getEditor('Content', {
-                serverUrl: "http://localhost:5002/WeixinManage/Upload/OnPostUpload",
-                autoHeightEnabled: true,
+                serverUrl: "http://localhost:5002/WeixinManage/WxUpload/OnPostUpload",
+                autoHeightEnabled: false,
             });
 
             //编辑器初始化完成再赋值    
@@ -579,13 +579,35 @@
         }
 
         function uploadForm() {
-            //alert($("#form1").valid());
-            //for (var i = 0; i < $('.newsitem-tr').length; i++) {
-            //    $('.newsitem-tr').eq(i).click();
-            //    if (!$("#form1").valid()) {
-            //        return;
-            //    }
-            //}
+            if (!$("#form1").valid() || !UE.getEditor('Content').hasContents()) {
+                if (!UE.getEditor('Content').hasContents()) {
+                    $.modalMsg('请输入一段正文内容。', 'error');
+                    UE.getEditor('Content').focus();
+                }
+                return false;
+            }
+            for (var i = 0; i < $('.newsitem-tr').length; i++) {
+                $('.newsitem-tr').eq(i).click();
+                if (!$("#form1").valid() || !UE.getEditor('Content').hasContents()) {
+                    if (!UE.getEditor('Content').hasContents()) {
+                        $.modalMsg('请输入一段正文内容。', 'error');
+                        UE.getEditor('Content').focus();
+                    }
+                    return false;
+                }
+            }
+            for (var i = 0; i < newsObj.WxNewsItems.length; i++) {
+                newsObj.WxNewsItems[i].Index = i;
+            }
+            var postData = newsObj;
+            postData.Id = keyValue;
+            $.submitForm({
+                url: "/WeixinManage/WxNews/UploadForm?keyValue=" + keyValue,
+                param: postData,
+                success: function () {
+                    $.currentWindow().initPaginator();
+                }
+            });   
         }
             
         //currentIndex是当前元素下标，targetIndex是拖动到的位置下标。
