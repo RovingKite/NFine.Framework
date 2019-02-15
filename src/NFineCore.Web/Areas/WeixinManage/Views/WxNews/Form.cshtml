@@ -262,7 +262,10 @@
                 ignore: "",
                 rules: {
                     Title: "required",
-                    ContentSourceUrl: "required",
+                    ContentSourceUrl: {
+                        required: true,
+                        url: true
+                    },
                     ThumbFileName: "required"
                 },
                 errorPlacement: function (error, element) {
@@ -446,7 +449,7 @@
                     bindNewsItemTrEvents();
                 }
                 else {
-                    alert('最多只能添加8个图文消息')
+                    $.modalMsg('最多只能添加8条图文消息','error')
                 }
             })
 

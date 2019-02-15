@@ -230,6 +230,7 @@
                                 success: function (data) {
                                     $.loading(false);
                                     if (data.state == "success") {
+                                        initPaginator();
                                         $.modalMsg(data.message, data.state);
                                     } else {
                                         $.modalAlert(data.message, data.state);

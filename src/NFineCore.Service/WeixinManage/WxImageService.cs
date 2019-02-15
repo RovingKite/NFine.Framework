@@ -91,23 +91,26 @@ namespace NFineCore.Service.WeixinManage
         {
             var id = Convert.ToInt64(keyValue);
             WxImage wxImage = wxImageRepository.Get(id);
-            wxImage.DeletedMark = true;
-            wxImage.DeletionTime = DateTime.Now;
-            wxImageRepository.Update(wxImage);
-            //if (!string.IsNullOrEmpty(wxImage.MediaId))
-            //{
-            //    string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
-            //    AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
-            //    WxJsonResult wxJsonResult = MediaApi.DeleteForeverMedia(accessTokenResult.access_token, wxImage.MediaId);
-            //    if (wxJsonResult.ErrorCodeValue == 0)
-            //    {
-            //        wxImageRepository.Update(wxImage);
-            //    }
-            //}
-            //else
-            //{
-            //    wxImageRepository.Update(wxImage);
-            //}
+            if (!string.IsNullOrEmpty(wxImage.MediaId))
+            {
+                string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+                AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
+                var wxJsonResult = MediaApi.DeleteForeverMedia(accessTokenResult.access_token, wxImage.MediaId, 10000);
+                if (wxJsonResult.ErrorCodeValue == 0)
+                {
+                    wxImage.MediaId = null;
+                    wxImage.DeletedMark = true;
+                    wxImage.DeletionTime = DateTime.Now;
+                    wxImageRepository.Update(wxImage);
+                }
+            }
+            else
+            {
+                wxImage.MediaId = null;
+                wxImage.DeletedMark = true;
+                wxImage.DeletionTime = DateTime.Now;
+                wxImageRepository.Update(wxImage);
+            }
         }
 
         public UploadForeverMediaResult UploadForeverImage(string keyValue,string webRootPath)

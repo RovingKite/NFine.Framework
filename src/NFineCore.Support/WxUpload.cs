@@ -8,12 +8,12 @@ using System.Text;
 
 namespace NFineCore.Support
 {
-    public class Upload
+    public class WxUpload
     {
-        private readonly SystemOptions _systemOptions;
-        public Upload()
+        private readonly WeixinOptions _weixinOptions;
+        public WxUpload()
         {
-            _systemOptions = JsonConfigHelper.GetAppSettings<SystemOptions>("SystemSettings");
+            _weixinOptions = JsonConfigHelper.GetAppSettings<WeixinOptions>("WeixinSettings");
         }
         /// <summary>
         /// 通过文件流上传文件方法
@@ -32,7 +32,7 @@ namespace NFineCore.Support
                 string newThumbnailFileName = "thumb_" + newFileName; //随机生成缩略图文件名
 
                 string uploadPath = GetUploadPath(); //本地上传目录相对路径
-                string fullUpLoadPath = _systemOptions.WebRootPath + uploadPath;//本地上传目录的物理路径
+                string fullUpLoadPath = _weixinOptions.WebRootPath + uploadPath;//本地上传目录的物理路径
                 string newFilePath = uploadPath + newFileName; //本地上传后的路径
                 string newThumbnailPath = uploadPath + newThumbnailFileName; //本地上传后的缩略图路径
 
@@ -53,11 +53,11 @@ namespace NFineCore.Support
                 {
                     return "{\"status\": 0, \"msg\": \"文件超过限制的大小！\"}";
                 }
-                int imgMaxHeight = _systemOptions.ImageMaxHeight;
-                int imgMaxWidth = _systemOptions.ImageMaxWidth;
-                int thumbHeight = _systemOptions.ThumbnailHeight;
-                int thumbWidth = _systemOptions.ThumbnailWidth;
-                string thumbMode = _systemOptions.ThumbnailMode;
+                int imgMaxHeight = _weixinOptions.ImageMaxHeight;
+                int imgMaxWidth = _weixinOptions.ImageMaxWidth;
+                int thumbHeight = _weixinOptions.ThumbnailHeight;
+                int thumbWidth = _weixinOptions.ThumbnailWidth;
+                string thumbMode = _weixinOptions.ThumbnailMode;
                 ////如果是图片，检查图片是否超出最大尺寸，是则裁剪
                 if (IsImage(fileExt) && (imgMaxHeight > 0 || imgMaxWidth > 0))
                 {
@@ -73,14 +73,14 @@ namespace NFineCore.Support
                     newThumbnailPath = newFilePath; //不生成缩略图则返回原图
                 }
 
-                int waterMarkPosition = _systemOptions.WaterMarkPosition;
-                int waterMarkImgQuality = _systemOptions.WaterMarkImgQuality;
-                int waterMarkFontSize = _systemOptions.WaterMarkFontSize;
-                int waterMarkTransparency = _systemOptions.WaterMarkTransparency;
-                int waterMarkType = _systemOptions.WaterMarkType;
-                string waterMarkText = _systemOptions.WaterMarkText;
-                string waterMarkFont = _systemOptions.WaterMarkFont;
-                string waterMarkPic = _systemOptions.WaterMarkPic;
+                int waterMarkPosition = _weixinOptions.WaterMarkPosition;
+                int waterMarkImgQuality = _weixinOptions.WaterMarkImgQuality;
+                int waterMarkFontSize = _weixinOptions.WaterMarkFontSize;
+                int waterMarkTransparency = _weixinOptions.WaterMarkTransparency;
+                int waterMarkType = _weixinOptions.WaterMarkType;
+                string waterMarkText = _weixinOptions.WaterMarkText;
+                string waterMarkFont = _weixinOptions.WaterMarkFont;
+                string waterMarkPic = _weixinOptions.WaterMarkPic;
                 //如果是图片，检查是否需要打水印
                 if (IsWaterMark(fileExt) && isWater)
                 {
@@ -94,7 +94,7 @@ namespace NFineCore.Support
                             break;
                     }
                 }
-                string fileServer = _systemOptions.FileServer;
+                string fileServer = _weixinOptions.FileServer;
                 //string ossSecretId = _attachOptions.OssSecretId; 
                 //string ossSecretKey = _attachOptions.OssSecretKey;
                 //string ossEndPoint = _attachOptions.OssEndPoint;
@@ -190,11 +190,11 @@ namespace NFineCore.Support
 
         private string GetUploadPath()
         {
-            string uploadPath = _systemOptions.UploadPath;
+            string uploadPath = _weixinOptions.UploadPath;
             if (uploadPath.Substring(0, 1) != "/") {
                 uploadPath = "/" + uploadPath;
             }
-            int fileSave = _systemOptions.FileSave;
+            int fileSave = _weixinOptions.FileSave;
             string path = uploadPath + "/";
             switch (fileSave)
             {

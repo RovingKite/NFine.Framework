@@ -77,14 +77,14 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
             }
            
             bool _isWater = false; //默认不打水印
-            bool _isThumb = true; //默认不生成缩略图
+            bool _isThumbnail = true; //默认不生成缩略图
             if (HttpContext.Request.Query["IsWater"] == "1")
             {
                 _isWater = true;
             }
-            if (HttpContext.Request.Query["IsThumb"] == "1")
+            if (HttpContext.Request.Query["IsThumbnail"] == "1")
             {
-                _isThumb = true;
+                _isThumbnail = true;
             }
             if (byteData.Length == 0)
             {
@@ -92,7 +92,7 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
                 return;
             }
             string webRootPath = _hostingEnvironment.WebRootPath;
-            string remsg = new NFineCore.Support.Upload().FileSaveAs(webRootPath, byteData, fileName, _isThumb, _isWater);
+            string remsg = new NFineCore.Support.WxUpload().FileSaveAs(byteData, fileName, _isThumbnail, _isWater);
             Dictionary<string, object> dic = JsonHelper.DataRowFromJSON(remsg);
             string status = dic["status"].ToString();
             string msg = dic["msg"].ToString();
@@ -202,7 +202,7 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
                 stream.Read(byteData, 0, (int)stream.Length);
             }
             //开始上传
-            string remsg = new NFineCore.Support.Upload().FileSaveAs(webRootPath, byteData, fileName, _isThumbnail, _iswater);
+            string remsg = new NFineCore.Support.Upload().FileSaveAs(byteData, fileName, _isThumbnail, _iswater);
             Dictionary<string, object> dic = JsonHelper.DataRowFromJSON(remsg);
             string status = dic["status"].ToString();
             string msg = dic["msg"].ToString();

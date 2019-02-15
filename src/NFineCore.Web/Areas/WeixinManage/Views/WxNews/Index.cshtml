@@ -37,9 +37,9 @@
                             <button type="button" class="btn btn-xs btn-info news-edit" data-id="{{row.Id}}" data-mediaid="{{row.MediaId}}"><i class="fa fa-pencil"></i> 编辑</button>
                             <button type="button" class="btn btn-xs btn-danger news-delete" data-id="{{row.Id}}" data-mediaid="{{row.MediaId}}"><i class="fa fa-trash"></i> 删除</button>
                         </div>
-                        <div class="pull-right">
+                        @*<div class="pull-right">
                             <button type="button" class="btn btn-xs btn-white"><strong>更新时间：2019-01-27 21:43:37</strong></button>
-                        </div>
+                        </div>*@
                     </td>
                 </tr>
                 {{each row.WxNewsItems newsItem i}}
@@ -292,29 +292,54 @@
 
             $('.news-edit').unbind();
             $('.news-edit').bind('click', function () {
-                var keyValue = $(this).data('id');
-                top.layer.open({
-                    id: 'Form',
-                    type: 2,
-                    shade: 0.3,
-                    title: "新增图文素材",
-                    fix: false,
-                    area: ['85%', '85%'],
-                    content: "/WeiXinManage/WxNews/Form?keyValue=" + keyValue,
-                    zIndex: 1000,
-                    btn: ['保存', '上传', '关闭'],
-                    btnclass: ['btn btn-info', 'btn btn-primary', 'btn btn-danger'],
-                    yes: function () {
-                        top.frames['Form'].submitForm();
-                    },
-                    upload: function () {
-                        top.frames['Form'].uploadForm();
-                        return false
-                    },
-                    cancel: function () {
-                        return true
-                    }
-                });
+                var id = $(this).data('id');
+                var mediaid = $(this).data('mediaid');
+                if (typeof mediaid == "undefined" || mediaid == null || mediaid == "") {
+                    top.layer.open({
+                        id: 'Form',
+                        type: 2,
+                        shade: 0.3,
+                        title: "编辑图文素材",
+                        fix: false,
+                        area: ['85%', '85%'],
+                        content: "/WeiXinManage/WxNews/Form?keyValue=" + id,
+                        zIndex: 1000,
+                        btn: ['保存', '上传', '关闭'],
+                        btnclass: ['btn btn-info', 'btn btn-primary', 'btn btn-danger'],
+                        btn1: function () {
+                            top.frames['Form'].submitForm();
+                        },
+                        btn2: function () {
+                            top.frames['Form'].uploadForm();
+                            return false;
+                        },
+                        btn3: function () {
+                            return true;
+                        }
+                    });
+                }
+                else {
+                    top.layer.open({
+                        id: 'Form',
+                        type: 2,
+                        shade: 0.3,
+                        title: "编辑图文素材",
+                        fix: false,
+                        area: ['85%', '85%'],
+                        content: "/WeiXinManage/WxNews/Form?keyValue=" + id,
+                        zIndex: 1000,
+                        btn: ['上传', '关闭'],
+                        btnclass: ['btn btn-primary', 'btn btn-danger'],
+                        btn1: function () {
+                            top.frames['Form'].uploadForm();
+                            return false;
+                        },
+                        btn2: function () {
+                            return true;
+                        }
+                    });
+                }
+                
             });
 
             $('.news-delete').unbind();

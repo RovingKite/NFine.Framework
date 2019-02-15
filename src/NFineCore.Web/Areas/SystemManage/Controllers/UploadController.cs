@@ -86,7 +86,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
             {
                 _isWater = true;
             }
-            if (HttpContext.Request.Query["IsThumbnail"] == "1")
+            if (HttpContext.Request.Query["IsThumb"] == "1")
             {
                 _isThumb = true;
             }
@@ -96,7 +96,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
                 return;
             }
             string webRootPath = _hostingEnvironment.WebRootPath;
-            string remsg = new NFineCore.Support.Upload().FileSaveAs(webRootPath, byteData, fileName, _isThumb, _isWater);
+            string remsg = new NFineCore.Support.Upload().FileSaveAs(byteData, fileName, _isThumb, _isWater);
             Dictionary<string, object> dic = JsonHelper.DataRowFromJSON(remsg);
             string status = dic["status"].ToString();
             string msg = dic["msg"].ToString();
@@ -206,7 +206,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
                 stream.Read(byteData, 0, (int)stream.Length);
             }
             //开始上传
-            string remsg = new NFineCore.Support.Upload().FileSaveAs(webRootPath, byteData, fileName, _isThumbnail, _iswater);
+            string remsg = new NFineCore.Support.Upload().FileSaveAs(byteData, fileName, _isThumbnail, _iswater);
             Dictionary<string, object> dic = JsonHelper.DataRowFromJSON(remsg);
             string status = dic["status"].ToString();
             string msg = dic["msg"].ToString();
@@ -233,7 +233,7 @@ namespace NFineCore.Web.Areas.SystemManage.Controllers
         }
         #endregion
 
-        #region 保存文件信息方法
+        #region 保存附件信息方法
         public void SaveAttach(string fileName, string fileType, string filePath, string thumbPath, string fileSize, string fileExt)
         {
             AttachService attachService = new AttachService();

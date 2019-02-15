@@ -189,15 +189,28 @@ namespace NFineCore.Service.WeixinManage
         }
 
         public void DeleteForm(string keyValue)
-        {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+        {            
             var id = Convert.ToInt64(keyValue);
             var genericFetchStrategy = new GenericFetchStrategy<WxNews>().Include(p => p.WxNewsItems);
             WxNews wxNews = wxNewsRepository.Get(id, genericFetchStrategy);
-            AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
-            var wxJsonResult = MediaApi.DeleteForeverMedia(accessTokenResult.access_token, wxNews.MediaId, 10000);
-            if (wxJsonResult.ErrorCodeValue == 0)
-            {
+            if (!string.IsNullOrEmpty(wxNews.MediaId)) {
+                string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+                AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
+                var wxJsonResult = MediaApi.DeleteForeverMedia(accessTokenResult.access_token, wxNews.MediaId, 10000);
+                if (wxJsonResult.ErrorCodeValue == 0)
+                {
+                    wxNews.MediaId = null;
+                    wxNews.DeletedMark = true;
+                    wxNews.DeletionTime = DateTime.Now;
+                    foreach (WxNewsItem item in wxNews.WxNewsItems)
+                    {
+                        item.DeletedMark = true;
+                        item.DeletionTime = DateTime.Now;
+                    }
+                    wxNewsRepository.Update(wxNews);
+                }
+            }
+            else {
                 wxNews.MediaId = null;
                 wxNews.DeletedMark = true;
                 wxNews.DeletionTime = DateTime.Now;
@@ -207,9 +220,6 @@ namespace NFineCore.Service.WeixinManage
                     item.DeletionTime = DateTime.Now;
                 }
                 wxNewsRepository.Update(wxNews);
-            }
-            else {
-                //throw new Exception(wxJsonResult.errmsg);
             }
         }
 

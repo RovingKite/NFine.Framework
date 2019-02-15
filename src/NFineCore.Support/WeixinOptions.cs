@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NFineCore.Support
 {
-    public class SystemOptions
+    public class WeixinOptions
     {
         public string WebPath { get; set; }
         public string WebRootPath { get; set; }
