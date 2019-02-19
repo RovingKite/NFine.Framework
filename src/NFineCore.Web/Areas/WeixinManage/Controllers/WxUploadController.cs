@@ -129,8 +129,8 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
             //上传图片配置项
             jsonStr.Append("\"imageActionName\": \"uploadimage\","); //执行上传图片的action名称
             jsonStr.Append("\"imageFieldName\": \"upfile\","); //提交的图片表单名称
-            jsonStr.Append("\"imageMaxSize\": \"2048000\","); //上传大小限制，单位B
-            jsonStr.Append("\"imageAllowFiles\": [\".png\", \".jpg\", \".jpeg\", \".gif\", \".bmp\"],"); //上传图片格式显示
+            jsonStr.Append("\"imageMaxSize\": \"1024000\","); //上传大小限制，单位B
+            jsonStr.Append("\"imageAllowFiles\": [\".jpg\",\".png\"],"); //上传图片格式显示
             jsonStr.Append("\"imageCompressEnable\": false,"); //是否压缩图片,默认是true
             jsonStr.Append("\"imageCompressBorder\": 1600,"); //图片压缩最长边限制
             jsonStr.Append("\"imageInsertAlign\": \"none\","); //插入的图片浮动方式
@@ -211,25 +211,22 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
                 stream.Read(byteData, 0, (int)stream.Length);
             }
             //开始上传
-            string remsg = new NFineCore.Support.Upload().FileSaveAs(byteData, fileName, _isThumbnail, _iswater);
-            Dictionary<string, object> dic = JsonHelper.DataRowFromJSON(remsg);
-            string status = dic["status"].ToString();
-            string msg = dic["msg"].ToString();
+            string remsg = new NFineCore.Support.WxUpload().FileSaveAs(byteData, fileName, _isThumbnail, _iswater);
+            Dictionary<string, object> dict = JsonHelper.DataRowFromJSON(remsg);
+            string status = dict["status"].ToString();
+            string msg = dict["msg"].ToString();
             if (status == "1")
             {
-                //string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
-                //AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
-
-                //string filePath = dic["path"].ToString(); //取得上传后的路径
-                //string thumbPath = dic["thumb"].ToString();
-                //string fileSize = dic["size"].ToString();
-                //string fileExt = dic["ext"].ToString();
-                //string title = fileName;
-                //string original = fileName;
-
-                //UploadImgResult uploadImgResult = MediaApi.UploadImg(accessTokenResult.access_token, webRootPath+filePath);
-                //string url = uploadImgResult.url;
-                //editorUploadSuccess(url, title, original);
+                string filePath = dict["path"].ToString();
+                string fileFullPath = dict["fullpath"].ToString();
+                string thumbPath = dict["thumb"].ToString();
+                string fileSize = dict["size"].ToString();
+                string fileExt = dict["ext"].ToString();
+                var uploadImgResult = UploadImg(fileFullPath);
+                if (uploadImgResult.ErrorCodeValue == 0)
+                {
+                    editorUploadSuccess(uploadImgResult.url, fileName, fileName);
+                }                
             }
             else
             {
@@ -352,6 +349,14 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
             string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
             uploadForeverMediaResult = MediaApi.UploadForeverMedia(appId, path);
             return uploadForeverMediaResult;
+        }
+
+        public UploadImgResult UploadImg(string path)
+        {
+            UploadImgResult uploadImgResult = null;
+            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            uploadImgResult = MediaApi.UploadImg(appId, path);
+            return uploadImgResult;
         }
     }
 }

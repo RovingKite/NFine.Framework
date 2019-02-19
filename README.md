@@ -18,7 +18,7 @@ JS框架：jquery-2.1.1、Bootstrap.js、JQuery UI
 CSS框架：Bootstrap v3.3.4（稳定是后台，UI方面根据需求自己升级改造吧）。  
 客户端验证：jQuery Validation Plugin 1.9.0。  
 在线编辑器：UEditor  
-上传文件：Bootstrap FileInput  
+上传文件：WebUploader、Bootstrap FileInput  
 动态页签：Jerichotab（自己改造）  
 数据表格：jqGrid  
 对话框：layer-v2.3  
