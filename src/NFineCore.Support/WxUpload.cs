@@ -34,6 +34,7 @@ namespace NFineCore.Support
                 string uploadPath = GetUploadPath(); //本地上传目录相对路径
                 string fullUpLoadPath = _weixinOptions.WebRootPath + uploadPath;//本地上传目录的物理路径
                 string newFilePath = uploadPath + newFileName; //本地上传后的路径
+                string newFileFullPath = _weixinOptions.WebRootPath + newFilePath;
                 string newThumbnailPath = uploadPath + newThumbnailFileName; //本地上传后的缩略图路径
 
                 byte[] thumbData = null; //缩略图文件流
@@ -149,7 +150,7 @@ namespace NFineCore.Support
 
                 //处理完毕，返回JOSN格式的文件信息
                 return "{\"status\": 1, \"msg\": \"上传文件成功！\", \"name\": \""
-                    + fileName + "\", \"path\": \"" + newFilePath + "\", \"thumb\": \""
+                    + fileName + "\", \"path\": \"" + newFilePath + "\", \"fullpath\": \"" + newFileFullPath.Replace('\\','/') + "\", \"thumb\": \""
                     + newThumbnailPath + "\", \"size\": " + byteData.Length + ", \"ext\": \"" + fileExt + "\"}";
             }
             catch

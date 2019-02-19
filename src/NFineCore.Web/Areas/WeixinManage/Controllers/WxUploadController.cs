@@ -13,6 +13,9 @@ using NFineCore.EntityFramework.Dtos.SystemManage;
 using NFineCore.Service.SystemManage;
 using NFineCore.Service.WeixinManage;
 using NFineCore.EntityFramework.Dtos.WeixinManage;
+using Senparc.Weixin.MP.AdvancedAPIs;
+using Senparc.Weixin.MP.AdvancedAPIs.Media;
+using Newtonsoft.Json.Linq;
 
 namespace NFineCore.Web.Areas.WeixinManage.Controllers
 {
@@ -64,9 +67,6 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
         private void UploadFile()
         {
             var upfile = HttpContext.Request.Form.Files["upfile"];
-            if (upfile == null) {
-                upfile = HttpContext.Request.Form.Files["file"];
-            }
             string fileName = upfile.FileName;
             string fileType = upfile.ContentType;
             byte[] byteData; //获取文件流
@@ -93,17 +93,26 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
             }
             string webRootPath = _hostingEnvironment.WebRootPath;
             string remsg = new NFineCore.Support.WxUpload().FileSaveAs(byteData, fileName, _isThumbnail, _isWater);
-            Dictionary<string, object> dic = JsonHelper.DataRowFromJSON(remsg);
-            string status = dic["status"].ToString();
-            string msg = dic["msg"].ToString();
+            Dictionary<string, object> dict = JsonHelper.DataRowFromJSON(remsg);
+            string status = dict["status"].ToString();
+            string msg = dict["msg"].ToString();
+
             if (status == "1")
             {
-                string filePath = dic["path"].ToString(); //取得上传后的路径
-                string thumbPath = dic["thumb"].ToString();
-                string fileSize = dic["size"].ToString();
-                string fileExt = dic["ext"].ToString();
-                SaveWxImage(fileName, filePath, thumbPath, fileSize, fileExt, null, null);
-                showSuccess(fileName, filePath, thumbPath, fileSize, fileExt);
+                string filePath = dict["path"].ToString();
+                string fileFullPath = dict["fullpath"].ToString();
+                string thumbPath = dict["thumb"].ToString();
+                string fileSize = dict["size"].ToString();
+                string fileExt = dict["ext"].ToString();
+                string _mediaType = HttpContext.Request.Query["MediaType"];
+                string _isForeverMedia = HttpContext.Request.Query["IsForeverMedia"];
+                if (_mediaType == "image" && _isForeverMedia == "1") {
+                    var uploadForeverMediaResult = UploadForeverMedia(fileFullPath);
+                    if (uploadForeverMediaResult.ErrorCodeValue == 0) {
+                        SaveWxImage(fileName, filePath, thumbPath, fileSize, fileExt, uploadForeverMediaResult.media_id, uploadForeverMediaResult.url);
+                        showSuccess(fileName, filePath, fileFullPath, thumbPath, fileSize, fileExt);
+                    }
+                }
             }
             else
             {
@@ -274,7 +283,7 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
         /// <summary>
         /// 显示成功提示
         /// </summary>
-        private void showSuccess(string fileName, string filePath, string thumbPath, string fileSize, string fileExt)
+        private void showSuccess(string fileName, string filePath, string fileFullPath, string thumbPath, string fileSize, string fileExt)
         {
             Hashtable hash = new Hashtable();
             hash["state"] = "SUCCESS";
@@ -336,5 +345,13 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
             HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(hash));
         }
         #endregion
+
+
+        public UploadForeverMediaResult UploadForeverMedia(string path) {
+            UploadForeverMediaResult uploadForeverMediaResult = null;
+            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            uploadForeverMediaResult = MediaApi.UploadForeverMedia(appId, path);
+            return uploadForeverMediaResult;
+        }
     }
 }
