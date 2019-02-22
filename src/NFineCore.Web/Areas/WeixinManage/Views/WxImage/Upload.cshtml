@@ -177,7 +177,7 @@
                 extensions: 'bmp,png,jpeg,jpg,gif',
                 mimeTypes: 'image/*'
             },
-
+            threads: 1, //上传并发数。允许同时最大上传进程数,为了保证文件上传顺序
             // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
             disableGlobalDnd: true,
             fileNumLimit: 100, //上传数量限制

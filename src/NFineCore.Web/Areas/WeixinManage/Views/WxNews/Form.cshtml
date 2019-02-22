@@ -51,7 +51,9 @@
             <td style="width:100px;vertical-align: middle;text-align: center;">
                 <a class="btn btn-xs btn-white newsitem-up" title="上移"><i class="fa fa-arrow-up"></i></a>
                 <a class="btn btn-xs btn-white newsitem-down" title="下移"><i class="fa fa-arrow-down"></i></a>
+                {{if MediaId == null || MediaId ==''}}
                 <a class="btn btn-xs btn-white newsitem-delete" title="删除"><i class="fa fa-trash"></i></a>
+                {{/if}}
             </td>
         </tr>
         {{/each}}

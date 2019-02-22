@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NFineCore.EntityFramework.Models.SystemManage;
+using NFineCore.EntityFramework.Models.WeixinManage;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -10,6 +11,7 @@ namespace NFineCore.EntityFramework
     public class NFineCoreDbContext : DbContext
     {
         private readonly string _connectionString;
+
         public NFineCoreDbContext(IConfiguration configuration) : base()
         {
             _connectionString = configuration.GetConnectionString("MySQLConnection");
@@ -32,6 +34,14 @@ namespace NFineCore.EntityFramework
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Attach> Attaches { get; set; }
+
+        public DbSet<WxOfficial> WxOfficials { get; set; }
+        public DbSet<WxMenu> WxMenus { get; set; }
+        public DbSet<WxUser> WxUsers { get; set; }
+        public DbSet<WxText> WxText { get; set; }
+        public DbSet<WxNews> WxNews { get; set; }
+        public DbSet<WxNewsItem> WxNewsItems { get; set; }
+        public DbSet<WxImage> WxImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

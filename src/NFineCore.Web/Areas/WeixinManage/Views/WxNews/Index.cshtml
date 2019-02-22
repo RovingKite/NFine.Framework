@@ -37,9 +37,9 @@
                             <button type="button" class="btn btn-xs btn-info news-edit" data-id="{{row.Id}}" data-mediaid="{{row.MediaId}}"><i class="fa fa-pencil"></i> 编辑</button>
                             <button type="button" class="btn btn-xs btn-danger news-delete" data-id="{{row.Id}}" data-mediaid="{{row.MediaId}}"><i class="fa fa-trash"></i> 删除</button>
                         </div>
-                        @*<div class="pull-right">
-                            <button type="button" class="btn btn-xs btn-white"><strong>更新时间：2019-01-27 21:43:37</strong></button>
-                        </div>*@
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-xs btn-white"><strong>更新于：{{row.LastModificationTime}}</strong></button>
+                        </div>
                     </td>
                 </tr>
                 {{each row.WxNewsItems newsItem i}}

@@ -25,6 +25,7 @@ namespace NFineCore.Service.WeixinManage
 {
     public class WxNewsService
     {
+        WxImageRepository wxImageRepository = new WxImageRepository(SharpRepoConfig.sharpRepoConfig, "efCore");
         WxNewsRepository wxNewsRepository = new WxNewsRepository(SharpRepoConfig.sharpRepoConfig, "efCore");
         WxNewsItemRepository wxNewsItemRepository = new WxNewsItemRepository(SharpRepoConfig.sharpRepoConfig, "efCore");
 
@@ -79,7 +80,7 @@ namespace NFineCore.Service.WeixinManage
             return wxNewsOutputDto;
         }
 
-        public void SubmitForm(WxNewsInputDto wxNewsInputDto, string keyValue)
+        public WxNews SubmitForm(WxNewsInputDto wxNewsInputDto, string keyValue)
         {
             string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
             WxNews wxNews = new WxNews();
@@ -87,6 +88,8 @@ namespace NFineCore.Service.WeixinManage
             {
                 long newsId = Convert.ToInt64(keyValue);
                 var genericFetchStrategy = new GenericFetchStrategy<WxNews>().Include(p => p.WxNewsItems.First().Thumb);
+                wxNewsRepository.CachingEnabled = false;
+                wxNewsRepository.ClearCache();
                 wxNews = wxNewsRepository.Get(newsId, genericFetchStrategy);
                 wxNews.LastModificationTime = DateTime.Now;
                 wxNewsRepository.Update(wxNews);
@@ -180,12 +183,22 @@ namespace NFineCore.Service.WeixinManage
                 }
                 wxNewsRepository.Add(wxNews);
             }
+            return wxNews;
         }
 
         public void UploadForm(WxNewsInputDto wxNewsInputDto, string keyValue)
         {
-            SubmitForm(wxNewsInputDto, keyValue);
-            UpdateForeverNews(keyValue);
+            WxNews wxNews = SubmitForm(wxNewsInputDto, keyValue);
+            wxNewsInputDto.Id = wxNews.Id.ToString();
+            wxNewsInputDto.AppId = wxNews.AppId;
+            if (!string.IsNullOrEmpty(wxNewsInputDto.MediaId))
+            {
+                UpdateForeverNews(wxNewsInputDto);
+            }
+            else
+            {
+                UploadForeverNews(wxNewsInputDto);
+            }
         }
 
         public void DeleteForm(string keyValue)
@@ -232,6 +245,18 @@ namespace NFineCore.Service.WeixinManage
             string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
             var specification = new Specification<WxNews>().FetchStrategy.Include(p => p.WxNewsItems.Select(e => e.Thumb));
             WxNews wxNews = wxNewsRepository.Get(id, specification);
+            wxNews.WxNewsItems = wxNews.WxNewsItems.OrderBy(x => x.Index).ToList();
+            var uploadForeverMediaResult = UploadForeverNews(wxNews);
+            return uploadForeverMediaResult;
+        }
+
+        /// <summary>
+        /// 新增永久图文素材
+        /// </summary>
+        /// <param name="wxNews"></param>
+        /// <returns></returns>
+        public UploadForeverMediaResult UploadForeverNews(WxNews wxNews)
+        {
             NewsModel[] newsModel = new NewsModel[wxNews.WxNewsItems.Count()];
             foreach (WxNewsItem wxNewsItem in wxNews.WxNewsItems)
             {
@@ -245,12 +270,48 @@ namespace NFineCore.Service.WeixinManage
                 newsModel[index].need_open_comment = wxNewsItem.NeedOpenComment;
                 newsModel[index].only_fans_can_comment = wxNewsItem.OnlyFansCanComment;
                 newsModel[index].show_cover_pic = wxNewsItem.ShowCoverPic.ToString();
+                if (wxNewsItem.Thumb == null)
+                {
+                    wxNewsItem.Thumb = wxImageRepository.Get(Convert.ToInt64(wxNewsItem.ThumbId));
+                }
                 newsModel[index].thumb_media_id = wxNewsItem.Thumb.MediaId;
                 newsModel[index].thumb_url = wxNewsItem.Thumb.MediaUrl;
             }
-            var uploadForeverMediaResult = MediaApi.UploadNews(appId, 10000, newsModel);
+            var uploadForeverMediaResult = MediaApi.UploadNews(wxNews.AppId, 10000, newsModel);
             if (uploadForeverMediaResult.ErrorCodeValue == 0)
             {
+                wxNewsRepository.Update(new WxNews { Id = wxNews.Id, MediaId = uploadForeverMediaResult.media_id });
+            }
+            return uploadForeverMediaResult;
+        }
+
+        /// <summary>
+        /// 新增永久图文素材
+        /// </summary>
+        /// <param name="wxNews"></param>
+        /// <returns></returns>
+        public UploadForeverMediaResult UploadForeverNews(WxNewsInputDto wxNewsInputDto)
+        {
+            NewsModel[] newsModel = new NewsModel[wxNewsInputDto.WxNewsItems.Count()];
+            foreach (WxNewsItemInputDto wxNewsItemInputDto in wxNewsInputDto.WxNewsItems)
+            {
+                int index = wxNewsInputDto.WxNewsItems.IndexOf(wxNewsItemInputDto);
+                newsModel[index] = new NewsModel();
+                newsModel[index].title = wxNewsItemInputDto.Title;
+                newsModel[index].author = wxNewsItemInputDto.Author;
+                newsModel[index].content = wxNewsItemInputDto.Content;
+                newsModel[index].content_source_url = wxNewsItemInputDto.ContentSourceUrl;
+                newsModel[index].digest = wxNewsItemInputDto.Digest;
+                newsModel[index].need_open_comment = wxNewsItemInputDto.NeedOpenComment;
+                newsModel[index].only_fans_can_comment = wxNewsItemInputDto.OnlyFansCanComment;
+                newsModel[index].show_cover_pic = wxNewsItemInputDto.ShowCoverPic.ToString();
+                newsModel[index].thumb_media_id = wxNewsItemInputDto.Thumb.MediaId;
+                newsModel[index].thumb_url = wxNewsItemInputDto.Thumb.MediaUrl;
+            }
+            var uploadForeverMediaResult = MediaApi.UploadNews(wxNewsInputDto.AppId, 10000, newsModel);
+            if (uploadForeverMediaResult.ErrorCodeValue == 0)
+            {
+                WxNews wxNews = wxNewsRepository.Get(Convert.ToInt64(wxNewsInputDto.Id));
                 wxNews.MediaId = uploadForeverMediaResult.media_id;
                 wxNewsRepository.Update(wxNews);
             }
@@ -260,36 +321,30 @@ namespace NFineCore.Service.WeixinManage
         /// <summary>
         /// 更新永久图文素材
         /// </summary>
-        /// <param name="keyValue"></param>
-        public void UpdateForeverNews(string keyValue)
+        /// <param name="wxNews"></param>
+        public void UpdateForeverNews(WxNewsInputDto wxNewsInputDto)
         {
-            long id = Convert.ToInt64(keyValue);
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
-            var specification = new Specification<WxNews>().FetchStrategy.Include(p => p.WxNewsItems.Select(e => e.Thumb));
-            WxNews wxNews = wxNewsRepository.Get(id, specification);
-
-            NewsModel[] newsModel = new NewsModel[wxNews.WxNewsItems.Count()];
-            var index = 0;
-            foreach (WxNewsItem wxNewsItem in wxNews.WxNewsItems)
+            NewsModel[] newsModel = new NewsModel[wxNewsInputDto.WxNewsItems.Count()];
+            foreach (WxNewsItemInputDto wxNewsItemInputDto in wxNewsInputDto.WxNewsItems)
             {
+                int index = wxNewsInputDto.WxNewsItems.IndexOf(wxNewsItemInputDto); //index 为索引值
                 newsModel[index] = new NewsModel();
-                newsModel[index].title = wxNewsItem.Title;
-                newsModel[index].author = wxNewsItem.Author;
-                newsModel[index].content = wxNewsItem.Content;
-                newsModel[index].content_source_url = wxNewsItem.ContentSourceUrl;
-                newsModel[index].digest = wxNewsItem.Digest;
-                newsModel[index].need_open_comment = wxNewsItem.NeedOpenComment;
-                newsModel[index].only_fans_can_comment = wxNewsItem.OnlyFansCanComment;
-                newsModel[index].show_cover_pic = wxNewsItem.ShowCoverPic.ToString();
-                newsModel[index].thumb_media_id = wxNewsItem.Thumb.MediaId;
-                newsModel[index].thumb_url = wxNewsItem.Thumb.MediaUrl;
-                index++;
+                newsModel[index].title = wxNewsItemInputDto.Title;
+                newsModel[index].author = wxNewsItemInputDto.Author;
+                newsModel[index].content = wxNewsItemInputDto.Content;
+                newsModel[index].content_source_url = wxNewsItemInputDto.ContentSourceUrl;
+                newsModel[index].digest = wxNewsItemInputDto.Digest;
+                newsModel[index].need_open_comment = wxNewsItemInputDto.NeedOpenComment;
+                newsModel[index].only_fans_can_comment = wxNewsItemInputDto.OnlyFansCanComment;
+                newsModel[index].show_cover_pic = wxNewsItemInputDto.ShowCoverPic.ToString();
+                newsModel[index].thumb_media_id = wxNewsItemInputDto.Thumb.MediaId;
+                newsModel[index].thumb_url = wxNewsItemInputDto.Thumb.MediaUrl;
             }
-            if (!string.IsNullOrEmpty(wxNews.MediaId))
+            if (!string.IsNullOrEmpty(wxNewsInputDto.MediaId))
             {
                 for (var i = 0; i < newsModel.Length; i++)
                 {
-                    var wxJsonResult = MediaApi.UpdateForeverNews(appId, wxNews.MediaId, i, newsModel[i], 10000);
+                    var wxJsonResult = MediaApi.UpdateForeverNews(wxNewsInputDto.AppId, wxNewsInputDto.MediaId, i, newsModel[i], 10000);
                 }
             }
         }
