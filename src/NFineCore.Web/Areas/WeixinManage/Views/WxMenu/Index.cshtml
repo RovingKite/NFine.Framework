@@ -45,7 +45,7 @@
                     <div class="ibox-title">
                         <h5>按钮其他参数 </h5>
                     </div>
-                    <div class="ibox-content" data-bind="with:EditModel" style="min-height: 630px;">
+                    <div class="ibox-content" style="min-height: 630px;">
                         <div class="form-horizontal">
                             <div id="menuBtnGroup" class="btn-group">
                                 <button id="btn_click" class="btn btn-white" data-menutype="click" data-menutmpl="keyTemplate"><i class="fa fa-font"></i>&nbsp;<span>点击推事件</span></button>
@@ -134,8 +134,7 @@
                             width: "90%",
                             height: "90%",
                             callBack: function (iframeId) {
-                                //top.frames[iframeId].submitForm();
-                                $(top.frames[iframeId]).find('iframe')[0].contentWindow.submitForm();
+                                top.frames['Choose'].submitForm();
                                 if (top.tempData != '') {
                                     var jsonObj = JSON.parse(top.tempData);
                                     $('#media_id').val(jsonObj.MediaId);
@@ -155,8 +154,7 @@
                             width: "90%",
                             height: "90%",
                             callBack: function (iframeId) {
-                                //top.frames[iframeId].submitForm();
-                                $(top.frames[iframeId]).find('iframe')[0].contentWindow.submitForm();
+                                top.frames['Choose'].submitForm();
                                 if (top.tempData != '') {
                                     var jsonObj = JSON.parse(top.tempData);
                                     $('#media_id').val(jsonObj.MediaId);
@@ -184,12 +182,12 @@
                     //$('#btn_click').click();
                 }
                 else {
-                    alert('自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。');
+                    $.modalAlert('自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。','warning');
                 }
             });
             $('#btn_save').bind('click', function () {
                 if ($(".dd-item-selected").length == 0) {
-                    alert('请先选择需要编辑的菜单项目。')
+                    $.modalAlert('请先选择需要编辑的菜单项目。', 'warning');
                     return false;
                 }
                 if (!validData()) {
@@ -220,16 +218,22 @@
                 dataType: "json",
                 async: false,
                 success: function (result) {
-                    if (result == null) {
-                        //document.getElementById('template').innerHTML = template('click_template', {});
-                    }
-                    else {
+                    //if (result == null) {
+                    //    //document.getElementById('template').innerHTML = template('click_template', {});
+                    //}
+                    //else {
+                    //    var menuData = result.MenuData.replace("\\", "");
+                    //    menuJson = JSON.parse(menuData);
+                    //    $('#nestable').find('ol').eq(0).html(template('nestableTemplate', menuJson.menu));
+                    //    bindNestableEvents();
+                    //    //$('.first-menu:first').find('.btnEdit')[0].click();
+                    //    //$('#btn_click').click();
+                    //}
+                    if (result.MenuData != null) {
                         var menuData = result.MenuData.replace("\\", "");
                         menuJson = JSON.parse(menuData);
                         $('#nestable').find('ol').eq(0).html(template('nestableTemplate', menuJson.menu));
                         bindNestableEvents();
-                        //$('.first-menu:first').find('.btnEdit')[0].click();
-                        //$('#btn_click').click();
                     }
                     $('#nestable').nestable({ maxDepth: 2 });
                 }
@@ -297,7 +301,12 @@
                     type: "Post",
                     dataType: "json",
                     success: function (result) {
-                        alert('同步菜单成功!');
+                        if (result.state == 'success') {
+                            $.modalMsg(result.message, 'success');
+                        }
+                        else {
+                            $.modalAlert(result.message, 'error');
+                        }
                     }
                 });
             });
@@ -330,7 +339,7 @@
                     $('#btn_click').click();
                 }
                 else {
-                    alert('自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。');
+                    $.modalAlert('自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。','warning');
                 }
             });
 
@@ -378,7 +387,7 @@
             $('.btnDelete').bind('click', function (event) {
                 if ($(this).parent().parent().hasClass('first-menu')) {
                     if ($(this).parent().parent().find('.second-menu').length > 0) {
-                        alert('一级菜单下包含有二级菜单，不能直接删除一级菜单；请先删除二级菜单，再删除一级菜单。')
+                        $.modalAlert('一级菜单下包含有二级菜单，不能直接删除一级菜单；请先删除二级菜单，再删除一级菜单。', 'warning');
                     }
                     else {
                         $(this).parent().parent().remove();

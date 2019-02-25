@@ -22,8 +22,17 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
 
         public ActionResult SubmitForm(string menuData)
         {
-            wxMenuService.SubmitForm(menuData);
-            return Success("操作成功。");
+            var wxJsonResult = wxMenuService.SubmitForm(menuData);
+            if (wxJsonResult.ErrorCodeValue == 0)
+            {
+                return Success("操作成功。");
+            }
+            else
+            {
+                return Error("错误码："+wxJsonResult.ErrorCodeValue+ "；</br>" +
+                             "错误名称："+wxJsonResult.errcode + "；</br>" +
+                             "错误信息：" +wxJsonResult.errmsg + "；");
+            }
         }
     }
 }

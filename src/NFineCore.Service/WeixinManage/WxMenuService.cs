@@ -34,7 +34,7 @@ namespace NFineCore.Service.WeixinManage
             return wxMenu;
         }
 
-        public void SubmitForm(string menuData)
+        public WxJsonResult SubmitForm(string menuData)
         {
             string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
             var specification = new Specification<WxMenu>(obj => obj.AppId == appId);
@@ -62,7 +62,7 @@ namespace NFineCore.Service.WeixinManage
             AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
             
             WxJsonResult wxJsonResult = CommonApi.CreateMenu(accessTokenResult.access_token, menu);
-
+            return wxJsonResult;
         }
     }
 }
