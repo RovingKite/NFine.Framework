@@ -15,9 +15,15 @@
     @*<script src="~/lib/bootstrap-fileinput/themes/explorer-fa/theme.js"></script>*@
     <style>
         .file-preview {
-            height:300px;
+            height: 300px;
+            border-radius: 0px;
         }
-
+        .file-drop-zone {
+            margin: 0px 0px 0px 0px;
+        }
+        .file-drop-zone-title {
+            padding: 100px 10px;
+        }
     </style>
 </head>
 <body class="white-bg">
@@ -49,7 +55,7 @@
                 browseClass: "btn btn-white", //按钮样式
                 previewFileIcon: "",
                 showUpload: true,
-                showClose: true,
+                showClose: false,
                 autoReplace: true,
                 elErrorContainer: false,
                 showUploadedThumbs: false,
