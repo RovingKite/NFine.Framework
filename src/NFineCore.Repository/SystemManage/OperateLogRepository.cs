@@ -1,4 +1,4 @@
-﻿using NFineCore.EntityFramework.Models.SystemManage;
+﻿using NFineCore.EntityFramework.Entity.SystemManage;
 using SharpRepository.Repository;
 using SharpRepository.Repository.Configuration;
 

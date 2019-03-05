@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NFineCore.EntityFramework.Models.SystemManage;
+using NFineCore.EntityFramework.Entity.SystemManage;
 using NFineCore.Web.Filters;
 using SharpRepository.Repository;
 

@@ -1,7 +1,7 @@
-﻿using NFineCore.EntityFramework.Dtos.SystemManage;
-using NFineCore.EntityFramework.Dtos.WeixinManage;
-using NFineCore.EntityFramework.Models.SystemManage;
-using NFineCore.EntityFramework.Models.WeixinManage;
+﻿using NFineCore.EntityFramework.Dto.SystemManage;
+using NFineCore.EntityFramework.Dto.WeixinManage;
+using NFineCore.EntityFramework.Entity.SystemManage;
+using NFineCore.EntityFramework.Entity.WeixinManage;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using NFineCore.EntityFramework.Dtos.SystemManage;
+﻿using NFineCore.EntityFramework.Dto.SystemManage;
 using NFineCore.Support;
 using System;
 using System.Collections.Generic;

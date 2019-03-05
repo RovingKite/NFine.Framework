@@ -16,7 +16,7 @@ using System.IO;
 namespace NFineCore.Web.Controllers
 {
     using Microsoft.Extensions.Options;
-    using NFineCore.EntityFramework.Models.WeixinManage;
+    using NFineCore.EntityFramework.Entity.WeixinManage;
     using NFineCore.Service.WeixinManage;
     using Senparc.CO2NET.HttpUtility;
     using Senparc.CO2NET.Utilities;

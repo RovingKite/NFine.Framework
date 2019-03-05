@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
-using NFineCore.EntityFramework.Dtos.SystemManage;
+using NFineCore.EntityFramework.Dto.SystemManage;
 using NFineCore.Service.SystemManage;
 using NFineCore.Support;
 using System;

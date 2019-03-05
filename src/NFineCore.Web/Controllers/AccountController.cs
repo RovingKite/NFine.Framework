@@ -12,9 +12,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NFineCore.Support;
-using NFineCore.EntityFramework.Models.SystemManage;
+using NFineCore.EntityFramework.Entity.SystemManage;
 using NFineCore.Service.SystemManage;
-using NFineCore.EntityFramework.Dtos.SystemManage;
+using NFineCore.EntityFramework.Dto.SystemManage;
 
 namespace NFineCore.Web.Controllers
 {

@@ -14,10 +14,10 @@ namespace NFineCore.EntityFramework.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Area", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Area", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -57,7 +57,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_area");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Attach", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Attach", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -95,7 +95,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_attach");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Dict", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Dict", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -135,7 +135,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_dict");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.DictItem", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.DictItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -181,7 +181,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_dictitem");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.LoginLog", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.LoginLog", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -221,7 +221,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_loginlog");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.OperateLog", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.OperateLog", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -263,7 +263,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_operatelog");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Organize", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Organize", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -325,7 +325,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_organize");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Permission", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Permission", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -359,7 +359,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_permission");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Position", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Position", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -399,7 +399,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_position");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Resource", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Resource", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -467,7 +467,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_resource");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Role", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Role", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -511,7 +511,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_role");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.User", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -579,7 +579,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_user");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.UserRole", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.UserRole", b =>
                 {
                     b.Property<long>("UserId");
 
@@ -594,7 +594,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_userrole");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxImage", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxImage", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -634,7 +634,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("wx_image");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxMenu", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxMenu", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -662,7 +662,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("wx_menu");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxNews", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxNews", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -690,7 +690,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("wx_news");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxNewsItem", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxNewsItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -740,7 +740,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("wx_newsitem");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxOfficial", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxOfficial", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -784,7 +784,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("wx_official");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxText", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxText", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -814,7 +814,7 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("wx_text");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxUser", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxUser", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -868,74 +868,154 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("wx_user");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Attach", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxVideo", b =>
                 {
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.User", "CreatorUser")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppId");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("FileExt");
+
+                    b.Property<string>("FileName");
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<long?>("FileSize");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("MediaId");
+
+                    b.Property<string>("MediaUrl");
+
+                    b.Property<string>("ThumbPath");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wx_video");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxVoice", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppId");
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("FileExt");
+
+                    b.Property<string>("FileName");
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<long?>("FileSize");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("MediaId");
+
+                    b.Property<string>("MediaUrl");
+
+                    b.Property<string>("ThumbPath");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wx_voice");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Attach", b =>
+                {
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.User", "CreatorUser")
                         .WithMany()
                         .HasForeignKey("CreatorUserId");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.DictItem", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.DictItem", b =>
                 {
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.Dict", "Dict")
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.Dict", "Dict")
                         .WithMany("DictItems")
                         .HasForeignKey("DictId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Permission", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Permission", b =>
                 {
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.Resource", "Resource")
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.Resource", "Resource")
                         .WithMany()
                         .HasForeignKey("ResourceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.Role", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Role", b =>
                 {
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.Organize", "Organize")
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.Organize", "Organize")
                         .WithMany()
                         .HasForeignKey("OrganizeId");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.User", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.User", b =>
                 {
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.Organize", "Company")
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.Organize", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.Organize", "Department")
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.Organize", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.Position", "Position")
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.Position", "Position")
                         .WithMany()
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.SystemManage.UserRole", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.UserRole", b =>
                 {
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.Role", "Role")
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NFineCore.EntityFramework.Models.SystemManage.User", "User")
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Models.WeixinManage.WxNewsItem", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxNewsItem", b =>
                 {
-                    b.HasOne("NFineCore.EntityFramework.Models.WeixinManage.WxNews", "WxNews")
+                    b.HasOne("NFineCore.EntityFramework.Entity.WeixinManage.WxNews", "WxNews")
                         .WithMany("WxNewsItems")
                         .HasForeignKey("NewsId");
 
-                    b.HasOne("NFineCore.EntityFramework.Models.WeixinManage.WxImage", "Thumb")
+                    b.HasOne("NFineCore.EntityFramework.Entity.WeixinManage.WxImage", "Thumb")
                         .WithMany()
                         .HasForeignKey("ThumbId");
                 });

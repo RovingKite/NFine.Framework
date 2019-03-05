@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using NFineCore.EntityFramework.Models.SystemManage;
-using NFineCore.EntityFramework.Models.WeixinManage;
+using NFineCore.EntityFramework.Entity.SystemManage;
+using NFineCore.EntityFramework.Entity.WeixinManage;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -10,17 +10,24 @@ namespace NFineCore.EntityFramework
 {
     public class NFineCoreDbContext : DbContext
     {
-        private readonly string _connectionString;
+        //private readonly string _connectionString;
 
-        public NFineCoreDbContext(IConfiguration configuration) : base()
+        //public NFineCoreDbContext(IConfiguration configuration) : base()
+        //{
+        //    _connectionString = configuration.GetConnectionString("MySQLConnection");
+        //}
+
+        public NFineCoreDbContext()
         {
-            _connectionString = configuration.GetConnectionString("MySQLConnection");
+
         }
 
         public NFineCoreDbContext(DbContextOptions<NFineCoreDbContext> options) : base(options)
         {
 
         }
+
+        #region SystemManage DbSet
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -34,7 +41,9 @@ namespace NFineCore.EntityFramework
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Attach> Attaches { get; set; }
+        #endregion
 
+        #region WeixinManage DbSet
         public DbSet<WxOfficial> WxOfficials { get; set; }
         public DbSet<WxMenu> WxMenus { get; set; }
         public DbSet<WxUser> WxUsers { get; set; }
@@ -42,6 +51,9 @@ namespace NFineCore.EntityFramework
         public DbSet<WxNews> WxNews { get; set; }
         public DbSet<WxNewsItem> WxNewsItems { get; set; }
         public DbSet<WxImage> WxImages { get; set; }
+        public DbSet<WxVoice> WxVoices { get; set; }
+        public DbSet<WxVideo> WxVideos { get; set; }
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -57,11 +69,12 @@ namespace NFineCore.EntityFramework
             }
 
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql(_connectionString);
+                optionsBuilder.UseMySql("Server=localhost;Database=nfinecorebase;User Id=root;Password=123456;");
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using NFineCore.Support;
-using NFineCore.EntityFramework.Dtos.WeixinManage;
-using NFineCore.EntityFramework.Models.WeixinManage;
+using NFineCore.EntityFramework.Dto.WeixinManage;
+using NFineCore.EntityFramework.Entity.WeixinManage;
 using NFineCore.Repository.SystemManage;
 using NFineCore.Repository.WeixinManage;
 using SharpRepository.Repository.Queries;

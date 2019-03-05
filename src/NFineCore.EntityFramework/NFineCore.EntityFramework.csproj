@@ -5,16 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20181026081740_Alert_ClassWxNewsArticle_NewsId_ForeignKey.cs" />
+    <Compile Remove="Migrations\20190305072125_Add_WxVoice_Entity.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
 
 </Project>

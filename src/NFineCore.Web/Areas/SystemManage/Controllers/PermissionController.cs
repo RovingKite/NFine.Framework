@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NFineCore.Support;
-using NFineCore.EntityFramework.Dtos.SystemManage;
+using NFineCore.EntityFramework.Dto.SystemManage;
 using NFineCore.Service.SystemManage;
 using NFineCore.Web.Controllers;
 using NFineCore.Web.Attributes;

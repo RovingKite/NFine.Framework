@@ -2,8 +2,8 @@
 using AutoMapper;
 using NFineCore.Support;
 using NFineCore.EntityFramework;
-using NFineCore.EntityFramework.Dtos.SystemManage;
-using NFineCore.EntityFramework.Models.SystemManage;
+using NFineCore.EntityFramework.Dto.SystemManage;
+using NFineCore.EntityFramework.Entity.SystemManage;
 using NFineCore.Repository.SystemManage;
 using SharpRepository.Repository.Queries;
 using SharpRepository.Repository.Specifications;

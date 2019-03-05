@@ -1,5 +1,5 @@
-﻿using NFineCore.EntityFramework.Models.SystemManage;
-using NFineCore.EntityFramework.Models.WeixinManage;
+﻿using NFineCore.EntityFramework.Entity.SystemManage;
+using NFineCore.EntityFramework.Entity.WeixinManage;
 using SharpRepository.Repository;
 using SharpRepository.Repository.Configuration;
 

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NFineCore.Support;
-using NFineCore.EntityFramework.Dtos.SystemManage;
+using NFineCore.EntityFramework.Dto.SystemManage;
 using NFineCore.Service.SystemManage;
 
 namespace NFineCore.Web.Areas.SystemManage.Controllers

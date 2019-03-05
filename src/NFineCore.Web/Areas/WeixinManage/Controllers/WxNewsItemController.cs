@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NFineCore.Support;
-using NFineCore.EntityFramework.Dtos.WeixinManage;
+using NFineCore.EntityFramework.Dto.WeixinManage;
 using NFineCore.Service.WeixinManage;
 using NFineCore.Web.Controllers;
 
