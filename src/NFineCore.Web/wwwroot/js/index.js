@@ -230,7 +230,7 @@ function navbar_click(a) {
                 $.each(childNodes, function (i) {
                     var subrow = childNodes[i];
 
-                    if (subrow.ParentId == id) {
+                    if (subrow.ParentId == id && subrow.IsDisplay != false) {
                         //¶þ¼¶²Ëµ¥
                         $("#menu_title").text(row.FullName);
                         $("#" + row.Id + "").css("background-color", "#14A689");

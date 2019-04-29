@@ -91,7 +91,7 @@
                             <li class="dropdown profile-dropdown">
                                 <a href="#" class="dropdown" data-toggle="dropdown">
                                     <img src="~/images/samples/scarlet-159.png" alt="" />
-                                    <span class="hidden-xs">@NFineCore.Support.OperatorProvider.Provider.GetCurrent().UserName</span>
+                                    <span class="hidden-xs">@NFineCore.Core.OperatorProvider.Provider.GetOperator().UserName</span>
                                 </a>
                                 <ul class="dropdown-menu pull-right">
                                     <li><a class="menuItem" data-id="userInfo" href="/SystemManage/User/Info"><i class="fa fa-user"></i>个人信息</a></li>
@@ -116,7 +116,7 @@
                                 <img alt="" src="~/images/samples/scarlet-159.png" />
                                 <div class="user-box">
                                     <span class="name">
-                                        @NFineCore.Support.OperatorProvider.Provider.GetCurrent().UserName
+                                        @NFineCore.Core.OperatorProvider.Provider.GetOperator().UserName
                                     </span>
                                     <span class="status">
                                         <i class="fa fa-circle"></i>在线

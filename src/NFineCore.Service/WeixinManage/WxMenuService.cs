@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using NFineCore.Core;
 
 namespace NFineCore.Service.WeixinManage
 {
@@ -28,7 +29,7 @@ namespace NFineCore.Service.WeixinManage
         
         public WxMenu GetForm()
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             var specification = new Specification<WxMenu>(obj => obj.AppId == appId);
             WxMenu wxMenu = wxMenuRepository.Find(specification);
             return wxMenu;
@@ -36,7 +37,7 @@ namespace NFineCore.Service.WeixinManage
 
         public WxJsonResult SubmitForm(string menuData)
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             var specification = new Specification<WxMenu>(obj => obj.AppId == appId);
             WxMenu wxMenu = wxMenuRepository.Find(specification);
             if (wxMenu == null)

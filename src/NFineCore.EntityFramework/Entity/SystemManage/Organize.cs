@@ -13,18 +13,31 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         public long Id { get; set; }
         public long ParentId { get; set; }
         public int? Layers { get; set; }
+        [MaxLength(255)]
         public string EnCode { get; set; }
+        [MaxLength(255)]
         public string FullName { get; set; }
+        [MaxLength(255)]
         public string ShortName { get; set; }
+        [MaxLength(255)]
         public string CategoryId { get; set; }
+        [MaxLength(255)]
         public string Type { get; set; }
+        [MaxLength(255)]
         public string ManagerId { get; set; }
+        [MaxLength(255)]
         public string TelePhone { get; set; }
+        [MaxLength(255)]
         public string MobilePhone { get; set; }
+        [MaxLength(255)]
         public string WeChat { get; set; }
+        [MaxLength(255)]
         public string Fax { get; set; }
+        [MaxLength(255)]
         public string Email { get; set; }
+        [MaxLength(255)]
         public string AreaId { get; set; }
+        [MaxLength(255)]
         public string Address { get; set; }
         public bool? AllowEdit { get; set; }
         public bool? AllowDelete { get; set; }

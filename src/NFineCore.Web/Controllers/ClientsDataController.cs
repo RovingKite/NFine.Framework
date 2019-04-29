@@ -12,6 +12,7 @@ using NFineCore.EntityFramework.Entity.SystemManage;
 using NFineCore.Service.SystemManage;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using NFineCore.Core;
 
 namespace NFineCore.Web.Controllers
 {
@@ -47,7 +48,7 @@ namespace NFineCore.Web.Controllers
         [HttpGet]
         public IActionResult GetClientsDataJson()
         {
-            OperatorModel operatorModel = OperatorProvider.Provider.GetCurrent();
+            OperatorModel operatorModel = OperatorProvider.Provider.GetOperator();
             var permissions = _permissionService.GetPermsResList(Convert.ToInt64(operatorModel.Id));
             var data = new
             {

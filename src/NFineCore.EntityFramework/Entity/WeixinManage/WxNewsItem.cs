@@ -10,10 +10,15 @@ namespace NFineCore.EntityFramework.Entity.WeixinManage
     {
         public long Id { get; set; }
         public int Index { get; set;}
+        [MaxLength(255)]
         public string Title { get; set; }
+        [MaxLength(255)]
         public string Author { get; set; }
+        [MaxLength(255)]
         public string Digest { get; set; }
+        [MaxLength(255)]
         public string Content { get; set; }
+        [MaxLength(255)]
         public string ContentSourceUrl { get; set; }
         public int ShowCoverPic { get; set; }
         public int NeedOpenComment { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NFineCore.EntityFramework.Entity.OAManage;
 using NFineCore.EntityFramework.Entity.SystemManage;
 using NFineCore.EntityFramework.Entity.WeixinManage;
 using System;
@@ -40,11 +41,11 @@ namespace NFineCore.EntityFramework
         public DbSet<DictItem> DictItems { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Attach> Attaches { get; set; }
+        public DbSet<ResFile> Attaches { get; set; }
         #endregion
 
         #region WeixinManage DbSet
-        public DbSet<WxOfficial> WxOfficials { get; set; }
+        public DbSet<WxAccount> WxAccounts { get; set; }
         public DbSet<WxMenu> WxMenus { get; set; }
         public DbSet<WxUser> WxUsers { get; set; }
         public DbSet<WxText> WxText { get; set; }
@@ -53,6 +54,11 @@ namespace NFineCore.EntityFramework
         public DbSet<WxImage> WxImages { get; set; }
         public DbSet<WxVoice> WxVoices { get; set; }
         public DbSet<WxVideo> WxVideos { get; set; }
+        #endregion
+
+        #region OAManage DbSet
+        public DbSet<ResFile> ResFiles { get; set; }
+        public DbSet<ResFileRecycle> ResFileRecycles { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

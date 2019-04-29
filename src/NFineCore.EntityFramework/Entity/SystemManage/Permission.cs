@@ -15,6 +15,7 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         [ForeignKey("ResourceId")]
         public Resource Resource { get; set; }
         public long ObjectId { get; set; }
+        [MaxLength(255)]
         public string ObjectType { get; set; }
         public DateTime? CreationTime { get; set; }
         public long? CreatorUserId { get; set; }

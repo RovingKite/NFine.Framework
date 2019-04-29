@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NFineCore.Core;
 using NFineCore.Support;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace NFineCore.Web.Filters
                 if (controllerName == "Weixin") return;
             }
 
-            if (OperatorProvider.Provider.GetCurrent() == null)
+            if (OperatorProvider.Provider.GetOperator() == null)
             {
                 filterContext.Result = new RedirectResult("/Account/Login");
             }

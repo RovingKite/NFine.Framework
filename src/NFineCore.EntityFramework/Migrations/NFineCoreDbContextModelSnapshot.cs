@@ -14,8 +14,98 @@ namespace NFineCore.EntityFramework.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.OAManage.ResFile", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("FileExt")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FileName")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FilePath")
+                        .HasMaxLength(255);
+
+                    b.Property<long>("FileSize");
+
+                    b.Property<string>("FileType")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<long>("ParentId");
+
+                    b.Property<string>("ThumbPath")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorUserId");
+
+                    b.ToTable("oa_resfile");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.OAManage.ResFileRecycle", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("FileExt")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FileName")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FilePath")
+                        .HasMaxLength(255);
+
+                    b.Property<long>("FileSize");
+
+                    b.Property<string>("FileType")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<long>("ParentId");
+
+                    b.Property<string>("ThumbPath")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorUserId");
+
+                    b.ToTable("oa_resfilerecycle");
+                });
 
             modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Area", b =>
                 {
@@ -32,13 +122,16 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("EnCode");
+                    b.Property<string>("EnCode")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("EnabledMark");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("LastModificationTime");
 
@@ -48,51 +141,14 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long>("ParentId");
 
-                    b.Property<string>("SimpleSpelling");
+                    b.Property<string>("SimpleSpelling")
+                        .HasMaxLength(255);
 
                     b.Property<int?>("SortCode");
 
                     b.HasKey("Id");
 
                     b.ToTable("sys_area");
-                });
-
-            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Attach", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<bool?>("DeletedMark");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<string>("FileExt");
-
-                    b.Property<string>("FileName");
-
-                    b.Property<string>("FilePath");
-
-                    b.Property<long>("FileSize");
-
-                    b.Property<string>("FileType");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<string>("ThumbPath");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorUserId");
-
-                    b.ToTable("sys_attach");
                 });
 
             modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Dict", b =>
@@ -110,13 +166,16 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("EnCode");
+                    b.Property<string>("EnCode")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("EnabledMark");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("IsTree");
 
@@ -150,7 +209,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
                     b.Property<long>("DictId");
 
@@ -158,9 +218,11 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<bool?>("IsDefault");
 
-                    b.Property<string>("ItemCode");
+                    b.Property<string>("ItemCode")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("ItemName");
+                    b.Property<string>("ItemName")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("LastModificationTime");
 
@@ -170,7 +232,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long>("ParentId");
 
-                    b.Property<string>("SimpleSpelling");
+                    b.Property<string>("SimpleSpelling")
+                        .HasMaxLength(255);
 
                     b.Property<int?>("SortCode");
 
@@ -196,11 +259,14 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("IpAddress");
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("IpAddressLocation");
+                    b.Property<string>("IpAddressLocation")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("LastModificationTime");
 
@@ -210,11 +276,13 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("OperateTime");
 
-                    b.Property<string>("OperateType");
+                    b.Property<string>("OperateType")
+                        .HasMaxLength(255);
 
                     b.Property<long>("UserId");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -226,11 +294,14 @@ namespace NFineCore.EntityFramework.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Action");
+                    b.Property<string>("Action")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Area");
+                    b.Property<string>("Area")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Controller");
+                    b.Property<string>("Controller")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -242,21 +313,25 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("Method");
+                    b.Property<string>("Method")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("OperateTime");
 
-                    b.Property<string>("Parameter");
+                    b.Property<string>("Parameter")
+                        .HasMaxLength(255);
 
                     b.Property<long>("UserId");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -268,15 +343,18 @@ namespace NFineCore.EntityFramework.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
+                    b.Property<string>("Address")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("AllowDelete");
 
                     b.Property<bool?>("AllowEdit");
 
-                    b.Property<string>("AreaId");
+                    b.Property<string>("AreaId")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("CategoryId");
+                    b.Property<string>("CategoryId")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -288,15 +366,19 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("EnCode");
+                    b.Property<string>("EnCode")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("EnabledMark");
 
-                    b.Property<string>("Fax");
+                    b.Property<string>("Fax")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("LastModificationTime");
 
@@ -304,21 +386,27 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<int?>("Layers");
 
-                    b.Property<string>("ManagerId");
+                    b.Property<string>("ManagerId")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("MobilePhone");
+                    b.Property<string>("MobilePhone")
+                        .HasMaxLength(255);
 
                     b.Property<long>("ParentId");
 
-                    b.Property<string>("ShortName");
+                    b.Property<string>("ShortName")
+                        .HasMaxLength(255);
 
                     b.Property<int?>("SortCode");
 
-                    b.Property<string>("TelePhone");
+                    b.Property<string>("TelePhone")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Type");
+                    b.Property<string>("Type")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("WeChat");
+                    b.Property<string>("WeChat")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -346,7 +434,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long>("ObjectId");
 
-                    b.Property<string>("ObjectType");
+                    b.Property<string>("ObjectType")
+                        .HasMaxLength(255);
 
                     b.Property<long>("ResourceId");
 
@@ -378,13 +467,16 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("EnCode");
+                    b.Property<string>("EnCode")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("EnabledMark");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("LastModificationTime");
 
@@ -418,15 +510,19 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("EnCode");
+                    b.Property<string>("EnCode")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("EnabledMark");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Icon");
+                    b.Property<string>("Icon")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("IsDisplay");
 
@@ -436,7 +532,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<bool?>("IsPublic");
 
-                    b.Property<string>("JsEvent");
+                    b.Property<string>("JsEvent")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("LastModificationTime");
 
@@ -446,21 +543,26 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<int?>("Location");
 
-                    b.Property<string>("Module");
+                    b.Property<string>("Module")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("ObjectType");
+                    b.Property<string>("ObjectType")
+                        .HasMaxLength(255);
 
                     b.Property<long>("ParentId");
 
-                    b.Property<string>("PermissionCode");
+                    b.Property<string>("PermissionCode")
+                        .HasMaxLength(255);
 
                     b.Property<int?>("SortCode");
 
                     b.Property<bool?>("Split");
 
-                    b.Property<string>("Target");
+                    b.Property<string>("Target")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("UrlAddress");
+                    b.Property<string>("UrlAddress")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -486,13 +588,16 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("EnCode");
+                    b.Property<string>("EnCode")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("EnabledMark");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("LastModificationTime");
 
@@ -502,7 +607,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<int?>("SortCode");
 
-                    b.Property<string>("Type");
+                    b.Property<string>("Type")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -532,9 +638,11 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long>("DepartmentId");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("EnabledMark");
 
@@ -548,25 +656,33 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("MobilePhone");
+                    b.Property<string>("MobilePhone")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("NickName");
+                    b.Property<string>("NickName")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .HasMaxLength(255);
 
                     b.Property<long>("PositionId");
 
-                    b.Property<string>("RealName");
+                    b.Property<string>("RealName")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("SecretKey");
+                    b.Property<string>("SecretKey")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("TelePhone");
+                    b.Property<string>("TelePhone")
+                        .HasMaxLength(255);
 
                     b.Property<byte?>("Type");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("WeChat");
+                    b.Property<string>("WeChat")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -594,12 +710,19 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("sys_userrole");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxImage", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxAccount", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppId");
+                    b.Property<string>("AppId")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("AppSecret")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("AppType")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -611,11 +734,61 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("FileExt");
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("FileName");
+                    b.Property<bool?>("EnabledMark");
 
-                    b.Property<string>("FilePath");
+                    b.Property<string>("EncodingAESKey")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Token")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Url")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("WeChat")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("wx_account");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxImage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppId")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<bool?>("DeletedMark");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("FileExt")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FileName")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FilePath")
+                        .HasMaxLength(255);
 
                     b.Property<long?>("FileSize");
 
@@ -623,11 +796,14 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("MediaId");
+                    b.Property<string>("MediaId")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("MediaUrl");
+                    b.Property<string>("MediaUrl")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("ThumbPath");
+                    b.Property<string>("ThumbPath")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -639,7 +815,8 @@ namespace NFineCore.EntityFramework.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppId");
+                    b.Property<string>("AppId")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -655,7 +832,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("MenuData");
+                    b.Property<string>("MenuData")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -667,7 +845,8 @@ namespace NFineCore.EntityFramework.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppId");
+                    b.Property<string>("AppId")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -683,7 +862,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("MediaId");
+                    b.Property<string>("MediaId")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -695,11 +875,14 @@ namespace NFineCore.EntityFramework.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Author");
+                    b.Property<string>("Author")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("ContentSourceUrl");
+                    b.Property<string>("ContentSourceUrl")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -711,7 +894,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("Digest");
+                    b.Property<string>("Digest")
+                        .HasMaxLength(255);
 
                     b.Property<int>("Index");
 
@@ -729,7 +913,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long?>("ThumbId");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -740,58 +925,16 @@ namespace NFineCore.EntityFramework.Migrations
                     b.ToTable("wx_newsitem");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxOfficial", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Account");
-
-                    b.Property<string>("AppId");
-
-                    b.Property<string>("AppSecret");
-
-                    b.Property<string>("AppType");
-
-                    b.Property<DateTime?>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<bool?>("DeletedMark");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<string>("Description");
-
-                    b.Property<bool?>("EnabledMark");
-
-                    b.Property<string>("EncodingAESKey");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Token");
-
-                    b.Property<string>("Url");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("wx_official");
-                });
-
             modelBuilder.Entity("NFineCore.EntityFramework.Entity.WeixinManage.WxText", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppId");
+                    b.Property<string>("AppId")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -807,7 +950,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -819,11 +963,14 @@ namespace NFineCore.EntityFramework.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppId");
+                    b.Property<string>("AppId")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("City");
+                    b.Property<string>("City")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Country");
+                    b.Property<string>("Country")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -835,21 +982,27 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<int?>("GroupId");
 
-                    b.Property<string>("HeadImgUrl");
+                    b.Property<string>("HeadImgUrl")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Language");
+                    b.Property<string>("Language")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("Nickname");
+                    b.Property<string>("Nickname")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("OpenId");
+                    b.Property<string>("OpenId")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Province");
+                    b.Property<string>("Province")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("Remark");
+                    b.Property<string>("Remark")
+                        .HasMaxLength(255);
 
                     b.Property<int?>("Sex");
 
@@ -861,7 +1014,8 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<string>("TagId");
 
-                    b.Property<string>("UnionId");
+                    b.Property<string>("UnionId")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -873,7 +1027,8 @@ namespace NFineCore.EntityFramework.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppId");
+                    b.Property<string>("AppId")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -885,11 +1040,14 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("FileExt");
+                    b.Property<string>("FileExt")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("FileName");
+                    b.Property<string>("FileName")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("FilePath");
+                    b.Property<string>("FilePath")
+                        .HasMaxLength(255);
 
                     b.Property<long?>("FileSize");
 
@@ -897,11 +1055,14 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("MediaId");
+                    b.Property<string>("MediaId")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("MediaUrl");
+                    b.Property<string>("MediaUrl")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("ThumbPath");
+                    b.Property<string>("ThumbPath")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -913,7 +1074,8 @@ namespace NFineCore.EntityFramework.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppId");
+                    b.Property<string>("AppId")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("CreationTime");
 
@@ -925,11 +1087,14 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<string>("FileExt");
+                    b.Property<string>("FileExt")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("FileName");
+                    b.Property<string>("FileName")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("FilePath");
+                    b.Property<string>("FilePath")
+                        .HasMaxLength(255);
 
                     b.Property<long?>("FileSize");
 
@@ -937,18 +1102,28 @@ namespace NFineCore.EntityFramework.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("MediaId");
+                    b.Property<string>("MediaId")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("MediaUrl");
+                    b.Property<string>("MediaUrl")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("ThumbPath");
+                    b.Property<string>("ThumbPath")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
                     b.ToTable("wx_voice");
                 });
 
-            modelBuilder.Entity("NFineCore.EntityFramework.Entity.SystemManage.Attach", b =>
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.OAManage.ResFile", b =>
+                {
+                    b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.User", "CreatorUser")
+                        .WithMany()
+                        .HasForeignKey("CreatorUserId");
+                });
+
+            modelBuilder.Entity("NFineCore.EntityFramework.Entity.OAManage.ResFileRecycle", b =>
                 {
                     b.HasOne("NFineCore.EntityFramework.Entity.SystemManage.User", "CreatorUser")
                         .WithMany()

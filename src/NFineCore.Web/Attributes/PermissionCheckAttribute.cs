@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
+using NFineCore.Core;
 using NFineCore.EntityFramework.Dto.SystemManage;
 using NFineCore.Service.SystemManage;
 using NFineCore.Support;
@@ -30,7 +32,7 @@ namespace NFineCore.Web.Attributes
 
             if (!string.IsNullOrEmpty(areaName))
             {
-                OperatorModel operatorModel = OperatorProvider.Provider.GetCurrent();
+                OperatorModel operatorModel = OperatorProvider.Provider.GetOperator();
                 PermissionService permissionService = new PermissionService();
                 var permissions = permissionService.GetPermsResList(Convert.ToInt64(operatorModel.Id));
 

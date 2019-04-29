@@ -48,8 +48,8 @@ namespace NFineCore.Web.Controllers
         [ActionName("Index")]
         public ActionResult Get(PostModel postModel, string echostr)
         {
-            WxOfficialService wxOfficialService = new WxOfficialService();
-            WxOfficial wxOfficial = wxOfficialService.GetEntityByAppId(postModel.AppId);
+            WxAccountService wxAccountService = new WxAccountService();
+            WxAccount wxOfficial = wxAccountService.GetEntityByAppId(postModel.AppId);
             if (CheckSignature.Check(postModel.Signature, postModel.Timestamp, postModel.Nonce, wxOfficial.Token))
             {
                 return Content(echostr); //返回随机字符串则表示验证通过

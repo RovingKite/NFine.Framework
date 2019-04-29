@@ -1,5 +1,7 @@
-﻿using NFineCore.EntityFramework.Dto.SystemManage;
+﻿using NFineCore.EntityFramework.Dto.OAManage;
+using NFineCore.EntityFramework.Dto.SystemManage;
 using NFineCore.EntityFramework.Dto.WeixinManage;
+using NFineCore.EntityFramework.Entity.OAManage;
 using NFineCore.EntityFramework.Entity.SystemManage;
 using NFineCore.EntityFramework.Entity.WeixinManage;
 using System;
@@ -74,18 +76,13 @@ namespace NFineCore.EntityFramework
                 cfg.CreateMap<Resource, ResourceGridDto>();
                 cfg.CreateMap<Resource, ResourceOutputDto>();
 
-                cfg.CreateMap<AttachInputDto, Attach>();
-                cfg.CreateMap<Attach, AttachGridDto>()
-                .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.CreatorUser.UserName));
-                //cfg.CreateMap<AttachInputDto, Attach>();
-
                 #endregion
 
                 #region WeixinManage Map
 
-                cfg.CreateMap<WxOfficialInputDto, WxOfficial>();
-                cfg.CreateMap<WxOfficial, WxOfficialOutputDto>();
-                cfg.CreateMap<WxOfficial, WxOfficialGridDto>();
+                cfg.CreateMap<WxAccountInputDto, WxAccount>();
+                cfg.CreateMap<WxAccount, WxAccountOutputDto>();
+                cfg.CreateMap<WxAccount, WxAccountGridDto>();
 
                 cfg.CreateMap<WxUser, WxUserGridDto>();
 
@@ -109,6 +106,16 @@ namespace NFineCore.EntityFramework
                 cfg.CreateMap<WxNewsItem, WxNewsItemOutputDto>();
                 //cfg.CreateMap<WxNews, WxNewsGridDto>();
 
+                #endregion
+
+                #region OAManage Map
+                cfg.CreateMap<ResFileInputDto, ResFile>();
+                cfg.CreateMap<ResFile, ResFileGridDto>().ForMember(d => d.UserName, opt => opt.MapFrom(s => s.CreatorUser.UserName));
+                //cfg.CreateMap<AttachInputDto, Attach>();
+
+                cfg.CreateMap<ResFileRecycleInputDto, ResFileRecycle>();
+                cfg.CreateMap<ResFileRecycle, ResFileRecycleGridDto>().ForMember(d => d.UserName, opt => opt.MapFrom(s => s.CreatorUser.UserName));
+                //cfg.CreateMap<AttachInputDto, Attach>();
                 #endregion
             });
         }

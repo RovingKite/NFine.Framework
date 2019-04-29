@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NFineCore.Core;
 using NFineCore.EntityFramework.Dto.WeixinManage;
 using NFineCore.EntityFramework.Entity.SystemManage;
 using NFineCore.Service.WeixinManage;
@@ -20,22 +21,25 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
     [Area("WeixinManage")]
     public class WxHomeController : Controller
     {
-        WxOfficialService wxOfficialService = new WxOfficialService();
+        WxAccountService wxAccountService = new WxAccountService();
 
         [HttpGet]
         public ActionResult Index(string keyValue)
         {
-            WxOfficialOutputDto wxOfficialOutputDto = wxOfficialService.GetForm(keyValue);
-            WxOperatorModel wxOperatorModel = new WxOperatorModel();
-            wxOperatorModel.AppId = wxOfficialOutputDto.AppId;
-            wxOperatorModel.Name = wxOfficialOutputDto.Name;
-            wxOperatorModel.AppSecret = wxOfficialOutputDto.AppSecret;
-            wxOperatorModel.AppType = wxOfficialOutputDto.AppType;
-            WxOperatorProvider.Provider.AddCurrent(wxOperatorModel);
-            var aaa = WxOperatorProvider.Provider.GetCurrent();
-            AccessTokenContainer.Register(wxOfficialOutputDto.AppId, wxOfficialOutputDto.AppSecret);
+            WxAccountOutputDto wxAccountOutputDto = wxAccountService.GetForm(keyValue);
+            OperatorModel operatorModel = OperatorProvider.Provider.GetOperator();
+            if (operatorModel.WxAccountModel == null) {
+                operatorModel.WxAccountModel = new WxAccountModel();
+            }
+            operatorModel.WxAccountModel.AppId = wxAccountOutputDto.AppId;
+            operatorModel.WxAccountModel.Name = wxAccountOutputDto.Name;
+            operatorModel.WxAccountModel.AppSecret = wxAccountOutputDto.AppSecret;
+            operatorModel.WxAccountModel.AppType = wxAccountOutputDto.AppType;
+            OperatorProvider.Provider.AddOperator(operatorModel);
 
-            ViewData["AppName"] = wxOfficialOutputDto.Name;
+            AccessTokenContainer.Register(wxAccountOutputDto.AppId, wxAccountOutputDto.AppSecret);
+
+            ViewData["AppName"] = wxAccountOutputDto.Name;
             return View();
         }
 

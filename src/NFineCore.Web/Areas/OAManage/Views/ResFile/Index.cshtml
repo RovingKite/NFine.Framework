@@ -1,0 +1,355 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="~/css/framework-font.css" rel="stylesheet" />
+    <link href="~/css/framework-theme.css" rel="stylesheet" />
+    <script src="~/lib/jquery/1.12.4/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/lib/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="~/lib/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/layout/jquery.layout.js"></script>
+    <script src="~/lib/wdtree/tree.js"></script>
+    <link href="~/lib/wdtree/tree.css" rel="stylesheet" />
+    <link href="~/lib/jqgrid/5.3.0/css/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jqgrid/5.3.0/js/jquery.jqGrid.js"></script>
+    <script src="~/lib/jqgrid/5.3.0/i18n/grid.locale-cn.js"></script>
+    <link href="~/css/framework-ui.css" rel="stylesheet" />
+    <script src="~/js/framework-ui.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        $(function () {
+            $('#layout').layout();
+            gridList();
+            treeView();
+            $("#dictTree").setNodeSelected('1');            
+        });
+        function treeView() {
+            $("#dictTree").treeview({
+                url: "/OAManage/ResFile/GetTreeJson",
+                onnodeclick: function (item) {
+                    var url = '';                    
+                    if (item.value == 'All') {
+                        url ='/OAManage/ResFile/GetRootFiles'
+                        $('#NF-NewFolder').show();
+                        $('#NF-Delete').show();
+                        $('#NF-Restore').hide();
+                        $('#NF-DeleteCompletely').hide();
+                        $('#NF-EmptyRecycle').hide();
+                    }
+                    else if (item.value == 'Document') {
+                        url = '/OAManage/ResFile/GetDocumentFiles'
+                        $('#NF-NewFolder').hide();
+                        $('#NF-Delete').show();
+                        $('#NF-Restore').hide();
+                        $('#NF-DeleteCompletely').hide();
+                        $('#NF-EmptyRecycle').hide();
+                    }
+                    else if (item.value == 'Image') {
+                        url = '/OAManage/ResFile/GetImageFiles'
+                        $('#NF-NewFolder').hide();
+                        $('#NF-Delete').show();
+                        $('#NF-Restore').hide();
+                        $('#NF-DeleteCompletely').hide();
+                        $('#NF-EmptyRecycle').hide();
+                    }
+                    else if (item.value == 'Recycle') {
+                        url = '/OAManage/ResFile/GetRecycleFiles'
+                        $('#NF-NewFolder').hide();   
+                        $('#NF-Delete').hide();
+                        $('#NF-Restore').show();
+                        $('#NF-DeleteCompletely').show();
+                        $('#NF-EmptyRecycle').show();
+                    }  
+                    if (item.value == 'All') {
+                        $("#gridList").jqGrid("setCaption", '<a href="javascript:void(0);" class="folder" data-id="1">所有文件</a>'); 
+                    }
+                    else {
+                        $("#gridList").jqGrid("setCaption", item.text); 
+                    }
+                    $("#gridList").jqGrid('setGridParam', { url: url }).trigger('reloadGrid'); 
+                }
+            });            
+        }
+        function gridList() {
+            var $gridList = $("#gridList");
+            $gridList.dataGrid({
+                caption: '<a href="javascript:void(0);">所有文件</a>',
+                url: "/OAManage/ResFile/GetRootFiles",
+                height: $(window).height() - 123,
+                //rowNum: 20,
+                colModel: [
+                    { label: '主键', name: 'Id', hidden: true, key: true },
+                    {
+                        label: '文件名称', name: '文件名称', width: 150, align: 'left', formatter: function (cellvalue, options, rowObject) {                            
+                            return '<a href="http://' + window.location.host + rowObject.FilePath + '" class="text-primary" target = _blank>' + rowObject.FileName + '</a>';
+                        }
+                    },
+                    { label: 'FileName', name: 'FileName', width: 150, align: 'left', hidden: true },
+                    { label: '文件路径', name: 'FilePath', width: 150, align: 'left' },
+                    {
+                        label: '文件大小', name: 'FileSize', width: 80, align: 'center', formatter: function (cellvalue) {
+                            return (parseFloat(cellvalue) / 1024).toFixed(2) + '(KB)';
+                        }
+                    },
+                    { label: '文件类型', name: 'FileType', width: 80, align: 'center' },
+                    { label: '文件扩展名', name: 'FileExt', width: 80, align: 'center' },
+                    { label: '上传时间', name: 'CreationTime', width: 80, align: 'center' },
+                    { label: '用户', name: 'UserName', width: 80, align: 'center' },
+                ],
+                //pager: "#gridPager",
+                sortname: 'CreatorTime desc',
+                multiselect: true,
+                viewrecords: true,
+                ondblClickRow: function (rowId, iRow, iCol, e) {
+                    var rowData = $gridList.jqGrid('getRowData', rowId);
+                    if (rowData.FileType == 'Folder') {
+                        var url = '/OAManage/ResFile/GetChildrenFiles?parentId=' + rowData.Id;
+                        $("#gridList").jqGrid('setGridParam', { url: url }).trigger('reloadGrid'); 
+                        var caption = $("#gridList").jqGrid('getGridParam', "caption");
+                        //alert(caption);
+                        caption = caption + '<span>&nbsp;&#47;&nbsp;</span>' + '<a href="javascript:void(0);" class="folder" data-id="'+rowData.Id+'">' + rowData.FileName + '</a>';                        
+                        $("#gridList").jqGrid("setCaption", caption); 
+                    }
+                },
+                gridComplete: function () {
+                    $('.folder').unbind();
+                    $('.folder').bind('click', function () {
+                        var id = $(this).data('id');
+                        var url = '';
+                        if (id == '1') {
+                            url = '/OAManage/ResFile/GetRootFiles'
+                        }
+                        else {
+                            url = '/OAManage/ResFile/GetChildrenFiles?parentId=' + id;
+                        }
+                        var prevs = $(this).prevAll();
+                        var caption = '';
+                        for (var i = prevs.length - 1; i >= 0; i--) {
+                            caption += prevs[i].outerHTML;
+                        }
+                        caption += this.outerHTML;
+                        $("#gridList").jqGrid("setCaption", caption); 
+                        $("#gridList").jqGrid('setGridParam', { url: url }).trigger('reloadGrid');
+                    });                    
+                }
+            });
+            $("#btn_search").click(function () {
+                var url = '/OAManage/ResFile/GetGridJson?keyword=' + $("#txt_keyword").val();
+                $("#gridList").jqGrid('setGridParam', { url: url }).trigger('reloadGrid');                 
+            });
+        }
+        function btn_add() {
+            var dictId = $("#dictTree").getCurrentNode().id;
+            var dictName = $("#dictTree").getCurrentNode().text;
+            if (!dictId) {
+                return false;
+            }
+            $.modalOpen({
+                id: "Form",
+                title: dictName + " 》新增字典项目",
+                url: "/SystemManage/DictItem/Form?dictId=" + dictId,
+                width: "450px",
+                height: "350px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_edit() {
+            var dictId = $("#dictTree").getCurrentNode().id;
+            var dictName = $("#dictTree").getCurrentNode().text;
+            var keyValue = $("#gridList").jqGridRowValue().Id;
+            $.modalOpen({
+                id: "Form",
+                title: dictName + " 》编辑字典项目",
+                url: "/SystemManage/DictItem/Form?keyValue=" + keyValue + "&dictId=" + dictId,
+                width: "450px",
+                height: "350px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+
+        function btn_delete() {
+            var keyValue = $('#gridList').jqGrid('getGridParam', 'selarrrow');
+            $.deleteForm({
+                url: "/OAManage/ResFile/DeleteForm",
+                param: { keyValue: keyValue.toString() },
+                success: function () {
+                    $("#gridList").resetSelection();
+                    $("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+        function btn_deletecompletely() {
+            var keyValue = $('#gridList').jqGrid('getGridParam', 'selarrrow');
+            $.deleteForm({
+                url: "/OAManage/ResFile/DeleteCompletely",
+                param: { keyValue: keyValue.toString() },
+                success: function () {
+                    $("#gridList").resetSelection();
+                    $("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+        function btn_upload() {
+            $.modalOpen({
+                id: "Upload",
+                title: "WebUploader上传文件",
+                url: "/OAManage/ResFile/Upload",
+                width: "770px",
+                height: "510px",
+                btn: null
+            });
+        }
+        function btn_newfolder() {
+            //var parent = $(".ui-jqgrid-title>a:last")
+            //var parentId = $(parent).data('id');
+            //alert(parentId);
+            $.modalOpen({
+                id: "NewFolder",
+                title: "新建文件夹",
+                url: "/OAManage/ResFile/NewFolder",
+                width: "550px",
+                height: "135px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_rename() {
+            //var keyValue = $("#gridList").jqGridRowValue().Id;
+            var keyValue = $('#gridList').jqGrid('getGridParam', 'selrow');
+            $.modalOpen({
+                id: "Rename",
+                title: "重命名",
+                url: "/OAManage/ResFile/Rename?keyValue=" + keyValue,
+                width: "550px",
+                height: "135px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_restore() {
+            var keyValue = $('#gridList').jqGrid('getGridParam', 'selarrrow');
+            $.deleteForm({
+                url: "/OAManage/ResFile/RestoreForm",
+                param: { keyValue: keyValue.toString() },
+                success: function () {
+                    $("#gridList").resetSelection();
+                    $("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+        function btn_move() {
+            //var keyValue = $("#gridList").jqGridRowValue().Id;
+            var keyValue = $('#gridList').jqGrid('getGridParam', 'selrow');
+            $.modalOpen({
+                id: "Rename",
+                title: "移动",
+                url: "/OAManage/ResFile/Move?keyValue=" + keyValue,
+                width: "550px",
+                height: "700px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_emptyrecycle() {
+            $.deleteForm({
+                url: "/OAManage/ResFile/EmptyRecycle",
+                success: function () {
+                    $("#gridList").resetSelection();
+                    $("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+    </script>
+    <div class="ui-layout" id="layout" style="height: 100%; width: 100%;">
+        <div class="ui-layout-west">
+            <div id="dictTree"></div>
+        </div>
+        <div class="ui-layout-center">
+            <div class="topPanel">
+                <div class="toolbar">
+                    <div class="btn-group">
+                        <a class="btn btn-white" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="NF-Upload" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_upload()"><i class="fa fa-upload"></i>上传文件</a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="NF-NewFolder" authorize="yes" class="btn btn-white dropdown-text" onclick="btn_newfolder()"><i class="fa fa-plus"></i>新建文件夹</a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="NF-Download" authorize="yes" class="btn btn-white dropdown-text" onclick="btn_download()"><i class="fa fa-download"></i>下载</a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="NF-Delete" authorize="yes" class="btn btn-white dropdown-text" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除</a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="NF-Restore" authorize="yes" class="btn btn-white dropdown-text" onclick="btn_restore()"><i class="fa fa-rotate-left"></i>还原文件</a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="NF-DeleteCompletely" authorize="yes" class="btn btn-white dropdown-text" onclick="btn_deletecompletely()"><i class="fa fa-trash-o"></i>彻底删除</a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="NF-EmptyRecycle" authorize="yes" class="btn btn-white dropdown-text" onclick="btn_emptyrecycle()" style="display:none"><i class="fa fa-eraser"></i>清空回收站</a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="NF-More" authorize="yes" class="btn btn-white dropdown-text" onclick="btn_more()"><i class="fa fa-reorder"></i>更多</a>
+                        <a class="btn btn-white dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a id="NF-Rename" authorize="no" href="javascript:void(0);" onclick="btn_rename()">重命名</a></li>
+                            <li><a id="NF-Move" authorize="no" href="javascript:void(0);" onclick="btn_move()">移动</a></li>
+                        </ul>
+                    </div>
+                    @*<div class="operate" style="display:block;">
+            <ul class="nav nav-pills">
+                <li class="first">已选中<span>1</span>项</li>
+                <li><a id="NF-Edit" authorize="no" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>编辑字典项目</a></li>
+                <li><a id="NF-Details" authorize="no" onclick="btn_details()"><i class="fa fa-pencil-square-o"></i>查看字典项目</a></li>
+                <li><a id="NF-Delete" authorize="no" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除字典项目</a></li>
+            </ul>
+            <a href="javascript:;" class="close"></a>
+        </div>*@
+                    @*<script>$('.toolbar').authorizeButton()</script>*@
+                </div>
+                <div class="search">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <input id="txt_keyword" type="text" class="form-control" placeholder="名称/编号" style="width: 200px;">
+                                    <span class="input-group-btn">
+                                        <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="gridPanel">
+                <table id="gridList"></table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

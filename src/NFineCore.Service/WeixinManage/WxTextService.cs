@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NFineCore.Core;
 
 namespace NFineCore.Service.WeixinManage
 {
@@ -20,7 +21,7 @@ namespace NFineCore.Service.WeixinManage
 
         public List<WxTextGridDto> GetList(string keyword)
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             var specification = new Specification<WxText>(p => p.DeletedMark == false && p.AppId == appId);
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -42,7 +43,7 @@ namespace NFineCore.Service.WeixinManage
 
         public void SubmitForm(WxTextInputDto wxTextInputDto, string keyValue)
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             WxText wxText = new WxText();
             if (!string.IsNullOrEmpty(keyValue))
             {

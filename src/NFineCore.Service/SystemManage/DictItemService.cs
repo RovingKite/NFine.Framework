@@ -9,6 +9,7 @@ using Snowflake;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SharpRepository.Repository.Queries;
 
 namespace NFineCore.Service.SystemManage
 {
@@ -26,13 +27,14 @@ namespace NFineCore.Service.SystemManage
         {
             List<Specification<DictItem>> specList = new List<Specification<DictItem>>();
 
-            var spec = new Specification<DictItem>(p => p.DeletedMark==false && p.Dict.Id == dictId);
+            var specification = new Specification<DictItem>(p => p.DeletedMark==false && p.Dict.Id == dictId);
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                spec = new Specification<DictItem>(p => p.DeletedMark == false && p.Dict.Id == dictId && (p.ItemCode.Contains(keyword) || p.ItemName.Contains(keyword)));
+                specification = new Specification<DictItem>(p => p.DeletedMark == false && p.Dict.Id == dictId && (p.ItemCode.Contains(keyword) || p.ItemName.Contains(keyword)));
             }
-            var list = dictItemRepository.FindAll(spec).ToList();
+            var sortingOtopns = new SortingOptions<DictItem, int?>(x => x.SortCode, isDescending: false);
+            var list = dictItemRepository.FindAll(specification, sortingOtopns).ToList();
             return Mapper.Map<List<DictItemGridDto>>(list);
         }
 
@@ -59,6 +61,7 @@ namespace NFineCore.Service.SystemManage
             {
                 AutoMapper.Mapper.Map<DictItemInputDto, DictItem>(dictItemInputDto, dictItem);
                 dictItem.Id = IdWorkerHelper.GenId64();
+                dictItem.DeletedMark = false;
                 dictItem.CreationTime = DateTime.Now;
                 dictItem.CreatorUserId = 1;
                 dictItemRepository.Add(dictItem);

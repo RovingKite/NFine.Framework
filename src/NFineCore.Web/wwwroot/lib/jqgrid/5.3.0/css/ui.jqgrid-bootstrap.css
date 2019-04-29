@@ -367,7 +367,8 @@ div.tablediv > .table-bordered {
 	height:auto;
 }
 .ui-jqgrid td input[type='checkbox'] {
-    margin-left:2px;
+    margin-left: 3px;
+    margin-top: 3px;
 }
 .ui-jqgrid .ui-jqgrid-pager .ui-pager-table,
 .ui-jqgrid .ui-jqgrid-toppager .ui-pager-table

@@ -12,12 +12,16 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         [Key]
         public long Id { get; set; }
         public long ParentId { get; set; }
+        [MaxLength(255)]
         public string ItemCode { get; set; }
+        [MaxLength(255)]
         public string ItemName { get; set; }
+        [MaxLength(255)]
         public string SimpleSpelling { get; set; }
         public bool? IsDefault { get; set; }
         public int? Layers { get; set; }
         public int? SortCode { get; set; }
+        [MaxLength(255)]
         public string Description { get; set; }
         public bool? EnabledMark { get; set; }
         public bool? DeletedMark { get; set; }

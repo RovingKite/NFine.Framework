@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NFineCore.Core;
 using NFineCore.EntityFramework.Dto.SystemManage;
 using NFineCore.Service.SystemManage;
 using NFineCore.Support;
@@ -22,7 +23,7 @@ namespace NFineCore.Web.Filters
 
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            OperatorModel operatorModel = OperatorProvider.Provider.GetCurrent();
+            OperatorModel operatorModel = OperatorProvider.Provider.GetOperator();
             //if (operatorModel != null)
             //{
             //    OperateLogInputDto operateLogInputDto = new OperateLogInputDto();

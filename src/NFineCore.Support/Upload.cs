@@ -23,18 +23,19 @@ namespace NFineCore.Support
         /// <param name="isThumb">是否生成缩略图</param>
         /// <param name="isWater">是否打水印</param>
         /// <returns>上传成功返回JSON字符串</returns>
-        public string FileSaveAs(byte[] byteData, string fileName, bool isThumbnail, bool isWater)
+        public string FileSaveAs(byte[] byteData, string fileName, bool isThumb, bool isWater)
         {
             try
             {
+                string fileType = "Other";
                 string fileExt = Path.GetExtension(fileName).Trim('.'); //文件扩展名，不含“.”
                 string newFileName = Utils.GetRamCode() + "." + fileExt; //随机生成新的文件名
-                string newThumbnailFileName = "thumb_" + newFileName; //随机生成缩略图文件名
+                string newThumbFileName = "thumb_" + newFileName; //随机生成缩略图文件名
 
                 string uploadPath = GetUploadPath(); //本地上传目录相对路径
                 string fullUpLoadPath = _systemOptions.WebRootPath + uploadPath;//本地上传目录的物理路径
                 string newFilePath = uploadPath + newFileName; //本地上传后的路径
-                string newThumbnailPath = uploadPath + newThumbnailFileName; //本地上传后的缩略图路径
+                string newThumbFilePath = uploadPath + newThumbFileName; //本地上传后的缩略图路径
 
                 byte[] thumbData = null; //缩略图文件流
 
@@ -58,21 +59,33 @@ namespace NFineCore.Support
                 int thumbHeight = _systemOptions.ThumbnailHeight;
                 int thumbWidth = _systemOptions.ThumbnailWidth;
                 string thumbMode = _systemOptions.ThumbnailMode;
-                ////如果是图片，检查图片是否超出最大尺寸，是则裁剪
-                if (IsImage(fileExt) && (imgMaxHeight > 0 || imgMaxWidth > 0))
+                //如果是图片
+                if (IsImage(fileExt))
                 {
-                    byteData = Thumbnail.MakeThumbnailImage(byteData, fileExt, imgMaxWidth, imgMaxHeight);
+                    fileType = "Image";
+                    //如果是图片，检查图片是否超出最大尺寸，是则裁剪
+                    if (imgMaxHeight > 0 || imgMaxWidth > 0)
+                    {
+                        byteData = Thumbnail.MakeThumbnailImage(byteData, fileExt, imgMaxWidth, imgMaxHeight);
+                    }
+                    ////如果是图片，检查是否需要生成缩略图，是则生成
+                    if (isThumb && thumbWidth > 0 && thumbHeight > 0)
+                    {
+                        thumbData = Thumbnail.MakeThumbnailImage(byteData, fileExt, thumbWidth, thumbHeight, thumbMode);
+                    }
+                    else
+                    {
+                        newThumbFilePath = newFilePath; //不生成缩略图则返回原图
+                    }
                 }
-                ////如果是图片，检查是否需要生成缩略图，是则生成
-                if (IsImage(fileExt) && isThumbnail && thumbWidth > 0 && thumbHeight > 0)
+                else {
+                    newThumbFileName = null;
+                    newThumbFilePath = null;
+                }
+                if (IsDocument(fileExt))
                 {
-                    thumbData = Thumbnail.MakeThumbnailImage(byteData, fileExt, thumbWidth, thumbHeight, thumbMode);
+                    fileType = "Document";
                 }
-                else
-                {
-                    newThumbnailPath = newFilePath; //不生成缩略图则返回原图
-                }
-
                 int waterMarkPosition = _systemOptions.WaterMarkPosition;
                 int waterMarkImgQuality = _systemOptions.WaterMarkImgQuality;
                 int waterMarkFontSize = _systemOptions.WaterMarkFontSize;
@@ -142,15 +155,20 @@ namespace NFineCore.Support
                         //保存缩略图文件
                         if (thumbData != null)
                         {
-                            FileHelper.SaveFile(thumbData, fullUpLoadPath + newThumbnailFileName);
+                            FileHelper.SaveFile(thumbData, fullUpLoadPath + newThumbFileName);
                         }
                         break;
                 }
 
-                //处理完毕，返回JOSN格式的文件信息
-                return "{\"status\": 1, \"msg\": \"上传文件成功！\", \"name\": \""
-                    + fileName + "\", \"path\": \"" + newFilePath + "\", \"thumb\": \""
-                    + newThumbnailPath + "\", \"size\": " + byteData.Length + ", \"ext\": \"" + fileExt + "\"}";
+                return "{\"status\": 1," +
+                        "\"msg\": \"上传文件成功！\"," +
+                        "\"name\": \""+ fileName + "\"," +
+                        "\"path\": \"" + newFilePath + "\"," +
+                        "\"thumb\": \""+ newThumbFilePath + "\"," +
+                        "\"size\": " + byteData.Length + "," +
+                        "\"ext\": \"" + fileExt + "\"," +
+                        "\"type\": \"" + fileType + "\"" +
+                        "}";
             }
             catch
             {
@@ -286,6 +304,31 @@ namespace NFineCore.Support
             al.Add("jpg");
             al.Add("gif");
             al.Add("png");
+            if (al.Contains(_fileExt.ToLower()))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 是否为文档文件
+        /// </summary>
+        /// <param name="_fileExt">文件扩展名，不含“.”</param>
+        private bool IsDocument(string _fileExt)
+        {
+            ArrayList al = new ArrayList();
+            al.Add("doc");
+            al.Add("docx");
+            al.Add("xls");
+            al.Add("xlsx");
+            al.Add("ppt");
+            al.Add("pptx");
+            al.Add("vsd");
+            al.Add("vsdx");
+            al.Add("mpp");
+            al.Add("txt");
+            al.Add("pdf");
             if (al.Contains(_fileExt.ToLower()))
             {
                 return true;

@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFineCore.Support", "NFineC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Senparc.Weixin.MP.CoreSample.CommonService", "Senparc.Weixin.MP.Sample.CommonService\Senparc.Weixin.MP.CoreSample.CommonService.csproj", "{A6CDB4CA-04BD-4582-85D5-0EEDD4071428}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFineCore.WebApi", "NFineCore.WebApi\NFineCore.WebApi.csproj", "{7520E6DF-E24E-4A11-AF41-202958C497AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFineCore.Core", "NFineCore.Core\NFineCore.Core.csproj", "{53DB3500-CD7D-422D-B55E-4CF823970BD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +101,30 @@ Global
 		{A6CDB4CA-04BD-4582-85D5-0EEDD4071428}.Test|Any CPU.Build.0 = Debug|Any CPU
 		{A6CDB4CA-04BD-4582-85D5-0EEDD4071428}.Test|x86.ActiveCfg = Debug|Any CPU
 		{A6CDB4CA-04BD-4582-85D5-0EEDD4071428}.Test|x86.Build.0 = Debug|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Debug|x86.Build.0 = Debug|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Release|x86.ActiveCfg = Release|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Release|x86.Build.0 = Release|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Test|x86.ActiveCfg = Debug|Any CPU
+		{7520E6DF-E24E-4A11-AF41-202958C497AD}.Test|x86.Build.0 = Debug|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Debug|x86.Build.0 = Debug|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Release|x86.ActiveCfg = Release|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Release|x86.Build.0 = Release|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Test|x86.ActiveCfg = Debug|Any CPU
+		{53DB3500-CD7D-422D-B55E-4CF823970BD8}.Test|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

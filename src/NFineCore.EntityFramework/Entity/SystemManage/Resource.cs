@@ -13,10 +13,15 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         public long Id { get; set; }
         public long ParentId { get; set; }
         public int? Layers { get; set; }
+        [MaxLength(255)]
         public string EnCode { get; set; }
+        [MaxLength(255)]
         public string FullName { get; set; }
+        [MaxLength(255)]
         public string Icon { get; set; }
+        [MaxLength(255)]
         public string UrlAddress { get; set; }
+        [MaxLength(255)]
         public string Target { get; set; }
         public bool? IsMenu { get; set; }
         public bool? IsExpand { get; set; }
@@ -27,6 +32,7 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         public int? SortCode { get; set; }
         public bool? DeletedMark { get; set; }
         public bool? EnabledMark { get; set; }
+        [MaxLength(255)]
         public string Description { get; set; }
         public DateTime? CreationTime { get; set; }
         public long? CreatorUserId { get; set; }
@@ -34,11 +40,15 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         public long? LastModifierUserId { get; set; }
         public DateTime? DeletionTime { get; set; }
         public long? DeleterUserId { get; set; }
+        [MaxLength(255)]
         public string ObjectType { get; set; }
         public int? Location { get; set; }
+        [MaxLength(255)]
         public string JsEvent { get; set; }
         public bool? Split { get; set; }
+        [MaxLength(255)]
         public string PermissionCode { get; set; }
+        [MaxLength(255)]
         public string Module { get; set; }
     }
 }

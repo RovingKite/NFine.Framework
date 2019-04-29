@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NFineCore.EntityFramework;
+using NFineCore.Core;
 
 namespace NFineCore.Service.WeixinManage
 {
@@ -26,7 +27,7 @@ namespace NFineCore.Service.WeixinManage
 
         public List<WxImageGridDto> GetList()
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             var specification = new Specification<WxImage>(p => p.DeletedMark == false && p.AppId == appId);
             var sortingOtopns = new SortingOptions<WxImage, DateTime?>(x => x.CreationTime, isDescending: false);
             var list = wxImageRepository.FindAll(specification, sortingOtopns).ToList();
@@ -35,7 +36,7 @@ namespace NFineCore.Service.WeixinManage
 
         public List<WxImageGridDto> GetList(Pagination pagination, string keyword)
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             var specification = new Specification<WxImage>(p => p.AppId == appId);
             var pagingOptions = new PagingOptions<WxImage, DateTime?>(pagination.page, pagination.rows, x => x.CreationTime, isDescending: true);
             if (!string.IsNullOrEmpty(keyword))
@@ -66,7 +67,7 @@ namespace NFineCore.Service.WeixinManage
         public void SubmitForm(WxImageInputDto wxImageInputDto, string keyValue)
         {
             WxImage wxImage = new WxImage();
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             if (!string.IsNullOrEmpty(keyValue))
             {
                 var id = Convert.ToInt64(keyValue);
@@ -94,7 +95,7 @@ namespace NFineCore.Service.WeixinManage
             WxImage wxImage = wxImageRepository.Get(id);
             if (!string.IsNullOrEmpty(wxImage.MediaId))
             {
-                string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+                string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
                 AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
                 var wxJsonResult = MediaApi.DeleteForeverMedia(accessTokenResult.access_token, wxImage.MediaId, 10000);
                 if (wxJsonResult.ErrorCodeValue == 0)
@@ -117,7 +118,7 @@ namespace NFineCore.Service.WeixinManage
         public UploadForeverMediaResult UploadForeverImage(string keyValue,string webRootPath)
         {
             var id = Convert.ToInt64(keyValue);
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             WxImage wxImage = wxImageRepository.Get(id);
             AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
             string fullFilePaht = webRootPath + wxImage.FilePath;

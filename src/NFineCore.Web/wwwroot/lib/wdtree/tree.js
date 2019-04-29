@@ -573,4 +573,15 @@
         var object = $id.find(('#' + id + '_' + value.replace(/-/g, "_")));
         object.addClass('bbit-tree-selected');
     }
+    //设置节点被选中,并触发click事件.
+    $.fn.setNodeSelected = function (value) {
+        var $id = $(this);
+        var id = $id.attr('id').trim();
+        $id.find('.bbit-tree-selected').removeClass('bbit-tree-selected');
+        var object = $id.find(('#' + id + '_' + value.replace(/-/g, "_")));
+        if (object.length != 0) {
+            object.addClass('bbit-tree-selected');
+            object.trigger("click");            
+        }        
+    }
 })(jQuery);

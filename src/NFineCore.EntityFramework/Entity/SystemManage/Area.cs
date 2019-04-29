@@ -13,10 +13,14 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         public long Id { get; set; }
         public long ParentId { get; set; }
         public int? Layers { get; set; }
+        [MaxLength(255)]
         public string FullName { get; set; }
+        [MaxLength(255)]
         public string EnCode { get; set; }
+        [MaxLength(255)]
         public string SimpleSpelling { get; set; }
         public int? SortCode { get; set; }
+        [MaxLength(255)]
         public string Description { get; set; }
         public bool? DeletedMark { get; set; }
         public bool? EnabledMark { get; set; }

@@ -3,13 +3,16 @@ using Hangfire;
 using Hangfire.RecurringJobExtensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using NFineCore.Core;
 using NFineCore.EntityFramework;
 using NFineCore.Service;
+using NFineCore.Service.OAManage;
 using NFineCore.Service.SystemManage;
 using NFineCore.Support;
 using NFineCore.Web.Filters;
@@ -20,6 +23,7 @@ using Senparc.Weixin.Entities;
 using Senparc.Weixin.MP;
 using Senparc.Weixin.RegisterServices;
 using SharpRepository.Ioc.Microsoft.DependencyInjection;
+using StackExchange.Redis;
 using System;
 
 namespace NFineCore.Web
@@ -39,16 +43,22 @@ namespace NFineCore.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddStaticHttpContextAccessor();
-            //services.AddDistributedRedisCache(options => { options.Configuration = "localhost"; options.InstanceName = "NFineCore"; });
-            services.AddDistributedRedisCache(options => {
-                options.Configuration = Configuration.GetConnectionString("RedisConnection");
-                options.InstanceName = "NFineCore";
-            });
+
             services.AddDistributedMemoryCache();//启用session之前必须先添加内存
+            services.AddStackExchangeRedisCache(options => {
+                options.Configuration = Configuration.GetConnectionString("RedisConnection");
+                options.InstanceName = "NFine";
+            });
+            var redis = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("RedisConnection"));
+            services.AddDataProtection()
+                .SetApplicationName("session_application_name")
+                .PersistKeysToStackExchangeRedis(redis, "DataProtection-Keys");
+            
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(7200);//Session过期时间为1小时(60*60)
             });
+
             services.AddAutoMapper();
             // 添加Cookie服务
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -69,12 +79,12 @@ namespace NFineCore.Web
             });
 
             //注入Hangfire服务
-            services.AddHangfire(configuration => {
-                configuration.UseRedisStorage(Configuration.GetConnectionString("HangfireConnection"));
-                configuration.UseRecurringJob("recurringjob.json");
-                configuration.UseRecurringJob(typeof(RecurringJobService));
-                configuration.UseDefaultActivator();
-            });
+            //services.AddHangfire(configuration => {
+            //    configuration.UseRedisStorage(Configuration.GetConnectionString("HangfireConnection"));
+            //    configuration.UseRecurringJob("recurringjob.json");
+            //    configuration.UseRecurringJob(typeof(RecurringJobService));
+            //    configuration.UseDefaultActivator();
+            //});
 
             #region 注入业务服务类
             //这里可以通过反射的方式批量注入，待优化。
@@ -89,7 +99,8 @@ namespace NFineCore.Web
             services.AddTransient(typeof(ResourceService));
             services.AddTransient(typeof(RoleService));
             services.AddTransient(typeof(UserService));
-            services.AddScoped<IAttachService, AttachService>();
+            services.AddScoped<IResFileService, ResFileService>();
+            services.AddScoped<IResFileRecycleService, ResFileRecycleService>();
             #endregion
 
             services.AddSenparcGlobalServices(Configuration)//Senparc.CO2NET 全局注册
@@ -129,9 +140,11 @@ namespace NFineCore.Web
                 routes.MapRoute(
                     name: "WeixinManage",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
                 routes.MapRoute(
                     name: "ExampleManage",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "OAManage",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             });
 
@@ -140,15 +153,16 @@ namespace NFineCore.Web
             register.RegisterTraceLog(ConfigTraceLog);//配置TraceLog
 
             #region Hangfire 定时任务 
-            var jobOptions = new BackgroundJobServerOptions
-            {
-                Queues = new[] { "test", "default", "jobs" },//队列名称，只能为小写
-                WorkerCount = Environment.ProcessorCount * 5, //并发任务数
-                ServerName = "hangfire1",//服务器名称
-            };
-            app.UseHangfireServer(jobOptions);
-            app.UseHangfireDashboard();
+            //var jobOptions = new BackgroundJobServerOptions
+            //{
+            //    Queues = new[] { "test", "default", "jobs" },//队列名称，只能为小写
+            //    WorkerCount = Environment.ProcessorCount * 5, //并发任务数
+            //    ServerName = "hangfire1",//服务器名称
+            //};
+            //app.UseHangfireServer(jobOptions);
+            //app.UseHangfireDashboard();
             #endregion
+
             app.UseStatusCodePagesWithRedirects("/Errors/Http{0}"); // 绝对路径
             app.UseStaticHttpContext();
             AutoMapperConfig.RegisterMappings();

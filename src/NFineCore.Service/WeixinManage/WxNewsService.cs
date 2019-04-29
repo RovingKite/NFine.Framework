@@ -20,6 +20,7 @@ using System.Text.RegularExpressions;
 using NFineCore.EntityFramework;
 using Senparc.Weixin.MP.AdvancedAPIs.Media;
 using Senparc.Weixin.Entities;
+using NFineCore.Core;
 
 namespace NFineCore.Service.WeixinManage
 {
@@ -31,7 +32,7 @@ namespace NFineCore.Service.WeixinManage
 
         public List<WxNewsGridDto> GetList(Pagination pagination, string keyword)
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             var wxNewsList = new List<WxNews>();
             if (string.IsNullOrEmpty(keyword))
             {
@@ -82,7 +83,7 @@ namespace NFineCore.Service.WeixinManage
 
         public WxNews SubmitForm(WxNewsInputDto wxNewsInputDto, string keyValue)
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             WxNews wxNews = new WxNews();
             if (!string.IsNullOrEmpty(keyValue))
             {
@@ -207,7 +208,7 @@ namespace NFineCore.Service.WeixinManage
             var genericFetchStrategy = new GenericFetchStrategy<WxNews>().Include(p => p.WxNewsItems);
             WxNews wxNews = wxNewsRepository.Get(id, genericFetchStrategy);
             if (!string.IsNullOrEmpty(wxNews.MediaId)) {
-                string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+                string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
                 AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
                 var wxJsonResult = MediaApi.DeleteForeverMedia(accessTokenResult.access_token, wxNews.MediaId, 10000);
                 if (wxJsonResult.ErrorCodeValue == 0)
@@ -242,7 +243,7 @@ namespace NFineCore.Service.WeixinManage
         /// <param name="keyValue">NewsId</param>
         public UploadForeverMediaResult UploadForeverNews(string keyValue) {
             long id = Convert.ToInt64(keyValue);
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             var specification = new Specification<WxNews>().FetchStrategy.Include(p => p.WxNewsItems.Select(e => e.Thumb));
             WxNews wxNews = wxNewsRepository.Get(id, specification);
             wxNews.WxNewsItems = wxNews.WxNewsItems.OrderBy(x => x.Index).ToList();

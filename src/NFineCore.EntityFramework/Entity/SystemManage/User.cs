@@ -10,14 +10,23 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
     {
         [Key]
         public long Id { get; set; }
+        [MaxLength(255)]
         public string UserName { get; set; }
+        [MaxLength(255)]
         public string Password { get; set; }
+        [MaxLength(255)]
         public string SecretKey { get; set; }
+        [MaxLength(255)]
         public string NickName { get; set; }
+        [MaxLength(255)]
         public string RealName { get; set; }
+        [MaxLength(255)]
         public string Email { get; set; }
+        [MaxLength(255)]
         public string TelePhone { get; set; }
+        [MaxLength(255)]
         public string MobilePhone { get; set; }
+        [MaxLength(255)]
         public string WeChat { get; set; }
         public DateTime? Birthday { get; set; }
         public byte? Type { get; set; }
@@ -43,6 +52,7 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         public long PositionId { get; set; }
         [ForeignKey("PositionId")]
         public Position Position { get; set; }
+        [MaxLength(255)]
         public string Description { get; set; }
     }
 }

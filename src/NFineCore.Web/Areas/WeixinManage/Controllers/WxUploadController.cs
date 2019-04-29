@@ -16,6 +16,7 @@ using NFineCore.EntityFramework.Dto.WeixinManage;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using Senparc.Weixin.MP.AdvancedAPIs.Media;
 using Newtonsoft.Json.Linq;
+using NFineCore.Core;
 
 namespace NFineCore.Web.Areas.WeixinManage.Controllers
 {
@@ -346,7 +347,7 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
 
         public UploadForeverMediaResult UploadForeverMedia(string path) {
             UploadForeverMediaResult uploadForeverMediaResult = null;
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             uploadForeverMediaResult = MediaApi.UploadForeverMedia(appId, path);
             return uploadForeverMediaResult;
         }
@@ -354,7 +355,7 @@ namespace NFineCore.Web.Areas.WeixinManage.Controllers
         public UploadImgResult UploadImg(string path)
         {
             UploadImgResult uploadImgResult = null;
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             uploadImgResult = MediaApi.UploadImg(appId, path);
             return uploadImgResult;
         }

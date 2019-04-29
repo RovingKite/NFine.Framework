@@ -9,15 +9,19 @@
     <Compile Remove="Areas\JobManage\**" />
     <Compile Remove="wwwroot\lib\layer\layer\**" />
     <Compile Remove="wwwroot\lib\layer\文档\**" />
+    <Compile Remove="wwwroot\upload\**" />
     <Content Remove="Areas\JobManage\**" />
     <Content Remove="wwwroot\lib\layer\layer\**" />
     <Content Remove="wwwroot\lib\layer\文档\**" />
+    <Content Remove="wwwroot\upload\**" />
     <EmbeddedResource Remove="Areas\JobManage\**" />
     <EmbeddedResource Remove="wwwroot\lib\layer\layer\**" />
     <EmbeddedResource Remove="wwwroot\lib\layer\文档\**" />
+    <EmbeddedResource Remove="wwwroot\upload\**" />
     <None Remove="Areas\JobManage\**" />
     <None Remove="wwwroot\lib\layer\layer\**" />
     <None Remove="wwwroot\lib\layer\文档\**" />
+    <None Remove="wwwroot\upload\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,12 +29,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\OAManage\Data\" />
+    <Folder Include="Areas\OAManage\Models\" />
     <Folder Include="Areas\SystemManage\Data\" />
     <Folder Include="Areas\SystemManage\Models\" />
     <Folder Include="wwwroot\attach\" />
     <Folder Include="wwwroot\lib\bootstrap\3.3.4\css\" />
     <Folder Include="wwwroot\lib\bootstrap\3.3.7\" />
-    <Folder Include="wwwroot\upload\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -242,15 +247,16 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="Hangfire" Version="1.7.0-beta2" />
+    <PackageReference Include="Hangfire" Version="1.7.0" />
     <PackageReference Include="Hangfire.RecurringJobExtensions" Version="1.1.6" />
     <PackageReference Include="Hangfire.Redis" Version="2.0.1" />
     <PackageReference Include="Hangfire.Redis.StackExchange" Version="1.8.0" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" />
     <PackageReference Include="Senparc.Weixin" Version="6.3.6-preview1" />
@@ -263,6 +269,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NFineCore.Core\NFineCore.Core.csproj" />
     <ProjectReference Include="..\NFineCore.EntityFramework\NFineCore.EntityFramework.csproj" />
     <ProjectReference Include="..\NFineCore.Service\NFineCore.Service.csproj" />
     <ProjectReference Include="..\NFineCore.Support\NFineCore.Support.csproj" />
@@ -274,7 +281,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Areas\SystemManage\Views\Attach\MultiUpload.cshtml">
+    <Content Update="Areas\OAManage\Views\ResFile\Move.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\OAManage\Views\ResFile\Rename.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\OAManage\Views\ResFile\NewFolder.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\OAManage\Views\ResFile\Upload.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\OAManage\Views\Schedule\Form.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="recurringjob.json">
@@ -296,9 +315,6 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\SystemManage\Views\Area\Index.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\SystemManage\Views\Attach\Upload.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\SystemManage\Views\DictItem\Details.cshtml">

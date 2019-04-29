@@ -12,7 +12,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="Dapper" Version="1.60.1" />
+    <PackageReference Include="Dapper.Contrib" Version="1.60.1" />
     <PackageReference Include="Hangfire" Version="1.7.0-beta2" />
     <PackageReference Include="Hangfire.RecurringJobExtensions" Version="1.1.6" />
     <PackageReference Include="Senparc.Weixin.MP" Version="16.6.10-preview1" />
@@ -20,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NFineCore.Core\NFineCore.Core.csproj" />
     <ProjectReference Include="..\NFineCore.EntityFramework\NFineCore.EntityFramework.csproj" />
     <ProjectReference Include="..\NFineCore.Repository\NFineCore.Repository.csproj" />
     <ProjectReference Include="..\NFineCore.Support\NFineCore.Support.csproj" />

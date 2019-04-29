@@ -14,12 +14,16 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         public long? OrganizeId { get;set;}
         [ForeignKey("OrganizeId")]
         public Organize Organize { get; set; }
+        [MaxLength(255)]
         public string FullName { get; set; }
+        [MaxLength(255)]
         public string EnCode { get; set; }
         public int? SortCode { get; set; }
         public bool? AllowEdit { get; set; }
         public bool? AllowDelete { get; set; }
+        [MaxLength(255)]
         public string Description { get; set; }
+        [MaxLength(255)]
         public string Type { get; set; }
         public bool? EnabledMark { get; set; }
         public bool? DeletedMark { get; set; }

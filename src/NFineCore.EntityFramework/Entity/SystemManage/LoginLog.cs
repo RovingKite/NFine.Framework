@@ -11,10 +11,14 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         [Key]
         public long Id { get; set; }
         public long UserId { get; set; }
+        [MaxLength(255)]
         public string UserName { get; set; }
         public DateTime? OperateTime { get; set; }
+        [MaxLength(255)]
         public string IpAddress { get; set; }
+        [MaxLength(255)]
         public string IpAddressLocation { get; set; }
+        [MaxLength(255)]
         public string OperateType { get; set; }
         public bool? OperateResult { get; set; }
         public bool? DeletedMark { get; set; }
@@ -24,6 +28,7 @@ namespace NFineCore.EntityFramework.Entity.SystemManage
         public long? LastModifierUserId { get; set; }
         public DateTime? DeletionTime { get; set; }
         public long? DeleterUserId { get; set; }
+        [MaxLength(255)]
         public string Description { get; set; }
     }
 }

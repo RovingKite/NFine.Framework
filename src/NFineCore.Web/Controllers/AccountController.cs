@@ -15,6 +15,8 @@ using NFineCore.Support;
 using NFineCore.EntityFramework.Entity.SystemManage;
 using NFineCore.Service.SystemManage;
 using NFineCore.EntityFramework.Dto.SystemManage;
+using Newtonsoft.Json;
+using NFineCore.Core;
 
 namespace NFineCore.Web.Controllers
 {
@@ -36,7 +38,7 @@ namespace NFineCore.Web.Controllers
 
         public IActionResult Logout()
         {
-            OperatorModel operatorModel = OperatorProvider.Provider.GetCurrent();
+            OperatorModel operatorModel = OperatorProvider.Provider.GetOperator();
             LoginLogInputDto loginLogInputDto = new LoginLogInputDto();
             loginLogInputDto.UserId = operatorModel.Id.ToString();
             loginLogInputDto.UserName = operatorModel.UserName;
@@ -48,7 +50,7 @@ namespace NFineCore.Web.Controllers
             loginLogInputDto.Description = "安全退出。";
             _loginLogService.SubmitForm(loginLogInputDto, null);
 
-            OperatorProvider.Provider.RemoveCurrent();
+            OperatorProvider.Provider.RemoveOperator();
             return RedirectToAction("Login", "Account");
         }
 
@@ -71,7 +73,7 @@ namespace NFineCore.Web.Controllers
             loginLogInputDto.IpAddressLocation = NetHelper.GetLocation(loginLogInputDto.IpAddress);
             try
             {
-                var SessionVerifyCode = HttpContext.Session.GetString("nfinecore_session_verifycode");
+                var SessionVerifyCode = HttpContext.Session.GetString("nfine_verify_code");
                 var Md5VerifyCode = Md5.md5(verifycode.ToLower(), 16);
                 if (SessionVerifyCode != Md5VerifyCode)
                 {
@@ -90,7 +92,8 @@ namespace NFineCore.Web.Controllers
                     operatorModel.UserName = userOutputDto.UserName;
                     operatorModel.MobilePhone = userOutputDto.MobilePhone;
                     operatorModel.Email = userOutputDto.Email;
-                    OperatorProvider.Provider.AddCurrent(operatorModel);
+                    OperatorProvider.Provider.AddOperator(operatorModel);
+                    //HttpContext.Session.SetString("nfine_login_user", JsonConvert.SerializeObject(operatorModel));
                 }
                 return Content(new AjaxResult { state = ResultType.success.ToString(), message = "登录成功。" }.ToJson());
             }
@@ -122,7 +125,7 @@ namespace NFineCore.Web.Controllers
                 chkCode += character[rnd.Next(character.Length)];
             }
             //写入Session、验证码加密
-            HttpContext.Session.SetString("nfinecore_session_verifycode", Md5.md5(chkCode.ToLower(), 16));
+            HttpContext.Session.SetString("nfine_verify_code", Md5.md5(chkCode.ToLower(), 16));
             //创建画布
             Bitmap bmp = new Bitmap(codeW, codeH);
             Graphics g = Graphics.FromImage(bmp);

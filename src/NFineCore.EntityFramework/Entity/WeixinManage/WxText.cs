@@ -10,8 +10,11 @@ namespace NFineCore.EntityFramework.Entity.WeixinManage
     {
         [Key]
         public long Id { get; set; }
+        [MaxLength(255)]
         public string AppId { get; set; }
+        [MaxLength(255)]
         public string Title { get; set; }
+        [MaxLength(255)]
         public string Content { get; set; }
         public bool? DeletedMark { get; set; }
         public DateTime? CreationTime { get; set; }

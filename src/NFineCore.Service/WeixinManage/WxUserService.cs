@@ -15,17 +15,18 @@ using System.Linq;
 using System.Text;
 using Senparc.Weixin.MP.AdvancedAPIs.User;
 using Senparc.Weixin.MP.Entities;
+using NFineCore.Core;
 
 namespace NFineCore.Service.WeixinManage
 {
     public class WxUserService
     {
-        WxOfficialRepository wxOfficialRepository = new WxOfficialRepository(SharpRepoConfig.sharpRepoConfig, "efCore");
+        WxAccountRepository wxAccountRepository = new WxAccountRepository(SharpRepoConfig.sharpRepoConfig, "efCore");
         WxUserRepository wxUserRepository = new WxUserRepository(SharpRepoConfig.sharpRepoConfig, "efCore");
 
         public List<WxUserGridDto> GetList(Pagination pagination, string keyword)
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
             var specification = new Specification<WxUser>(p => p.AppId == appId);
             var pagingOptions = new PagingOptions<WxUser, DateTime?>(pagination.page, pagination.rows, x => x.SubscribeTime, isDescending: true);
             if (!string.IsNullOrEmpty(keyword))
@@ -39,8 +40,8 @@ namespace NFineCore.Service.WeixinManage
 
         public void BatchGetUserInfo()
         {
-            string appId = WxOperatorProvider.Provider.GetCurrent().AppId;
-            string appSecret = WxOperatorProvider.Provider.GetCurrent().AppSecret;
+            string appId = OperatorProvider.Provider.GetOperator().WxAccountModel.AppId;
+            string appSecret = OperatorProvider.Provider.GetOperator().WxAccountModel.AppSecret;
             AccessTokenResult accessTokenResult = AccessTokenContainer.GetAccessTokenResult(appId);
             var specification = new Specification<WxUser>(p => p.AppId == appId && p.SubscribeStatus == 1 && p.SynchronisedTime == null);
             List<BatchGetUserInfoData> batchGetUserInfoDataList = new List<BatchGetUserInfoData>();
@@ -89,16 +90,16 @@ namespace NFineCore.Service.WeixinManage
 
         public void Subscribe(string toUserName, string fromUserName, DateTime subscribeTime)
         {
-            var wxOfficialSpecification = new Specification<WxOfficial>(p => p.Account == toUserName);
-            WxOfficial wxOfficial = wxOfficialRepository.Find(wxOfficialSpecification);
+            var wxOfficialSpecification = new Specification<WxAccount>(p => p.WeChat == toUserName);
+            WxAccount wxAccount = wxAccountRepository.Find(wxOfficialSpecification);
 
-            var wxUserSpecification = new Specification<WxUser>(p => p.AppId == wxOfficial.AppId && p.OpenId == fromUserName);
+            var wxUserSpecification = new Specification<WxUser>(p => p.AppId == wxAccount.AppId && p.OpenId == fromUserName);
             WxUser wxUser = wxUserRepository.Find(wxUserSpecification);
             if (wxUser == null)
             {
                 wxUser = new WxUser();
                 wxUser.Id = IdWorkerHelper.GenId64();
-                wxUser.AppId = wxOfficial.AppId;
+                wxUser.AppId = wxAccount.AppId;
                 wxUser.OpenId = fromUserName;
                 wxUser.SubscribeTime = subscribeTime;
                 wxUser.SubscribeStatus = 1;
@@ -125,10 +126,10 @@ namespace NFineCore.Service.WeixinManage
         //}
         public void Unsubscribe(string toUserName, string fromUserName, DateTime createTime)
         {
-            var wxOfficialSpecification = new Specification<WxOfficial>(p => p.Account == toUserName);
-            WxOfficial wxOfficial = wxOfficialRepository.Find(wxOfficialSpecification);
+            var wxOfficialSpecification = new Specification<WxAccount>(p => p.WeChat == toUserName);
+            WxAccount wxAccount = wxAccountRepository.Find(wxOfficialSpecification);
 
-            var wxUserSpecification = new Specification<WxUser>(p => p.AppId == wxOfficial.AppId && p.OpenId == fromUserName);
+            var wxUserSpecification = new Specification<WxUser>(p => p.AppId == wxAccount.AppId && p.OpenId == fromUserName);
             WxUser wxUser = wxUserRepository.Find(wxUserSpecification);
             if (wxUser != null)
             {

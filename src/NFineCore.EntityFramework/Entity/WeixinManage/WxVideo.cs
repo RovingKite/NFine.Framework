@@ -10,13 +10,20 @@ namespace NFineCore.EntityFramework.Entity.WeixinManage
     {
         [Key]
         public long Id { get; set; }
+        [MaxLength(255)]
         public string AppId { get; set; }
+        [MaxLength(255)]
         public string MediaId { get; set; }
+        [MaxLength(255)]
         public string MediaUrl { get; set; }
+        [MaxLength(255)]
         public string FileName { get; set; }
         public long? FileSize { get; set; }
+        [MaxLength(255)]
         public string FileExt { get; set; }
+        [MaxLength(255)]
         public string FilePath { get; set; }
+        [MaxLength(255)]
         public string ThumbPath { get; set; }
         public bool? DeletedMark { get; set; }
         public DateTime? CreationTime { get; set; }
