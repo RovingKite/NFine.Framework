@@ -1,0 +1,12 @@
+E:\GitHub\NFineCore\src\NFineCore.Repository\bin\Debug\netcoreapp2.2\NFineCore.Repository.deps.json
+E:\GitHub\NFineCore\src\NFineCore.Repository\bin\Debug\netcoreapp2.2\NFineCore.Repository.dll
+E:\GitHub\NFineCore\src\NFineCore.Repository\bin\Debug\netcoreapp2.2\NFineCore.Repository.pdb
+E:\GitHub\NFineCore\src\NFineCore.Repository\bin\Debug\netcoreapp2.2\NFineCore.EntityFramework.dll
+E:\GitHub\NFineCore\src\NFineCore.Repository\bin\Debug\netcoreapp2.2\NFineCore.EntityFramework.pdb
+E:\GitHub\NFineCore\src\NFineCore.Repository\obj\Debug\netcoreapp2.2\NFineCore.Repository.csprojAssemblyReference.cache
+E:\GitHub\NFineCore\src\NFineCore.Repository\obj\Debug\netcoreapp2.2\NFineCore.Repository.csproj.CoreCompileInputs.cache
+E:\GitHub\NFineCore\src\NFineCore.Repository\obj\Debug\netcoreapp2.2\NFineCore.Repository.AssemblyInfoInputs.cache
+E:\GitHub\NFineCore\src\NFineCore.Repository\obj\Debug\netcoreapp2.2\NFineCore.Repository.AssemblyInfo.cs
+E:\GitHub\NFineCore\src\NFineCore.Repository\obj\Debug\netcoreapp2.2\NFineCore.Repository.csproj.CopyComplete
+E:\GitHub\NFineCore\src\NFineCore.Repository\obj\Debug\netcoreapp2.2\NFineCore.Repository.dll
+E:\GitHub\NFineCore\src\NFineCore.Repository\obj\Debug\netcoreapp2.2\NFineCore.Repository.pdb

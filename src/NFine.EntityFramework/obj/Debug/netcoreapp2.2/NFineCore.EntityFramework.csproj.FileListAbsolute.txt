@@ -1,0 +1,9 @@
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\bin\Debug\netcoreapp2.2\NFineCore.EntityFramework.deps.json
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\bin\Debug\netcoreapp2.2\NFineCore.EntityFramework.dll
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\bin\Debug\netcoreapp2.2\NFineCore.EntityFramework.pdb
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFineCore.EntityFramework.csproj.CoreCompileInputs.cache
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFineCore.EntityFramework.AssemblyInfoInputs.cache
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFineCore.EntityFramework.AssemblyInfo.cs
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFineCore.EntityFramework.dll
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFineCore.EntityFramework.pdb
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFineCore.EntityFramework.csprojAssemblyReference.cache

@@ -1,0 +1,394 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\JobManage\**" />
+    <Compile Remove="Areas\OAManage\Data\**" />
+    <Compile Remove="Areas\OAManage\Models\**" />
+    <Compile Remove="Areas\SystemManage\Data\**" />
+    <Compile Remove="Areas\SystemManage\Models\**" />
+    <Compile Remove="wwwroot\lib\layer\layer\**" />
+    <Compile Remove="wwwroot\lib\layer\文档\**" />
+    <Compile Remove="wwwroot\upload\**" />
+    <Content Remove="Areas\JobManage\**" />
+    <Content Remove="Areas\OAManage\Data\**" />
+    <Content Remove="Areas\OAManage\Models\**" />
+    <Content Remove="Areas\SystemManage\Data\**" />
+    <Content Remove="Areas\SystemManage\Models\**" />
+    <Content Remove="wwwroot\lib\layer\layer\**" />
+    <Content Remove="wwwroot\lib\layer\文档\**" />
+    <Content Remove="wwwroot\upload\**" />
+    <EmbeddedResource Remove="Areas\JobManage\**" />
+    <EmbeddedResource Remove="Areas\OAManage\Data\**" />
+    <EmbeddedResource Remove="Areas\OAManage\Models\**" />
+    <EmbeddedResource Remove="Areas\SystemManage\Data\**" />
+    <EmbeddedResource Remove="Areas\SystemManage\Models\**" />
+    <EmbeddedResource Remove="wwwroot\lib\layer\layer\**" />
+    <EmbeddedResource Remove="wwwroot\lib\layer\文档\**" />
+    <EmbeddedResource Remove="wwwroot\upload\**" />
+    <None Remove="Areas\JobManage\**" />
+    <None Remove="Areas\OAManage\Data\**" />
+    <None Remove="Areas\OAManage\Models\**" />
+    <None Remove="Areas\SystemManage\Data\**" />
+    <None Remove="Areas\SystemManage\Models\**" />
+    <None Remove="wwwroot\lib\layer\layer\**" />
+    <None Remove="wwwroot\lib\layer\文档\**" />
+    <None Remove="wwwroot\upload\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Startup - 复制.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\bootstrap\3.3.4\css\" />
+    <Folder Include="wwwroot\lib\bootstrap\3.3.7\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\art-template\.babelrc" />
+    <None Include="wwwroot\lib\art-template\.editorconfig" />
+    <None Include="wwwroot\lib\art-template\.eslintignore" />
+    <None Include="wwwroot\lib\art-template\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\lib\art-template\.gitignore" />
+    <None Include="wwwroot\lib\art-template\.prettierrc" />
+    <None Include="wwwroot\lib\art-template\.travis.yml" />
+    <None Include="wwwroot\lib\art-template\CHANGELOG.md" />
+    <None Include="wwwroot\lib\art-template\example\node-include\footer.art" />
+    <None Include="wwwroot\lib\art-template\example\node-include\header.art" />
+    <None Include="wwwroot\lib\art-template\example\node-include\index.art" />
+    <None Include="wwwroot\lib\art-template\example\node-include\index.js" />
+    <None Include="wwwroot\lib\art-template\example\node-layout\index.art" />
+    <None Include="wwwroot\lib\art-template\example\node-layout\index.js" />
+    <None Include="wwwroot\lib\art-template\example\node-layout\layout.art" />
+    <None Include="wwwroot\lib\art-template\example\node-layout\nested-block\index.art" />
+    <None Include="wwwroot\lib\art-template\example\node-layout\nested-block\index.js" />
+    <None Include="wwwroot\lib\art-template\example\node-layout\nested-block\inner-layout.art" />
+    <None Include="wwwroot\lib\art-template\example\node-layout\nested-block\outer-layout.art" />
+    <None Include="wwwroot\lib\art-template\example\web-ie-compatible\es5-sham.min.js" />
+    <None Include="wwwroot\lib\art-template\example\web-ie-compatible\es5-shim.min.js" />
+    <None Include="wwwroot\lib\art-template\example\web-ie-compatible\json3.min.js" />
+    <None Include="wwwroot\lib\art-template\example\web-requirejs\require.js" />
+    <None Include="wwwroot\lib\art-template\example\web-test-speed\js\doT.min.js" />
+    <None Include="wwwroot\lib\art-template\example\web-test-speed\js\ejs.min.js" />
+    <None Include="wwwroot\lib\art-template\example\web-test-speed\js\handlebars.js" />
+    <None Include="wwwroot\lib\art-template\example\web-test-speed\js\highcharts.js" />
+    <None Include="wwwroot\lib\art-template\example\web-test-speed\js\jquery-1.7.2.min.js" />
+    <None Include="wwwroot\lib\art-template\example\web-test-speed\js\mustache.min.js" />
+    <None Include="wwwroot\lib\art-template\example\web-test-speed\js\pug.min.js" />
+    <None Include="wwwroot\lib\art-template\example\web-test-speed\js\swig.min.js" />
+    <None Include="wwwroot\lib\art-template\index.js" />
+    <None Include="wwwroot\lib\art-template\lib\template-web.js" />
+    <None Include="wwwroot\lib\art-template\LICENSE" />
+    <None Include="wwwroot\lib\art-template\README.md" />
+    <None Include="wwwroot\lib\art-template\src\compile\adapter\caches.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\adapter\extend.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\adapter\html-minifier.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\adapter\include.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\adapter\loader.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\adapter\onerror.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\adapter\resolve-filename.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\adapter\rule.art.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\adapter\rule.native.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\compiler.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\defaults.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\error.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\es-tokenizer.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\index.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\runtime.js" />
+    <None Include="wwwroot\lib\art-template\src\compile\tpl-tokenizer.js" />
+    <None Include="wwwroot\lib\art-template\src\defaults.js" />
+    <None Include="wwwroot\lib\art-template\src\extension.js" />
+    <None Include="wwwroot\lib\art-template\src\index.js" />
+    <None Include="wwwroot\lib\art-template\src\precompile.js" />
+    <None Include="wwwroot\lib\art-template\src\render.js" />
+    <None Include="wwwroot\lib\art-template\src\runtime.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\adapter\caches.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\adapter\html-minifier.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\adapter\loader.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\adapter\onerror.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\adapter\resolve-filename.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\adapter\rule.art.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\adapter\rule.native.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\compiler.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\defaults.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\es-tokenizer.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\index.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\runtime.js" />
+    <None Include="wwwroot\lib\art-template\test\compile\tpl-tokenizer.js" />
+    <None Include="wwwroot\lib\art-template\test\index.js" />
+    <None Include="wwwroot\lib\art-template\test\node.js" />
+    <None Include="wwwroot\lib\art-template\test\res\extend-options\file.art" />
+    <None Include="wwwroot\lib\art-template\test\res\extend-options\file2.art" />
+    <None Include="wwwroot\lib\art-template\test\res\extend-options\include.art" />
+    <None Include="wwwroot\lib\art-template\test\res\extension.compile-error.2.tpl" />
+    <None Include="wwwroot\lib\art-template\test\res\extension.compile-error.tpl" />
+    <None Include="wwwroot\lib\art-template\test\res\extension.file.tpl" />
+    <None Include="wwwroot\lib\art-template\test\res\extension.runtime-error.2.tpl" />
+    <None Include="wwwroot\lib\art-template\test\res\extension.runtime-error.tpl" />
+    <None Include="wwwroot\lib\art-template\test\res\file.art" />
+    <None Include="wwwroot\lib\art-template\test\res\nested-block\base-layout.art" />
+    <None Include="wwwroot\lib\art-template\test\res\nested-block\default.art" />
+    <None Include="wwwroot\lib\art-template\test\res\nested-block\index.art" />
+    <None Include="wwwroot\lib\art-template\test\res\nested-block\layout.art" />
+    <None Include="wwwroot\lib\art-template\webpack.config.js" />
+    <None Include="wwwroot\lib\echarts\echarts-all.js" />
+    <None Include="wwwroot\lib\echarts\echarts.js" />
+    <None Include="wwwroot\lib\echarts\echarts.min.js" />
+    <None Include="wwwroot\lib\echarts\infographic.js" />
+    <None Include="wwwroot\lib\fancybox\.gitignore" />
+    <None Include="wwwroot\lib\fancybox\dist\jquery.fancybox.js" />
+    <None Include="wwwroot\lib\fancybox\dist\jquery.fancybox.min.js" />
+    <None Include="wwwroot\lib\fancybox\gulpfile.js" />
+    <None Include="wwwroot\lib\fancybox\README.md" />
+    <None Include="wwwroot\lib\fancybox\src\js\core.js" />
+    <None Include="wwwroot\lib\fancybox\src\js\fullscreen.js" />
+    <None Include="wwwroot\lib\fancybox\src\js\guestures.js" />
+    <None Include="wwwroot\lib\fancybox\src\js\hash.js" />
+    <None Include="wwwroot\lib\fancybox\src\js\media.js" />
+    <None Include="wwwroot\lib\fancybox\src\js\share.js" />
+    <None Include="wwwroot\lib\fancybox\src\js\slideshow.js" />
+    <None Include="wwwroot\lib\fancybox\src\js\thumbs.js" />
+    <None Include="wwwroot\lib\fancybox\src\js\wheel.js" />
+    <None Include="wwwroot\lib\jqprint\jquery.jqprint-0.3.js" />
+    <None Include="wwwroot\lib\nestable\jquery.nestable.js" />
+    <None Include="wwwroot\lib\simditor\css\editor.scss" />
+    <None Include="wwwroot\lib\simditor\css\fonticon.scss" />
+    <None Include="wwwroot\lib\simditor\css\simditor.scss" />
+    <None Include="wwwroot\lib\simditor\js\hotkeys.js" />
+    <None Include="wwwroot\lib\simditor\js\hotkeys.min.js" />
+    <None Include="wwwroot\lib\simditor\js\module.js" />
+    <None Include="wwwroot\lib\simditor\js\module.min.js" />
+    <None Include="wwwroot\lib\simditor\js\simditor.js" />
+    <None Include="wwwroot\lib\simditor\js\simditor.min.js" />
+    <None Include="wwwroot\lib\simditor\js\uploader.js" />
+    <None Include="wwwroot\lib\simditor\js\uploader.min.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\attachment\attachment.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\background\background.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\charts\chart.config.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\charts\charts.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\emotion\emotion.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\help\help.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\image\image.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\internal.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\music\music.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\scrawl\scrawl.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\searchreplace\searchreplace.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\spechars\spechars.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\table\edittable.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\template\config.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\template\template.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\video\video.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\wordimage\fClipboard_ueditor.swf" />
+    <None Include="wwwroot\lib\ueditor\dialogs\wordimage\imageUploader.swf" />
+    <None Include="wwwroot\lib\ueditor\dialogs\wordimage\tangram.js" />
+    <None Include="wwwroot\lib\ueditor\dialogs\wordimage\wordimage.js" />
+    <None Include="wwwroot\lib\ueditor\lang\en\en.js" />
+    <None Include="wwwroot\lib\ueditor\lang\zh-cn\zh-cn.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\codemirror\codemirror.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\adapters\mootools-adapter.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\adapters\mootools-adapter.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\adapters\prototype-adapter.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\adapters\prototype-adapter.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\adapters\standalone-framework.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\adapters\standalone-framework.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\highcharts-more.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\highcharts-more.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\highcharts.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\highcharts.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\annotations.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\annotations.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\canvas-tools.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\canvas-tools.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\data.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\data.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\drilldown.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\drilldown.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\exporting.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\exporting.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\funnel.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\funnel.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\heatmap.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\heatmap.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\map.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\map.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\no-data-to-display.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\modules\no-data-to-display.src.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\themes\dark-blue.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\themes\dark-green.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\themes\gray.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\themes\grid.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\highcharts\themes\skies.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\jquery-1.10.2.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\jquery-1.10.2.min.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\jquery-1.10.2.min.map" />
+    <None Include="wwwroot\lib\ueditor\third-party\snapscreen\UEditorSnapscreen.exe" />
+    <None Include="wwwroot\lib\ueditor\third-party\SyntaxHighlighter\shCore.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\video-js\font\vjs.svg" />
+    <None Include="wwwroot\lib\ueditor\third-party\video-js\video-js.swf" />
+    <None Include="wwwroot\lib\ueditor\third-party\video-js\video.dev.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\video-js\video.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\Uploader.swf" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.custom.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.custom.min.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.flashonly.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.flashonly.min.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.html5only.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.html5only.min.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.min.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.withoutimage.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\webuploader\webuploader.withoutimage.min.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\xss.min.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\zeroclipboard\ZeroClipboard.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\zeroclipboard\ZeroClipboard.min.js" />
+    <None Include="wwwroot\lib\ueditor\third-party\zeroclipboard\ZeroClipboard.swf" />
+    <None Include="wwwroot\lib\ueditor\ueditor.all.js" />
+    <None Include="wwwroot\lib\ueditor\ueditor.all.min.js" />
+    <None Include="wwwroot\lib\ueditor\ueditor.config.js" />
+    <None Include="wwwroot\lib\ueditor\ueditor.parse.js" />
+    <None Include="wwwroot\lib\ueditor\ueditor.parse.min.js" />
+    <None Include="wwwroot\lib\zsign\jquery.zsign.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Senparc.Weixin" Version="6.3.6-preview1" />
+    <PackageReference Include="Senparc.Weixin.MP" Version="16.6.10-preview1" />
+    <PackageReference Include="Senparc.Weixin.MP.MVC" Version="7.2.4" />
+    <PackageReference Include="SharpRepository.Caching.Redis" Version="2.0.2.2" />
+    <PackageReference Include="SharpRepository.InMemoryRepository" Version="2.0.3-prerelease" />
+    <PackageReference Include="SharpRepository.Ioc.Microsoft.DependencyInjection" Version="2.0.2" />
+    <PackageReference Include="SharpRepository.MongoDbRepository" Version="2.0.7.2-prerelease" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NFine.Core\NFine.Core.csproj" />
+    <ProjectReference Include="..\NFine.EntityFramework\NFine.EntityFramework.csproj" />
+    <ProjectReference Include="..\NFine.Service\NFine.Service.csproj" />
+    <ProjectReference Include="..\NFine.Support\NFine.Support.csproj" />
+    <ProjectReference Include="..\Senparc.Weixin.MP.Sample.CommonService\Senparc.Weixin.MP.CoreSample.CommonService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\lib\art-template\index.d.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\OAManage\Views\ResFile\Move.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\OAManage\Views\ResFile\Rename.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\OAManage\Views\ResFile\NewFolder.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\OAManage\Views\ResFile\Upload.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\OAManage\Views\Schedule\Form.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemSecurity\Views\LoginLog\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="recurringjob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Areas\ExampleManage\Views\Home\ForumMain.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\ExampleManage\Views\Home\SearchResults.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Area\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Area\Form.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Area\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\DictItem\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Position\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\MenuButton\Form.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\MenuButton\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\DictItem\Form.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\DictItem\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Dict\Form.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Dict\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Position\Form.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Position\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Menu\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Organize\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Organize\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Menu\Form.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Menu\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Resource\Form.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Role\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Role\Form.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\Role\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\User\ResetPassword.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

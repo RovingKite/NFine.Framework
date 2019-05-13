@@ -1,0 +1,9 @@
+E:\GitHub\NFineCore\src\NFineCore.Core\bin\Debug\netcoreapp2.2\NFineCore.Core.deps.json
+E:\GitHub\NFineCore\src\NFineCore.Core\bin\Debug\netcoreapp2.2\NFineCore.Core.dll
+E:\GitHub\NFineCore\src\NFineCore.Core\bin\Debug\netcoreapp2.2\NFineCore.Core.pdb
+E:\GitHub\NFineCore\src\NFineCore.Core\obj\Debug\netcoreapp2.2\NFineCore.Core.csproj.CoreCompileInputs.cache
+E:\GitHub\NFineCore\src\NFineCore.Core\obj\Debug\netcoreapp2.2\NFineCore.Core.AssemblyInfoInputs.cache
+E:\GitHub\NFineCore\src\NFineCore.Core\obj\Debug\netcoreapp2.2\NFineCore.Core.AssemblyInfo.cs
+E:\GitHub\NFineCore\src\NFineCore.Core\obj\Debug\netcoreapp2.2\NFineCore.Core.dll
+E:\GitHub\NFineCore\src\NFineCore.Core\obj\Debug\netcoreapp2.2\NFineCore.Core.pdb
+E:\GitHub\NFineCore\src\NFineCore.Core\obj\Debug\netcoreapp2.2\NFineCore.Core.csprojAssemblyReference.cache

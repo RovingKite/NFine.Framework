@@ -1,0 +1,17 @@
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\bin\Debug\netcoreapp2.2\NFine.EntityFramework.deps.json
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\bin\Debug\netcoreapp2.2\NFine.EntityFramework.dll
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\bin\Debug\netcoreapp2.2\NFine.EntityFramework.pdb
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.csprojAssemblyReference.cache
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.csproj.CoreCompileInputs.cache
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.AssemblyInfoInputs.cache
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.AssemblyInfo.cs
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.dll
+E:\GitHub\NFineCore\src\NFineCore.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.pdb
+E:\GitHub\NFineCore\src\NFine.EntityFramework\bin\Debug\netcoreapp2.2\NFine.EntityFramework.deps.json
+E:\GitHub\NFineCore\src\NFine.EntityFramework\bin\Debug\netcoreapp2.2\NFine.EntityFramework.dll
+E:\GitHub\NFineCore\src\NFine.EntityFramework\bin\Debug\netcoreapp2.2\NFine.EntityFramework.pdb
+E:\GitHub\NFineCore\src\NFine.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.csproj.CoreCompileInputs.cache
+E:\GitHub\NFineCore\src\NFine.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.AssemblyInfoInputs.cache
+E:\GitHub\NFineCore\src\NFine.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.AssemblyInfo.cs
+E:\GitHub\NFineCore\src\NFine.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.dll
+E:\GitHub\NFineCore\src\NFine.EntityFramework\obj\Debug\netcoreapp2.2\NFine.EntityFramework.pdb

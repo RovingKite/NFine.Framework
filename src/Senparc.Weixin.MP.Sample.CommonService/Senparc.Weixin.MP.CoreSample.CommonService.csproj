@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NFineCore.EntityFramework\NFineCore.EntityFramework.csproj" />
-    <ProjectReference Include="..\NFineCore.Service\NFineCore.Service.csproj" />
+    <ProjectReference Include="..\NFine.EntityFramework\NFine.EntityFramework.csproj" />
+    <ProjectReference Include="..\NFine.Service\NFine.Service.csproj" />
   </ItemGroup>
 
 </Project>

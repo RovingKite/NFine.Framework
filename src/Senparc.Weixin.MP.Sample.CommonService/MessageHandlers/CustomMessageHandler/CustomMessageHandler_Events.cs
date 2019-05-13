@@ -9,7 +9,7 @@
 ----------------------------------------------------------------*/
 
 //DPBMARK_FILE MP
-using NFineCore.Service.WeixinManage;
+using NFine.Service.WeixinManage;
 using Senparc.CO2NET.Extensions;
 using Senparc.CO2NET.Utilities;
 using Senparc.NeuChar.Agents;
@@ -42,7 +42,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler
             var filePath = ServerUtility.ContentRootMapPath("~/bin/Senparc.Weixin.MP.dll");//发布路径
 #else
             //var filePath = ServerUtility.ContentRootMapPath("~/bin/Release/netcoreapp2.2/Senparc.Weixin.MP.dll");//本地测试路径
-            var filePath = ServerUtility.ContentRootMapPath(@"E:\GitHub\NFineCore\src\Senparc.Weixin.MP.Sample.CommonService\bin\Debug\netcoreapp2.2\Senparc.Weixin.MP.dll");//发布路径
+            var filePath = ServerUtility.ContentRootMapPath(@"E:\GitHub\NFine\src\Senparc.Weixin.MP.Sample.CommonService\bin\Debug\netcoreapp2.2\Senparc.Weixin.MP.dll");//发布路径
 #endif
             var fileVersionInfo = FileVersionInfo.GetVersionInfo(filePath);
 

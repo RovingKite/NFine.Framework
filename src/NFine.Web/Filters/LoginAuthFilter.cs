@@ -1,0 +1,35 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using NFine.Core;
+using NFine.Support;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace NFine.Web.Filters
+{
+    public class LoginAuthFilter : IAuthorizationFilter
+    {
+        public void OnAuthorization(AuthorizationFilterContext filterContext)
+        {
+            string areaName = filterContext.ActionDescriptor.RouteValues["area"];
+            string controllerName = filterContext.ActionDescriptor.RouteValues["controller"];
+            string actionName = filterContext.ActionDescriptor.RouteValues["action"];
+            if (areaName == null)
+            {
+                if (controllerName == "Account" && actionName == "Login") return;
+                if (controllerName == "Account" && actionName == "GetAuthCode") return;
+                if (controllerName == "Account" && actionName == "CheckLogin") return;
+                if (controllerName == "Weixin") return;
+            }
+
+            if (OperatorProvider.Provider.GetOperator() == null)
+            {
+                filterContext.Result = new RedirectResult("/Account/Login");
+            }
+        }
+    }
+}
