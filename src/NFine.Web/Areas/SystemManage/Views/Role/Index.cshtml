@@ -73,16 +73,11 @@
                     { label: "主键", name: "Id", hidden: true, key: true },
                     { label: '角色名称', name: 'FullName', width: 150, align: 'left' },
                     { label: '角色编号', name: 'EnCode', width: 150, align: 'left' },
-                    {
-                        label: '角色类型', name: 'Type', width: 80, align: 'left',
-                        formatter: function (cellvalue) {
-                            return top.clients.dataItems["RoleType"][cellvalue] == undefined ? "" : top.clients.dataItems["RoleType"][cellvalue]
-                        }
-                    },
+                    { label: '角色类型', name: 'ObjectType', width: 80, align: 'left' },
                     {
                         label: '归属机构', name: 'OrganizeId', width: 150, align: 'left',
                         formatter: function (cellvalue, options, rowObject) {
-                            return top.clients.organize[cellvalue] == null ? "" : top.clients.organize[cellvalue].fullname;
+                            //return top.clients.organize[cellvalue] == null ? "" : top.clients.organize[cellvalue].fullname;
                         }
                     },
                     {

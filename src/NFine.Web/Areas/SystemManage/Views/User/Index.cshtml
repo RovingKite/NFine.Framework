@@ -92,19 +92,19 @@
                     {
                         label: '公司', name: 'CompanyId', width: 150, align: 'left',
                         formatter: function (cellvalue, options, rowObject) {
-                            return top.clients.organize[cellvalue] == null ? "" : top.clients.organize[cellvalue].fullname;
+                            return rowObject.Company == null ? "" : rowObject.Company.FullName;
                         }
                     },
                     {
                         label: '部门', name: 'DepartmentId', width: 80, align: 'left',
                         formatter: function (cellvalue, options, rowObject) {
-                            return top.clients.organize[cellvalue] == null ? "" : top.clients.organize[cellvalue].fullname;
+                            return rowObject.Department == null ? "" : rowObject.Department.FullName;
                         }
                     },
                     {
                         label: '岗位', name: 'PositionId', width: 80, align: 'left',
                         formatter: function (cellvalue, options, rowObject) {
-                            return top.clients.position[cellvalue] == null ? "" : top.clients.position[cellvalue].fullname;
+                            return rowObject.Position == null ? "" : rowObject.Position.FullName;
                         }
                     },
                     {

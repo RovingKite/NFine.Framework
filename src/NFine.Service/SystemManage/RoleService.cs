@@ -45,6 +45,7 @@ namespace NFine.Service.SystemManage
             {
                 specification = new Specification<Role>(r => r.DeletedMark == false && (r.FullName.Contains(keyword)||r.EnCode.Contains(keyword)));
             }
+            specification.FetchStrategy.Include(obj=>obj.Organize);
             var pagingOptions = new PagingOptions<Role, DateTime?>(pagination.page, pagination.rows, x => x.CreatedTime, isDescending: true);
             var list = roleRepository.FindAll(specification, pagingOptions).ToList();
             pagination.records = pagingOptions.TotalItems;

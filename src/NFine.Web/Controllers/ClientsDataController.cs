@@ -47,7 +47,7 @@ namespace NFine.Web.Controllers
             var permissions = _permissionService.GetPermsResList(Convert.ToInt64(operatorModel.Id));
             var data = new
             {
-                currentUser = this.GetUserForm(operatorModel.Id.ToString()),
+                //currentUser = this.GetUserForm(operatorModel.Id.ToString()),
                 authorizeMenu = this.GetMenuList(permissions),
                 authorizeButton = this.GetMenuButtonList(permissions),
                 //wxMenu = this.GetWxMenuList()
@@ -99,10 +99,10 @@ namespace NFine.Web.Controllers
             return dictionary;
         }
 
-        private object GetUserForm(string keyValue)
-        {
-            var data = _userService.GetForm(keyValue);
-            return data;
-        }
+        //private object GetUserForm(string keyValue)
+        //{
+        //    var data = _userService.GetForm(keyValue);
+        //    return data;
+        //}
     }
 }

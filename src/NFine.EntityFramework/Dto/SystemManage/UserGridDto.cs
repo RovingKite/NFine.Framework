@@ -23,10 +23,10 @@ namespace NFine.EntityFramework.Dto.SystemManage
         public DateTime? CreatedTime { get; set; }
         public byte? Type { get; set; }
         public string Description { get; set; }
-        public string CompanyId { get; set; }
-        public string DepartmentId { get; set; }
+        public OrganizeOutputDto Company { get; set; }
+        public OrganizeOutputDto Department { get; set; }
         public string RoleId { get; set; }
-        public string PositionId { get; set; }
+        public PositionOutputDto Position { get; set; }
         //public virtual IEnumerable<UserRole> UserRoles { get; set; }
     }
 }

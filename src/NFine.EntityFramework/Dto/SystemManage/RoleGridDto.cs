@@ -13,7 +13,7 @@ namespace NFine.EntityFramework.Dto.SystemManage
         public bool? AllowEdit { get; set; }
         public bool? AllowDelete { get; set; }
         public string Description { get; set; }
-        public string Type { get; set; }
+        public string ObjectType { get; set; }
         public bool? EnabledMark { get; set; }
         public DateTime? CreatedTime { get; set; }
         public string OrganizeId { get; set; }

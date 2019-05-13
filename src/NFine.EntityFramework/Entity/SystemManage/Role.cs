@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NFine.EntityFramework.Dto.SystemManage;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +14,7 @@ namespace NFine.EntityFramework.Entity.SystemManage
         public long Id { get; set; }
         public long? OrganizeId { get;set;}
         [ForeignKey("OrganizeId")]
-        public Organize Organize { get; set; }
+        public OrganizeOutputDto Organize { get; set; }
         [MaxLength(255)]
         public string FullName { get; set; }
         [MaxLength(255)]
@@ -22,7 +23,7 @@ namespace NFine.EntityFramework.Entity.SystemManage
         public bool? AllowEdit { get; set; }
         public bool? AllowDelete { get; set; }
         [MaxLength(255)]
-        public string Type { get; set; }
+        public string ObjectType { get; set; }
         public bool? EnabledMark { get; set; }
         public bool? DeletedMark { get; set; }
         public virtual List<UserRole> UserRoles { get; set; }

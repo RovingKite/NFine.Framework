@@ -35,18 +35,18 @@ namespace NFine.Web.Areas.SystemSecurity.Controllers
         {
             return View();
         }
-        [HttpGet]
-        [PermissionCheck("SystemSecurity_LoginLog_Index")]
-        public ActionResult GetGridJson(Pagination pagination, string keyword)
-        {
-            var data = new
-            {
-                rows = _loginLogService.GetList(pagination, keyword),
-                total = pagination.total,
-                page = pagination.page,
-                records = pagination.records
-            };
-            return Content(data.ToJson());
-        }
+        //[HttpGet]
+        //[PermissionCheck("SystemSecurity_LoginLog_Index")]
+        //public ActionResult GetGridJson(Pagination pagination, string keyword)
+        //{
+        //    var data = new
+        //    {
+        //        rows = _loginLogService.GetList(pagination, keyword),
+        //        total = pagination.total,
+        //        page = pagination.page,
+        //        records = pagination.records
+        //    };
+        //    return Content(data.ToJson());
+        //}
     }
 }

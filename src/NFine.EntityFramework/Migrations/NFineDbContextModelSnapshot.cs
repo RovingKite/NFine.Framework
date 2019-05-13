@@ -417,7 +417,7 @@ namespace NFine.EntityFramework.Migrations
 
                     b.Property<int?>("SortCode");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("ObjectType")
                         .HasMaxLength(255);
 
                     b.HasKey("Id");

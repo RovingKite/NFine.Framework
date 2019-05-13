@@ -213,7 +213,7 @@ namespace NFine.EntityFramework.Migrations
                     SortCode = table.Column<int>(nullable: true),
                     AllowEdit = table.Column<bool>(nullable: true),
                     AllowDelete = table.Column<bool>(nullable: true),
-                    Type = table.Column<string>(maxLength: 255, nullable: true),
+                    ObjectType = table.Column<string>(maxLength: 255, nullable: true),
                     EnabledMark = table.Column<bool>(nullable: true),
                     DeletedMark = table.Column<bool>(nullable: true),
                     Description = table.Column<string>(maxLength: 255, nullable: true),
