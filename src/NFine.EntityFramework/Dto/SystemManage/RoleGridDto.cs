@@ -16,6 +16,6 @@ namespace NFine.EntityFramework.Dto.SystemManage
         public string ObjectType { get; set; }
         public bool? EnabledMark { get; set; }
         public DateTime? CreatedTime { get; set; }
-        public string OrganizeId { get; set; }
+        public OrganizeOutputDto Organize { get; set; }
     }
 }

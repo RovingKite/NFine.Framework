@@ -14,7 +14,7 @@ namespace NFine.EntityFramework.Entity.SystemManage
         public long Id { get; set; }
         public long? OrganizeId { get;set;}
         [ForeignKey("OrganizeId")]
-        public OrganizeOutputDto Organize { get; set; }
+        public Organize Organize { get; set; }
         [MaxLength(255)]
         public string FullName { get; set; }
         [MaxLength(255)]

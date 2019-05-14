@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using NFine.Core;
+using NFine.EntityFramework.Dto.SystemManage;
+using NFine.EntityFramework.Dto.SystemSecurity;
+using NFine.Service.SystemManage;
+using NFine.Service.SystemSecurity;
+using NFine.Support;
+using System;
 using System.DrawingCore;
 using System.DrawingCore.Imaging;
 using System.IO;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NFine.Support;
-using NFine.EntityFramework.Entity.SystemManage;
-using NFine.Service.SystemManage;
-using NFine.EntityFramework.Dto.SystemManage;
-using Newtonsoft.Json;
-using NFine.Core;
-using NFine.Service.SystemSecurity;
-using NFine.EntityFramework.Dto.SystemSecurity;
 
 namespace NFine.Web.Controllers
 {
@@ -38,23 +30,23 @@ namespace NFine.Web.Controllers
             return View();
         }
 
-        //public IActionResult Logout()
-        //{
-        //    OperatorModel operatorModel = OperatorProvider.Provider.GetOperator();
-        //    LoginLogInputDto loginLogInputDto = new LoginLogInputDto();
-        //    loginLogInputDto.UserId = operatorModel.Id.ToString();
-        //    loginLogInputDto.UserName = operatorModel.UserName;
-        //    loginLogInputDto.OperateType = "Logout";
-        //    loginLogInputDto.OperateResult = true;
-        //    loginLogInputDto.OperateTime = System.DateTime.Now;
-        //    loginLogInputDto.IpAddress = HttpContext.Connection.RemoteIpAddress.ToString();
-        //    loginLogInputDto.IpAddressLocation = NetHelper.GetLocation(loginLogInputDto.IpAddress);
-        //    loginLogInputDto.Description = "安全退出。";
-        //    _loginLogService.SubmitForm(loginLogInputDto, null);
+        public IActionResult Logout()
+        {
+            OperatorModel operatorModel = OperatorProvider.Provider.GetOperator();
+            LoginLogInputDto loginLogInputDto = new LoginLogInputDto();
+            loginLogInputDto.UserId = operatorModel.Id.ToString();
+            loginLogInputDto.UserName = operatorModel.UserName;
+            loginLogInputDto.OperateType = "Logout";
+            loginLogInputDto.OperateResult = true;
+            loginLogInputDto.OperateTime = System.DateTime.Now;
+            loginLogInputDto.IpAddress = HttpContext.Connection.RemoteIpAddress.ToString();
+            loginLogInputDto.IpAddressLocation = NetHelper.GetLocation(loginLogInputDto.IpAddress);
+            loginLogInputDto.Description = "安全退出。";
+            _loginLogService.SubmitForm(loginLogInputDto, null);
 
-        //    OperatorProvider.Provider.RemoveOperator();
-        //    return RedirectToAction("Login", "Account");
-        //}
+            OperatorProvider.Provider.RemoveOperator();
+            return RedirectToAction("Login", "Account");
+        }
 
         [HttpGet]
         [AllowAnonymous]
@@ -62,51 +54,51 @@ namespace NFine.Web.Controllers
         {
             return File(GetVerifyCode(), @"image/Gif");
         }
-        
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public IActionResult CheckLogin(string username, string password, string verifycode)
-        //{
-        //    LoginLogInputDto loginLogInputDto = new LoginLogInputDto();
-        //    loginLogInputDto.UserName = username;
-        //    loginLogInputDto.OperateType = "Login";
-        //    loginLogInputDto.OperateTime = System.DateTime.Now;
-        //    loginLogInputDto.IpAddress = HttpContext.Connection.RemoteIpAddress.ToString();
-        //    loginLogInputDto.IpAddressLocation = NetHelper.GetLocation(loginLogInputDto.IpAddress);
-        //    try
-        //    {
-        //        var SessionVerifyCode = HttpContext.Session.GetString("nfine_verify_code");
-        //        var Md5VerifyCode = Md5.md5(verifycode.ToLower(), 16);
-        //        if (SessionVerifyCode != Md5VerifyCode)
-        //        {
-        //            throw new Exception("验证码错误，请重新输入。");
-        //        }
-        //        UserOutputDto userOutputDto = _userService.CheckLogin(username, password);
-        //        if (userOutputDto != null)
-        //        {
-        //            loginLogInputDto.UserId = userOutputDto.Id;
-        //            loginLogInputDto.OperateResult = true;
-        //            loginLogInputDto.Description = "系统登录，登录成功。";
-        //            _loginLogService.SubmitForm(loginLogInputDto, null);
 
-        //            OperatorModel operatorModel = new OperatorModel();
-        //            operatorModel.Id = Convert.ToInt64(userOutputDto.Id);
-        //            operatorModel.UserName = userOutputDto.UserName;
-        //            operatorModel.MobilePhone = userOutputDto.MobilePhone;
-        //            operatorModel.Email = userOutputDto.Email;
-        //            OperatorProvider.Provider.AddOperator(operatorModel);
-        //            //HttpContext.Session.SetString("nfine_login_user", JsonConvert.SerializeObject(operatorModel));
-        //        }
-        //        return Content(new AjaxResult { state = ResultType.success.ToString(), message = "登录成功。" }.ToJson());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        loginLogInputDto.OperateResult = false;
-        //        loginLogInputDto.Description = "系统登录，" + ex.Message;
-        //        _loginLogService.SubmitForm(loginLogInputDto, null);
-        //        return Content(new AjaxResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
-        //    }
-        //}
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult CheckLogin(string username, string password, string verifycode)
+        {
+            LoginLogInputDto loginLogInputDto = new LoginLogInputDto();
+            loginLogInputDto.UserName = username;
+            loginLogInputDto.OperateType = "Login";
+            loginLogInputDto.OperateTime = System.DateTime.Now;
+            loginLogInputDto.IpAddress = HttpContext.Connection.RemoteIpAddress.ToString();
+            loginLogInputDto.IpAddressLocation = NetHelper.GetLocation(loginLogInputDto.IpAddress);
+            try
+            {
+                var SessionVerifyCode = HttpContext.Session.GetString("nfine_verify_code");
+                var Md5VerifyCode = Md5.md5(verifycode.ToLower(), 16);
+                if (SessionVerifyCode != Md5VerifyCode)
+                {
+                    throw new Exception("验证码错误，请重新输入。");
+                }
+                UserOutputDto userOutputDto = _userService.CheckLogin(username, password);
+                if (userOutputDto != null)
+                {
+                    loginLogInputDto.UserId = userOutputDto.Id;
+                    loginLogInputDto.OperateResult = true;
+                    loginLogInputDto.Description = "系统登录，登录成功。";
+                    _loginLogService.SubmitForm(loginLogInputDto, null);
+
+                    OperatorModel operatorModel = new OperatorModel();
+                    operatorModel.Id = Convert.ToInt64(userOutputDto.Id);
+                    operatorModel.UserName = userOutputDto.UserName;
+                    operatorModel.MobilePhone = userOutputDto.MobilePhone;
+                    operatorModel.Email = userOutputDto.Email;
+                    OperatorProvider.Provider.AddOperator(operatorModel);
+                    //HttpContext.Session.SetString("nfine_login_user", JsonConvert.SerializeObject(operatorModel));
+                }
+                return Content(new AjaxResult { state = ResultType.success.ToString(), message = "登录成功。" }.ToJson());
+            }
+            catch (Exception ex)
+            {
+                loginLogInputDto.OperateResult = false;
+                loginLogInputDto.Description = "系统登录，" + ex.Message;
+                _loginLogService.SubmitForm(loginLogInputDto, null);
+                return Content(new AjaxResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
+            }
+        }
 
         public byte[] GetVerifyCode()
         {

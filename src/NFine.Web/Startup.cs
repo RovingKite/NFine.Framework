@@ -9,17 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NFine.Core;
 using NFine.EntityFramework;
-using NFine.Service;
 using NFine.Service.OAManage;
 using NFine.Service.SystemManage;
 using NFine.Service.SystemSecurity;
-using NFine.Support;
 using NFine.Web.Filters;
 using Senparc.CO2NET;
 using Senparc.CO2NET.RegisterServices;
 using Senparc.Weixin;
 using Senparc.Weixin.Entities;
-using Senparc.Weixin.MP;
 using Senparc.Weixin.RegisterServices;
 using SharpRepository.Ioc.Microsoft.DependencyInjection;
 using StackExchange.Redis;
@@ -74,7 +71,7 @@ namespace NFine.Web
             services.AddMvc(option =>
             {
                 option.Filters.Add(new LoginAuthFilter());
-                option.Filters.Add<GlobalExceptionFilter>();
+                //option.Filters.Add<GlobalExceptionFilter>();
                 //option.Filters.Add(new OperateLogFilter());
             });
 
@@ -85,7 +82,7 @@ namespace NFine.Web
             services.AddTransient(typeof(DictService));
             services.AddTransient(typeof(PositionService));
             services.AddTransient(typeof(LoginLogService));
-            services.AddTransient(typeof(OperateLogService));
+            //services.AddTransient(typeof(OperateLogService));
             services.AddTransient(typeof(OrganizeService));
             services.AddTransient(typeof(PermissionService));
             services.AddTransient(typeof(ResourceService));
@@ -122,7 +119,6 @@ namespace NFine.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
                 routes.MapRoute(
                     name: "SystemManage",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

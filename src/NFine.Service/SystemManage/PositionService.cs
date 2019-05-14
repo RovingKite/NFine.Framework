@@ -27,13 +27,14 @@ namespace NFine.Service.SystemManage
 
         public List<PositionGridDto> GetList(string keyword)
         {
-            var spec = new Specification<Position>(p => p.DeletedMark.Equals(false));
+            var specification = new Specification<Position>(p => p.DeletedMark.Equals(false));
             if (!string.IsNullOrEmpty(keyword))
             {
-                spec = new Specification<Position>(p => p.DeletedMark.Equals(false) && (p.FullName.Contains(keyword) || p.EnCode.Contains(keyword)));
+                specification = new Specification<Position>(p => p.DeletedMark.Equals(false) && (p.FullName.Contains(keyword) || p.EnCode.Contains(keyword)));
             }
+            specification.FetchStrategy.Include(obj=>obj.Organize);
             var sortingOtopns = new SortingOptions<Position, int?>(x => x.SortCode, isDescending: false);
-            var list = positionRepository.FindAll(spec, sortingOtopns).ToList();
+            var list = positionRepository.FindAll(specification, sortingOtopns).ToList();
             return Mapper.Map<List<PositionGridDto>>(list);
         }
 
