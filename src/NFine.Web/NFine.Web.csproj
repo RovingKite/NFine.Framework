@@ -266,9 +266,6 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    <PackageReference Include="Senparc.Weixin" Version="6.3.6-preview1" />
-    <PackageReference Include="Senparc.Weixin.MP" Version="16.6.10-preview1" />
-    <PackageReference Include="Senparc.Weixin.MP.MVC" Version="7.2.4" />
     <PackageReference Include="SharpRepository.Caching.Redis" Version="2.0.2.2" />
     <PackageReference Include="SharpRepository.InMemoryRepository" Version="2.0.3-prerelease" />
     <PackageReference Include="SharpRepository.Ioc.Microsoft.DependencyInjection" Version="2.0.2" />
@@ -280,7 +277,6 @@
     <ProjectReference Include="..\NFine.EntityFramework\NFine.EntityFramework.csproj" />
     <ProjectReference Include="..\NFine.Service\NFine.Service.csproj" />
     <ProjectReference Include="..\NFine.Support\NFine.Support.csproj" />
-    <ProjectReference Include="..\Senparc.Weixin.MP.Sample.CommonService\Senparc.Weixin.MP.CoreSample.CommonService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
